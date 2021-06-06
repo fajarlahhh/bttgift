@@ -1,4 +1,5 @@
 <div>
+    @inject('member', 'App\Models\Member')
     @include('includes.mobile-menu')
     <div class="flex">
         @include('includes.side-menu')
@@ -47,6 +48,8 @@
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="intro-y box p-5">
                         <form wire:submit.prevent="submit">
+
+                        <img src="{{ $qr }}">
                             <div>
                                 <label for="username" class="form-label">Username</label>
                                 <input id="username" type="text" class="form-control" wire:model="username" placeholder="Username" readonly>
@@ -93,7 +96,12 @@
                     </div>
                 </div>
                 <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="box p-5 bg-theme-6 intro-x">
+                    @php
+                        $turnover = $member->select(
+                                DB::raw('(select ifnull(sum(contract * extension), 0) from member a where contract is not null and left(a.network, length(concat(member.network, member.id, "ki")))=concat(member.network, member.id, "ki") ) left_turnover'),
+                                DB::raw('(select ifnull(sum(contract * extension), 0) from member a where contract is not null and left(a.network, length(concat(member.network, member.id, "ka")))=concat(member.network, member.id, "ka") ) right_turnover'))->where('id', auth()->id())->first();
+                    @endphp
+                    <div class="box p-5 bg-theme-3 intro-x">
                         <div class="flex flex-wrap gap-3">
                             <div class="w-full">
                                 <div class="text-white text-opacity-70 flex items-center leading-3"> LEFT TURNOVER </div>
@@ -106,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box p-5 bg-theme-26 intro-x mt-3">
+                    <div class="box p-5 bg-theme-1 intro-x mt-3">
                         <div class="flex flex-wrap gap-3">
                             <div class="w-full">
                                 <div class="text-white text-opacity-70 flex items-center leading-3"> RIGHT TURNOVER </div>

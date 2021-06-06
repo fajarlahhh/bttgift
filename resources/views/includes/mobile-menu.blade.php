@@ -3,7 +3,7 @@
 <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
-            <img alt="BTT Give" class="w-6" src="/images/logo.png">
+            <img alt="{{ config('app.name') }}" class="w-6" src="/images/logo.png">
         </a>
         <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
     </div>
@@ -21,9 +21,9 @@
             </a>
         </li>
         <li>
-            <a href="/withdraw" class="menu @if ($menu == 'withdraw') menu--active @endif">
+            <a href="/withdrawal" class="menu @if ($menu == 'withdrawal') menu--active @endif">
                 <div class="menu__icon"> <i data-feather="toggle-right"></i> </div>
-                <div class="menu__title"> Withdraw </div>
+                <div class="menu__title"> Withdrawal </div>
             </a>
         </li>
         <li>

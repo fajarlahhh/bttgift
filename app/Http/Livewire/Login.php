@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
+use App\Models\Member;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
@@ -44,8 +46,20 @@ class Login extends Component
 		// 		'pesan' => '<li><strong>Sign In notification!!!</strong><br>Wrong username or password</li>'
 		// 	];
 		// }
+
         $remember = $this->remember == 'on';
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $remember)) {
+            if (auth()->user()->registration_waiting->count() > 0) {
+                $data = auth()->user()->registration_waiting->first();
+                $until = Carbon::parse($data->created_at)->addHours(5);
+                if($until > now()){
+                    Member::findOrFail(auth()->id())->delete();
+                    Auth::logout();
+                    $this->message = "<p class='text-theme-6'>The username is not registered!!!</p>";
+                    return;
+                }
+            }
+
             Auth::logoutOtherDevices($this->password, 'password');
             return redirect()->intended('dashboard');
         }

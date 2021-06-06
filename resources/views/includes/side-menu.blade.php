@@ -2,7 +2,7 @@
 <!-- BEGIN: Side Menu -->
 <nav class="side-nav">
     <a href="" class="intro-x flex items-center pl-5 pt-4">
-        <img alt="BTT Give" class="w-6" src="/images/logo.png">
+        <img alt="{{ config('app.name') }}" class="w-6" src="/images/logo.png">
         <span class="hidden xl:block text-white text-lg ml-3"> BTT<span class="font-medium">Give</span> </span>
     </a>
     <div class="side-nav__devider my-6"></div>
@@ -20,9 +20,9 @@
             </a>
         </li>
         <li>
-            <a href="/withdraw" class="side-menu  @if ($menu == 'withdraw') side-menu--active @endif">
+            <a href="/withdrawal" class="side-menu  @if ($menu == 'withdrawal') side-menu--active @endif">
                 <div class="side-menu__icon"> <i data-feather="toggle-right"></i> </div>
-                <div class="side-menu__title"> Withdraw </div>
+                <div class="side-menu__title"> Withdrawal </div>
             </a>
         </li>
         <li>
