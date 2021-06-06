@@ -61,18 +61,18 @@ class Registration extends Component
             $upline = Member::where('referral_left', $this->ref)->first();
         }
 
-        $member = new Member();
-        $member->username = $this->username;
-        $member->password = Hash::make($this->password);
-        $member->name = $this->name;
-        $member->email = $this->email;
-        $member->contract_price = $this->contract;
-        $member->position = $position;
-        $member->upline = $upline->id;
-        $member->network = trim($upline->network).$upline->id.($position == 0? 'ki': 'ka');
-        $member->referral_left = md5($this->username)."0";
-        $member->referral_right = md5($this->username)."1";
-        $member->save();
+        $user = new Member();
+        $user->username = $this->username;
+        $user->password = Hash::make($this->password);
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->contract_price = $this->contract;
+        $user->position = $position;
+        $user->upline = $upline->id;
+        $user->network = trim($upline->network).$upline->id.($position == 0? 'ki': 'ka');
+        $user->referral_left = md5($this->username)."0";
+        $user->referral_right = md5($this->username)."1";
+        $user->save();
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
             Auth::logoutOtherDevices($this->password, 'password');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Member;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -22,9 +22,9 @@ class Profile extends Component
         $this->upline = $this->data->upline;
         $this->referral_left = URL::to('/registration?ref='.$this->data->referral_left);
         $this->referral_right = URL::to('/registration?ref='.$this->data->referral_right);
-        $this->turnover = Member::select(
-            DB::raw('ifnull((select contract_price from member a where contract_price is not null and left(a.network, length(concat(member.network, member.id, "ki")))=concat(member.network, member.id, "ki") ), 0) left_turnover'),
-            DB::raw('ifnull((select contract_price from member a where contract_price is not null and left(a.network, length(concat(member.network, member.id, "ka")))=concat(member.network, member.id, "ka") ), 0) right_turnover'))->where('id', auth()->id())->first();
+        $this->turnover = User::select(
+            DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ), 0) left_turnover'),
+            DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ), 0) right_turnover'))->where('id', auth()->id())->first();
     }
 
     public function submit()
@@ -39,11 +39,11 @@ class Profile extends Component
             'referral_right' => 'required',
         ]);
 
-        $member = Member::findOrFail(auth()->id());
-        $member->name = $this->name;
-        $member->email = $this->email;
-        $member->wallet = $this->wallet;
-        $member->save();
+        $user = User::findOrFail(auth()->id());
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->wallet = $this->wallet;
+        $user->save();
     }
 
     public function render()
