@@ -80,7 +80,7 @@
             <div class="grid grid-cols-12 gap-12 mt-5">
                 <div class="intro-y col-span-12 lg:col-span-12">
                     <div class="intro-y box p-5">
-                        @if (auth()->user()->registration_waiting)
+                        @if (auth()->user()->registration_waiting_fund->count() > 0)
                         <div class="text-center ">
                             <h5 class="text-2xl">Waiting For Fund . . .</h5>
                             <br>
@@ -119,10 +119,29 @@
                                         @endphp
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrapt text-center" >
+                                        <form wire:submit.prevent="done">
+                                            Upload your proof of deposit here  <input type="file" wire:model="file" accept="image/*"><br>
+                                            @error('file')
+                                            <div class="text-theme-6 mt-2">Image file is required</div>
+                                            @enderror
+                                            <textarea wire:model="information" class="form-control mt-3" cols="30" rows="2" placeholder="Deposit Information">
+                                            </textarea>
+                                            @error('information')
+                                            <div class="text-theme-6 mt-2">This field is required</div>
+                                            @enderror
+                                            <input type="submit" class="btn btn-success mt-3" value="Done">
+                                        </form>
+                                    </td>
+                                </tr>
                             </table>
                             <br>
                             <small>The amount of {{ $name }} to be transferred must match the amount above</small>
                         </div>
+                        @else
+                        @if (auth()->user()->registration_waiting_process->count() > 0)
+                        <h1 class="text-center text-lg"><strong>We have received your funds.</strong><br>The registration process takes at least 2 x 24 hours</h1>
                         @else
                         <form wire:submit.prevent="submit">
                             <div>
@@ -140,6 +159,9 @@
                                     <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->description }}</option>
                                     @endforeach
                                 </select>
+                                @error('method')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
                             </div>
                             @if ($method)
                             <hr class="mt-3 mb-3">
@@ -161,6 +183,7 @@
                             <button class="btn btn-primary mt-5">Submit</button>
                             @endif
                         </form>
+                        @endif
                         @endif
                     </div>
                 </div>

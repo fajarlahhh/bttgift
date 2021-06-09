@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Carbon\Carbon;
-use App\Models\Member;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
@@ -31,12 +31,12 @@ class Login extends Component
         //     ];
         //     return;
         // }
-        // $member = Member::where('username', $this->username)->get();
+        // $member = User::where('username', $this->username)->get();
         // if($member){
         //     $member = $member->first();
         //     $wd_total = TransactionExchange::select('transaction_exchange_amount')->where('transaction_exchange_type', 'Reward')->where('member_id', $member->member_id)->get()->sum('transaction_exchange_amount');
         //     if(($member->contract_price * 3) - $wd_total < $member->contract->contract_reward_exchange_min){
-        //         $member = Member::findOrFail($member->member_id);
+        //         $member = User::findOrFail($member->member_id);
         //         $member->due_date = Carbon::now()->addDays(5)->format('Y-m-d');
         //         $member->save();
         //     }
@@ -49,14 +49,11 @@ class Login extends Component
 
         $remember = $this->remember == 'on';
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $remember)) {
-            if (auth()->user()->registration_waiting->count() > 0) {
-                $data = auth()->user()->registration_waiting->first();
+            if (auth()->user()->registration_waiting_fund->count() > 0) {
+                $data = auth()->user()->registration_waiting_fund->first();
                 $until = Carbon::parse($data->created_at)->addHours(5);
-                if($until > now()){
-                    Member::findOrFail(auth()->id())->delete();
-                    Auth::logout();
-                    $this->message = "<p class='text-theme-6'>The username is not registered!!!</p>";
-                    return;
+                if($until < now()){
+                    Deposit::where('id_member', auth()->id())->delete();
                 }
             }
 

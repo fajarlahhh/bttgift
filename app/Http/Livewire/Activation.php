@@ -7,17 +7,23 @@ use App\Models\Deposit;
 use App\Models\Payment;
 use Livewire\Component;
 use App\Models\Contract;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 use Hexters\CoinPayment\CoinPayment;
 use Illuminate\Support\Facades\Http;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class Activation extends Component
 {
-    public $data_payment, $contract, $method, $wallet, $coin, $amount, $name, $alias, $description, $deposit, $time;
+    use WithFileUploads;
+
+    public $data_payment, $error, $contract, $method, $wallet, $coin, $amount, $name, $alias, $description, $deposit, $time, $ticket, $file, $information;
 
     public function mount()
     {
-        if (auth()->user()->registration_waiting) {
-            $data = auth()->user()->registration_waiting->first();
+        if (auth()->user()->registration_waiting_fund->count() > 0) {
+            $data = auth()->user()->registration_waiting_fund->first();
             $this->name = $data->coin_name;
             $this->wallet = $data->wallet;
             $this->amount = $data->amount;
@@ -33,9 +39,9 @@ class Activation extends Component
         if ($this->method) {
             $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at')->first();
             if ($ticket) {
-                $ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
+                $this->ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
             }else{
-                $ticket = "00001";
+                $this->ticket = "00001";
             }
 
             $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
@@ -44,10 +50,38 @@ class Activation extends Component
             $this->alias = $payment->alias;
             $this->wallet = $payment->wallet;
             $this->description = $payment->description;
-            $usdt_idr = (float)$indodax['usdt_idr']['last'];
             $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
-            $this->amount = (float)round(auth()->user()->contract_price * $payment_idr / $usdt_idr).".".$ticket;
+            $this->amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr).".".$this->ticket;
         }
+    }
+
+    public function done()
+    {
+        $this->validate([
+            'information' => 'required',
+            'file' => 'required'
+        ]);
+
+        $file = null;
+        if($this->file){
+            $image = $this->file;
+            $file_name = date('YmdHims').time().uniqid();
+            $img = Image::make($image->getRealPath())->encode('png', 100)->fit(760, null, function ($c) {
+                $c->aspectRatio();
+                $c->upsize();
+            });;
+            $img->stream();
+            Storage::disk(config('constants.storage'))->put('deposit/'.$file_name.'.png', $img);
+            $img->destroy();
+
+            $file = 'deposit/'.$file_name.'.png';
+        }
+
+        $deposit = Deposit::findOrFail(auth()->user()->registration_waiting_fund->first()->id);
+        $deposit->information = $this->information;
+        $deposit->file = $file;
+        $deposit->save();
+        redirect('/activation');
     }
 
     public function submit()
@@ -58,15 +92,23 @@ class Activation extends Component
             'amount' => 'required'
         ]);
 
+        if (auth()->user()->registration_waiting_fund->count() == 0) {
+            DB::transaction(function () {
+                $ticket = new Ticket();
+                $ticket->contract_price = auth()->user()->contract_price;
+                $ticket->kode = $this->ticket;
+                $ticket->date = now();
+                $ticket->save();
 
-
-        $deposit = new Deposit();
-        $deposit->id_member = auth()->id();
-        $deposit->coin_name = $this->name;
-        $deposit->wallet = $this->wallet;
-        $deposit->amount = $this->amount;
-        $deposit->requisite = 'Registration';
-        $deposit->save();
+                $deposit = new Deposit();
+                $deposit->id_member = auth()->id();
+                $deposit->coin_name = $this->name;
+                $deposit->wallet = $this->wallet;
+                $deposit->amount = $this->amount;
+                $deposit->requisite = 'Registration';
+                $deposit->save();
+            });
+        }
 
         redirect('/activation');
     }

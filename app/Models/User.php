@@ -32,9 +32,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Contract', 'contract_price', 'price');
     }
 
-    public function registration_waiting()
+    public function registration_waiting_fund()
     {
-        return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Registration')->whereNull('id_user')->whereNull('prcessed_at');
+        return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Registration')->whereNull('file')->whereNull('information')->whereNull('id_user')->whereNull('processed_at');
+    }
+
+    public function registration_waiting_process()
+    {
+        return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Registration')->whereNotNull('file')->whereNotNull('information')->whereNull('id_user')->whereNull('processed_at');
     }
 
     public function left_child()

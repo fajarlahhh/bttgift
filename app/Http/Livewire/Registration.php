@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Member;
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Contract;
 use Illuminate\Support\Facades\DB;
@@ -27,9 +27,9 @@ class Registration extends Component
 
         $position = substr($this->ref, -1);
         if ($position == 1) {
-            $upline = Member::where('referral_right', $this->ref)->first();
+            $upline = User::where('referral_right', $this->ref)->first();
         } else {
-            $upline = Member::where('referral_left', $this->ref)->first();
+            $upline = User::where('referral_left', $this->ref)->first();
         }
 
         if (!$upline) {
@@ -48,7 +48,7 @@ class Registration extends Component
             'contract' => 'required'
         ]);
 
-        if (Member::where('username', $this->username)->count() > 0) {
+        if (User::where('username', $this->username)->count() > 0) {
             $this->error .= "Username already used";
         }
 
@@ -56,12 +56,12 @@ class Registration extends Component
         $referral = date('Ymd');
         $position = substr($this->ref, -1);
         if ($position == 1) {
-            $upline = Member::where('referral_right', $this->ref)->first();
+            $upline = User::where('referral_right', $this->ref)->first();
         } else {
-            $upline = Member::where('referral_left', $this->ref)->first();
+            $upline = User::where('referral_left', $this->ref)->first();
         }
 
-        $user = new Member();
+        $user = new User();
         $user->username = $this->username;
         $user->password = Hash::make($this->password);
         $user->name = $this->name;
