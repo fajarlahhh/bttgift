@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Member;
 
 use Livewire\Component;
 
@@ -8,6 +8,6 @@ class Reward extends Component
 {
     public function render()
     {
-        return view('livewire.reward');
+        return view('livewire.member.reward');
     }
 }

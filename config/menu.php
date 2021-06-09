@@ -6,13 +6,23 @@ return [
             'icon' => 'home',
             'title' => 'Dashboard',
             'link' => 'dashboard'
+        ],
+        [
+            'icon' => 'pocket',
+            'title' => 'Deposit',
+            'link' => 'deposit'
+        ],
+        [
+            'icon' => 'command',
+            'title' => 'Withdrawal Request',
+            'link' => 'withdrawalrequest'
         ]
     ],
     'member' => [
         [
             'icon' => 'home',
-            'title' => 'Home',
-            'link' => 'home'
+            'title' => 'Dashboard',
+            'link' => 'dashboard'
         ],
         [
             'icon' => 'trello',

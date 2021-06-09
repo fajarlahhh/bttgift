@@ -66,7 +66,7 @@
                             <hr class="mt-3 mb-3">
                             <div>
                                 <label for="amount" class="form-label">Amount</label>
-                                <input id="amount" step="any" type="number" class="form-control" wire:model.lazy="amount" placeholder="Amount" autocomplete="off">
+                                <input id="amount" step="any" type="number" class="form-control" wire:model="amount" placeholder="Amount" autocomplete="off">
                                 @error('amount')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror

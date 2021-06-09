@@ -1,6 +1,6 @@
 
 <!-- BEGIN: Side Menu -->
-<nav class="side-nav">
+<nav class="side-nav" wire:ignore>
     <a href="" class="intro-x flex items-center pl-5 pt-4">
         <img alt="{{ config('app.name') }}" class="w-6" src="/images/logo.png">
         <span class="hidden xl:block text-white text-lg ml-3"> BTT<span class="font-medium">Gift</span> </span>

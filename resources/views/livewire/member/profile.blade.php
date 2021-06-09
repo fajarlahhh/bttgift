@@ -66,11 +66,11 @@
                         <div class="flex flex-wrap gap-3">
                             <div class="w-full">
                                 <div class="text-white text-opacity-70 flex items-center leading-3"> LEFT TURNOVER </div>
-                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5"> <span class="absolute text-lg font-bold top-0 left-0 -mt-1.5">$</span> {{ $turnover['left_turnover'] }} </div>
+                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5">$ {{ $left_turnover }} </div>
                                 <hr class="mt-3">
                                 <div class="mt-3">
-                                    <label for="referral_left" class="form-label text-white">Referral Link</label>
-                                    <input id="referral_left" type="text" class="form-control" wire:model="referral_left" placeholder="Left Referral" readonly>
+                                    <label for="left_referral" class="form-label text-white">Referral Link</label>
+                                    <input id="left_referral" type="text" class="form-control" value="{{ $left_referral }}" placeholder="Left Referral" readonly>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +79,11 @@
                         <div class="flex flex-wrap gap-3">
                             <div class="w-full">
                                 <div class="text-white text-opacity-70 flex items-center leading-3"> RIGHT TURNOVER </div>
-                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5"> <span class="absolute text-lg font-bold top-0 left-0 -mt-1.5">$</span> {{ $turnover['right_turnover'] }} </div>
+                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5"> $ {{ $right_turnover }} </div>
                                 <hr class="mt-3">
                                 <div class="mt-3">
-                                    <label for="referral_right" class="form-label text-white">Referral Link</label>
-                                    <input id="referral_right" type="text" class="form-control" wire:model="referral_right" placeholder="Right Referral" readonly>
+                                    <label for="right_referral" class="form-label text-white">Referral Link</label>
+                                    <input id="right_referral" type="text" class="form-control" value="{{ $right_referral }}" placeholder="Right Referral" readonly>
                                 </div>
                             </div>
                         </div>

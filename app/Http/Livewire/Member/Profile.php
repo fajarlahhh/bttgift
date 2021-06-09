@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Member;
 
 use App\Models\User;
 use Livewire\Component;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\URL;
 
 class Profile extends Component
 {
-    public $data, $username, $referral_left, $referral_right, $email, $contract, $parent, $wallet, $upline, $name, $turnover;
+    public $data, $username, $left_referral, $right_referral, $email, $contract, $parent, $wallet, $upline, $name, $left_turnover, $right_turnover;
 
     public function mount()
     {
@@ -20,11 +20,14 @@ class Profile extends Component
         $this->contract = $this->data->contract_price;
         $this->wallet = $this->data->wallet;
         $this->upline = $this->data->upline;
-        $this->referral_left = URL::to('/registration?ref='.$this->data->referral_left);
-        $this->referral_right = URL::to('/registration?ref='.$this->data->referral_right);
-        $this->turnover = User::select(
+        $this->left_referral = URL::to('/registration?ref='.$this->data->left_referral);
+        $this->right_referral = URL::to('/registration?ref='.$this->data->right_referral);
+        $turnover = User::select(
             DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ), 0) left_turnover'),
             DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ), 0) right_turnover'))->where('id', auth()->id())->first();
+        $this->right_turnover = $turnover['right_turnover'];
+        $this->left_turnover = $turnover['left_turnover'];
+
     }
 
     public function submit()
@@ -35,8 +38,8 @@ class Profile extends Component
             'email' => 'required',
             'contract' => 'required',
             'wallet' => 'required',
-            'referral_left' => 'required',
-            'referral_right' => 'required',
+            'left_referral' => 'required',
+            'right_referral' => 'required',
         ]);
 
         $user = User::findOrFail(auth()->id());
@@ -48,7 +51,7 @@ class Profile extends Component
 
     public function render()
     {
-        return view('livewire.profile', [
+        return view('livewire.member.profile', [
             'menu' => 'profile'
         ])->extends('layouts.default');
     }

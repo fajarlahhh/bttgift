@@ -1,6 +1,6 @@
 
 <!-- BEGIN: Mobile Menu -->
-<div class="mobile-menu md:hidden">
+<div class="mobile-menu md:hidden" wire:ignore>
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
             <img alt="{{ config('app.name') }}" class="w-6" src="/images/logo.png">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Member;
 
 use Carbon\Carbon;
 use App\Models\Bonus;
@@ -33,6 +33,7 @@ class Withdraw extends Component
 
     public function updated()
     {
+        $this->emit('reinitialize');
         $this->submit = false;
         $this->fee = $this->amount * $this->fee_percentage / 100;
         $this->btt = round(($this->amount - $this->fee) / $this->btt_price);
@@ -117,7 +118,7 @@ class Withdraw extends Component
 
     public function render()
     {
-        return view('livewire.withdraw', [
+        return view('livewire.member.withdraw', [
             'menu' => 'withdrawal'
         ])->extends('layouts.default');
     }
