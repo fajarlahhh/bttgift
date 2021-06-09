@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['active']], function () {
-        Route::get('/', \App\Http\Livewire\Dashboard::class);
-        Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
-        Route::get('/profile', \App\Http\Livewire\Profile::class);
-        Route::get('/withdrawal', \App\Http\Livewire\Withdraw::class);
+    Route::group(['middleware' => ['member']], function () {
+        Route::group(['middleware' => ['active']], function () {
+            Route::get('/', \App\Http\Livewire\Home::class);
+            Route::get('/home', \App\Http\Livewire\Home::class);
+            Route::get('/profile', \App\Http\Livewire\Profile::class);
+            Route::get('/withdrawal', \App\Http\Livewire\Withdraw::class);
+        });
+        Route::get('/activation', \App\Http\Livewire\Activation::class);
     });
-    Route::get('/activation', \App\Http\Livewire\Activation::class);
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
+    });
 });
 
 Route::get('/registration', \App\Http\Livewire\Registration::class);

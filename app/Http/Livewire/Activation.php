@@ -59,7 +59,7 @@ class Activation extends Component
     {
         $this->validate([
             'information' => 'required',
-            'file' => 'required'
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $file = null;

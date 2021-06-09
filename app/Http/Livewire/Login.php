@@ -49,16 +49,22 @@ class Login extends Component
 
         $remember = $this->remember == 'on';
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $remember)) {
-            if (auth()->user()->registration_waiting_fund->count() > 0) {
-                $data = auth()->user()->registration_waiting_fund->first();
-                $until = Carbon::parse($data->created_at)->addHours(5);
-                if($until < now()){
-                    Deposit::where('id_member', auth()->id())->delete();
+            if (auth()->user()->role == 1) {
+                if (auth()->user()->registration_waiting_fund->count() > 0) {
+                    $data = auth()->user()->registration_waiting_fund->first();
+                    $until = Carbon::parse($data->created_at)->addHours(5);
+                    if($until < now()){
+                        Deposit::where('id_member', auth()->id())->delete();
+                    }
                 }
             }
 
             Auth::logoutOtherDevices($this->password, 'password');
-            return redirect()->intended('dashboard');
+            if (auth()->user()->role == 1){
+                return redirect()->intended('/home');
+            }else{
+                return redirect('/dashboard')->intended('/dashboard');
+            }
         }
         $this->message = "<p class='text-theme-6'>Wrong username or password!!!</p>";
         return;
