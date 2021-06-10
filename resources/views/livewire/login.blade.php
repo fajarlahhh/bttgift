@@ -26,8 +26,8 @@
                     </h2>
                     <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your accounts in one place</div>
                     <div class="intro-x mt-8">
-                        <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Username" wire:model="username" required>
-                        <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" wire:model="password" required>
+                        <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Username" wire:model.defer="username" required>
+                        <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" wire:model.defer="password" required>
                     </div>
                     <div class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4">
                         <div class="flex items-center mr-auto">
