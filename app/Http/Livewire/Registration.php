@@ -27,9 +27,9 @@ class Registration extends Component
 
         $position = substr($this->ref, -1);
         if ($position == 1) {
-            $upline = User::where('referral_right', $this->ref)->first();
+            $upline = User::where('right_referral', $this->ref)->first();
         } else {
-            $upline = User::where('referral_left', $this->ref)->first();
+            $upline = User::where('left_referral', $this->ref)->first();
         }
 
         if (!$upline) {
@@ -56,9 +56,9 @@ class Registration extends Component
         $referral = date('Ymd');
         $position = substr($this->ref, -1);
         if ($position == 1) {
-            $upline = User::where('referral_right', $this->ref)->first();
+            $upline = User::where('right_referral', $this->ref)->first();
         } else {
-            $upline = User::where('referral_left', $this->ref)->first();
+            $upline = User::where('left_referral', $this->ref)->first();
         }
 
         $user = new User();
@@ -70,8 +70,8 @@ class Registration extends Component
         $user->position = $position;
         $user->upline = $upline->id;
         $user->network = trim($upline->network).$upline->id.($position == 0? 'ki': 'ka');
-        $user->referral_left = md5($this->username)."0";
-        $user->referral_right = md5($this->username)."1";
+        $user->left_referral = md5($this->username)."0";
+        $user->right_referral = md5($this->username)."1";
         $user->save();
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
