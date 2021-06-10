@@ -17,7 +17,7 @@ class Administrator
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->user()->role == 0) {
-            return abort(404);
+            return abort(403, "Forbidden access");
         }
         return $next($request);
     }
