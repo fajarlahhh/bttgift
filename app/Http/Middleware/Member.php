@@ -17,7 +17,7 @@ class Member
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->user()->role == 1) {
-            return abort(403, "Forbidden access");
+            return redirect('/admin-area');
         }
         return $next($request);
     }
