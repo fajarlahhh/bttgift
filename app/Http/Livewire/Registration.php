@@ -52,6 +52,10 @@ class Registration extends Component
             $this->error .= "Username already used";
         }
 
+        if($this->error){
+            return;
+        }
+
         $upline = null;
         $referral = date('Ymd');
         $position = substr($this->ref, -1);
