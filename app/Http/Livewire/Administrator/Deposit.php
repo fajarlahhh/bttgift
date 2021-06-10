@@ -92,6 +92,8 @@ class Deposit extends Component
 
             User::findOrFail($data->id_member)->update($update);
 
+            $bonus = [];
+
             array_push($bonus,[
                 'description' => "Referral  10% of ".$data->contract_price,
                 'type' => "Referral",
@@ -107,8 +109,7 @@ class Deposit extends Component
                 $this->setParent(User::with('parent')->with('rating')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at", DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'), DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->where('id', $data->id_member)->first());
                 $data_rating = Rating::all();
 
-                $bonus = [];
-                $omset_keluar = [];
+                $invalid_turnover = [];
                 $parent_length = 0;
                 $network = $data->network;
 
@@ -180,7 +181,7 @@ class Deposit extends Component
                         }
                     }
                     if ($row['due_date']) {
-                        array_push($omset_keluar,[
+                        array_push($invalid_turnover,[
                             'id_member' => $row['id'],
                             'from_member' => $data->id_member,
                             'amount' => $data->contract_price,
@@ -195,8 +196,8 @@ class Deposit extends Component
                         break;
                     }
                 }
-                $data_omset_keluar = collect($omset_keluar)->chunk(10);
-                foreach ($data_omset_keluar as $item)
+                $data_invalid_turnover = collect($invalid_turnover)->chunk(10);
+                foreach ($data_invalid_turnover as $item)
                 {
                     InvalidTurnover::insert($item->toArray());
                 }
