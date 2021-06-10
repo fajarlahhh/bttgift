@@ -70,7 +70,7 @@
                 </div>
                 @endif
                 <div class="col-md-12 intro-y text-center">
-                    <a href="/downline" class="btn btn-primary text-center">Reset</a>
+                    <a href="/downline" class="btn btn-primary text-center">Refresh</a>
                 </div>
             </div>
         </div>

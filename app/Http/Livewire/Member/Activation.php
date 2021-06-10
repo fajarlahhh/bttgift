@@ -37,13 +37,6 @@ class Activation extends Component
     public function updated()
     {
         if ($this->method) {
-            $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at')->first();
-            if ($ticket) {
-                $this->ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
-            }else{
-                $this->ticket = "00001";
-            }
-
             $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
             $payment = $this->data_payment->where('id', $this->method)->first();
             $this->name = $payment->name;
@@ -51,7 +44,7 @@ class Activation extends Component
             $this->wallet = $payment->wallet;
             $this->description = $payment->description;
             $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
-            $this->amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr).".".$this->ticket;
+            $this->amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
         }
     }
 
@@ -94,6 +87,13 @@ class Activation extends Component
 
         if (auth()->user()->registration_waiting_fund->count() == 0) {
             DB::transaction(function () {
+                $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at', 'desc')->first();
+                if ($ticket) {
+                    $this->ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
+                }else{
+                    $this->ticket = "00001";
+                }
+                $this->amount = $this->amount.".".$this->ticket;
                 $ticket = new Ticket();
                 $ticket->contract_price = auth()->user()->contract_price;
                 $ticket->kode = $this->ticket;

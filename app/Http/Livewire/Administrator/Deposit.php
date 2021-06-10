@@ -74,6 +74,7 @@ class Deposit extends Component
         DB::transaction(function () {
             $time = now();
             $data = \App\Models\Deposit::with('member')->findOrFail($this->key);
+
             $data->update([
                 'id_user' => auth()->id(),
                 'processed_at' => $time
@@ -95,23 +96,25 @@ class Deposit extends Component
             $bonus = [];
 
             array_push($bonus,[
-                'description' => "Referral  10% of ".$data->contract_price,
+                'description' => "Referral 10% of ".$data->member->contract_price." by ".$data->member->username,
                 'type' => "Referral",
                 'debit' => 0,
-                'credit' => $data->contract_price * 10 /100,
-                'id_member' => $data->upline,
+                'credit' => $data->member->contract_price * 10 /100,
+                'id_member' => $data->member->upline,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
 
             if ($data->requisite == 'Registration') {
                 $this->parent = [];
-                $this->setParent(User::with('parent')->with('rating')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at", DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'), DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->where('id', $data->id_member)->first());
-                $data_rating = Rating::all();
+                $this->setParent(User::with('parent')->with('rating')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",
+                DB::raw('(select ifnull(sum(contract_price), 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'),
+                DB::raw('(select ifnull(sum(contract_price), 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->where('id', $data->id_member)->first());
 
+                $data_rating = Rating::all();
                 $invalid_turnover = [];
                 $parent_length = 0;
-                $network = $data->network;
+                $network = $data->member->network;
 
                 $persen = 5;
                 $level = 7;
@@ -121,6 +124,7 @@ class Deposit extends Component
                     $achievement_id = 0;
                     if(is_null($row['due_date']) == 1 && $row['active'] == 1){
                         $kaki_kecil = collect([$row['left'], $row['right']])->min();
+
                         $child = User::findOrFail($row['id']);
 
                         $rating = $data_rating->filter(function ($q) use ($kaki_kecil)
@@ -143,12 +147,12 @@ class Deposit extends Component
                         if($row['pair'] === 1) {
                             $pairing = "Pairing bonus ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
-                                if($row['left'] - $data->contract_price < $row['right']){
+                                if($row['left'] - $data->member->contract_price < $row['right']){
                                     $reward = 0;
                                     if($row['left'] > $row['right']){
-                                        $reward = $row['right'] - $row['left'] + $data->contract_price;
+                                        $reward = $row['right'] - $row['left'] + $data->member->contract_price;
                                     }else{
-                                        $reward = $data->contract_price;
+                                        $reward = $data->member->contract_price;
                                     }
                                     array_push($bonus,[
                                         'description' => $pairing.number_format($reward, 2)." by ".$data->member->username,
@@ -161,16 +165,17 @@ class Deposit extends Component
                                     ]);
                                 }
                             }else if(substr($network, -2) == 'ka'){
-                                if($row['right'] - $data->contract_price < $row['left']){
+                                if($row['right'] - $data->member->contract_price < $row['left']){
                                     $reward = 0;
                                     if($row['right'] > $row['left']){
-                                        $reward = $row['left'] - $row['right'] + $data->contract_price;
+                                        $reward = $row['left'] - $row['right'] + $data->member->contract_price;
                                     }else{
-                                        $reward = $data->contract_price;
+                                        $reward = $data->member->contract_price;
                                     }
                                     array_push($bonus,[
                                         'description' => $pairing.number_format($reward, 2)." by ".$data->member->username,
                                         'type' => "Turnover Growth",
+                                        'debit' => 0,
                                         'credit' => $reward * $persen /100,
                                         'id_member' => $row['id'],
                                         'created_at' => Carbon::now(),
@@ -184,7 +189,7 @@ class Deposit extends Component
                         array_push($invalid_turnover,[
                             'id_member' => $row['id'],
                             'from_member' => $data->id_member,
-                            'amount' => $data->contract_price,
+                            'amount' => $data->member->contract_price,
                             'position' => substr($network, -2) == "ka"? 1: 0
                         ]);
                     }
@@ -201,12 +206,12 @@ class Deposit extends Component
                 {
                     InvalidTurnover::insert($item->toArray());
                 }
+            }
 
-                $data_bonus = collect($bonus)->chunk(10);
-                foreach ($data_bonus as $item)
-                {
-                    Bonus::insert($item->toArray());
-                }
+            $data_bonus = collect($bonus)->chunk(10);
+            foreach ($data_bonus as $item)
+            {
+                Bonus::insert($item->toArray());
             }
         });
         $this->key = null;

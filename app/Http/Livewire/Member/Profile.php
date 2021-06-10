@@ -23,8 +23,8 @@ class Profile extends Component
         $this->left_referral = URL::to('/registration?ref='.$this->data->left_referral);
         $this->right_referral = URL::to('/registration?ref='.$this->data->right_referral);
         $turnover = User::select(
-            DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ), 0) left_turnover'),
-            DB::raw('ifnull((select contract_price from user a where contract_price is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ), 0) right_turnover'))->where('id', auth()->id())->first();
+            DB::raw('ifnull((select sum(contract_price) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ), 0) left_turnover'),
+            DB::raw('ifnull((select sum(contract_price) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ), 0) right_turnover'))->where('id', auth()->id())->first();
         $this->right_turnover = $turnover['right_turnover'];
         $this->left_turnover = $turnover['left_turnover'];
 

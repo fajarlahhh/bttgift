@@ -49,7 +49,11 @@ class Registration extends Component
         ]);
 
         if (User::where('username', $this->username)->count() > 0) {
-            $this->error .= "Username already used";
+            $this->error .= "Username already exist";
+        }
+
+        if (User::where('email', $this->email)->count() > 0) {
+            $this->error .= "Email already used";
         }
 
         if($this->error){
