@@ -76,7 +76,7 @@ class Registration extends Component
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
             Auth::logoutOtherDevices($this->password, 'password');
-            return redirect('dashboard');
+            return redirect('activation');
         }
     }
 
