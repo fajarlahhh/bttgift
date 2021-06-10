@@ -40,7 +40,6 @@ class Deposit extends Component
     public function updated()
     {
         $this->resetPage();
-        $this->reset('error');
     }
 
     public function setParent($data)
