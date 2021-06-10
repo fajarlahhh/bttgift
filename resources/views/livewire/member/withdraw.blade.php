@@ -12,41 +12,39 @@
                     {{ ucfirst($menu) }}
                 </h2>
             </div>
-            @if ($total_wd->filter(function ($q) {
-                return false !== stristr($q->created_at, date('Y-m-d'));
-            })->count() > 0)
-            <div class="alert intro-y alert-warning text-2xl gap-6 show mt-10 mb-2 text-center" role="alert">
-                We have received your withdrawal request today. Please wait for this process for 2 x 24 hours
+            @if ($exist == true)
+            <div class="alert intro-y alert-warning text-1xl gap-6 show mt-10 mb-2 text-center" role="alert">
+                We have received your withdrawal request at {{ $total_wd->first()->created_at }}.<br>Please wait for this process for 2 x 24 hours
             </div>
             <div class="intro-y col-span-12 lg:col-span-12">
                 <div class="intro-y box p-5">
-                    @php
-                        $data = $total_wd->filter(function ($q) {
-                            return false !== stristr($q->created_at, date('Y-m-d'));
-                        })->first();
-                    @endphp
                     <h3>Last Withdrawal Information</h3>
                     <hr class="mt-3">
                     <table class="table">
                         <tr>
                             <td> Time</td>
-                            <td> : {{ $data->created_at }}</td>
+                            <td> : </td>
+                            <td class="text-right">{{ $total_wd->first()->created_at }}</td>
                         </tr>
                         <tr>
                             <td> Amount</td>
-                            <td> : $ {{ $data->amount }}</td>
+                            <td> : </td>
+                            <td class="text-right">$ {{ $total_wd->first()->amount }}</td>
                         </tr>
                         <tr>
                             <td> Fee</td>
-                            <td> : $ {{ $data->fee }}</td>
+                            <td> : </td>
+                            <td class="text-right">$ {{ $total_wd->first()->fee }}</td>
                         </tr>
                         <tr>
                             <td> Acceptance</td>
-                            <td> : $ {{ $data->acceptance }}</td>
+                            <td> : </td>
+                            <td class="text-right">$ {{ $total_wd->first()->acceptance }}</td>
                         </tr>
                         <tr>
                             <td> BTT</td>
-                            <td> : {{ number_format($data->accepted_btt) }}</td>
+                            <td> : </td>
+                            <td class="text-right">{{ number_format($total_wd->first()->accepted_btt) }}</td>
                         </tr>
                     </table>
                 </div>

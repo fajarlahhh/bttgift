@@ -20,16 +20,20 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/dashboard', \App\Http\Livewire\Member\Dashboard::class);
             Route::get('/profile', \App\Http\Livewire\Member\Profile::class);
             Route::get('/withdrawal', \App\Http\Livewire\Member\Withdraw::class);
+            Route::get('/downline', \App\Http\Livewire\Member\Downline::class);
         });
         Route::group(['middleware' => ['inactive']], function () {
             Route::get('/activation', \App\Http\Livewire\Member\Activation::class);
         });
     });
 
-    // Route::group(['middleware' => ['admin']], function () {
-    //     Route::get('/', \App\Http\Livewire\Dashboard::class);
-    //     Route::get('/dashboard', \App\Http\Livewire\Dashboard::class);
-    // });
+    Route::group(['middleware' => ['admin']], function () {
+        Route::prefix('admin-area')->group(function (){
+            Route::get('/', \App\Http\Livewire\Administrator\Dashboard::class);
+            Route::get('/dashboard', \App\Http\Livewire\Administrator\Dashboard::class);
+            Route::get('/deposit', \App\Http\Livewire\Administrator\Deposit::class);
+        });
+    });
 });
 
 Route::get('/registration', \App\Http\Livewire\Registration::class);

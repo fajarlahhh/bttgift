@@ -12,14 +12,20 @@ use Illuminate\Support\Facades\Http;
 
 class Withdraw extends Component
 {
-    public $amount, $address, $fee_percentage, $fee = 0, $error, $total_wd, $max_wd, $min_wd, $remaining_contract, $success, $bonus, $btt_price, $btt = 0, $submit=true;
+    public $amount, $address, $fee_percentage, $fee = 0, $error, $total_wd, $max_wd, $min_wd, $remaining_contract, $success, $bonus, $btt_price, $btt = 0, $submit = true, $exist = false;
 
     public function mount()
     {
-        $this->total_wd = Withdrawal::where('id_member', auth()->id())->get();
-        if ($this->total_wd->filter(function ($q) {
-            return false !== stristr($q->created_at, date('Y-m-d'));
-        })->count() == 0){
+        $this->total_wd = Withdrawal::where('id_member', auth()->id())->orderBy('created_at', 'desc')->get();
+        if ($this->total_wd->count() > 0) {
+            $last_wd = new Carbon($this->total_wd->first()->created_at);
+            $now = new Carbon();
+
+            if ($last_wd->diffInDays($now) <= 2) {
+                $this->exist = true;
+            }
+        }
+        if ($this->exist != true) {
             $this->btt_price = (float)Http::get('https://indodax.com//api/summaries')->collect()->first()['btt_usdt']['last'];
             $bonus_all = Bonus::where('id_member', auth()->id())->get();
             $this->bonus = $bonus_all->sum('credit') - $bonus_all->sum('debit');
@@ -51,7 +57,7 @@ class Withdraw extends Component
             'fee' => 'required'
         ]);
 
-        if ($this->submit == false) {
+        if ($this->submit == false || $this->exist == true) {
             $this->error .= "You can't do this action now<br>";
             return;
         }

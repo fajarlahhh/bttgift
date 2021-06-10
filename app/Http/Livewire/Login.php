@@ -60,7 +60,11 @@ class Login extends Component
             }
 
             Auth::logoutOtherDevices($this->password, 'password');
-            return redirect()->intended('dashboard');
+            if (auth()->user()->role == 1){
+                return redirect()->intended('dashboard');
+            }else{
+                return redirect('/admin-area');
+            }
         }
         $this->message = "<p class='text-theme-6'>Wrong username or password!!!</p>";
         return;

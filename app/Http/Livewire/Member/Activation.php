@@ -65,13 +65,13 @@ class Activation extends Component
         $file = null;
         if($this->file){
             $image = $this->file;
-            $file_name = date('YmdHims').time().uniqid();
+            $file_name = auth()->user()->username.date('-Ymd-').time().uniqid();
             $img = Image::make($image->getRealPath())->encode('png', 100)->fit(760, null, function ($c) {
                 $c->aspectRatio();
                 $c->upsize();
             });;
             $img->stream();
-            Storage::disk(config('constants.storage'))->put('deposit/'.$file_name.'.png', $img);
+            Storage::disk('public')->put('deposit/'.$file_name.'.png', $img);
             $img->destroy();
 
             $file = 'deposit/'.$file_name.'.png';

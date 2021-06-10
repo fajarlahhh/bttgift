@@ -5,54 +5,59 @@ return [
         [
             'icon' => 'home',
             'title' => 'Dashboard',
-            'link' => 'dashboard'
+            'link' => '/admin-area/dashboard'
         ],
         [
             'icon' => 'pocket',
             'title' => 'Deposit',
-            'link' => 'deposit'
+            'link' => '/admin-area/deposit'
+        ],
+        [
+            'icon' => 'zap',
+            'title' => 'Renewal',
+            'link' => '/admin-area/renewal'
         ],
         [
             'icon' => 'command',
-            'title' => 'Withdrawal Request',
-            'link' => 'withdrawalrequest'
+            'title' => 'Withdrawal',
+            'link' => '/admin-area/withdrawal'
         ]
     ],
     'member' => [
         [
             'icon' => 'home',
             'title' => 'Dashboard',
-            'link' => 'dashboard'
+            'link' => '/dashboard'
         ],
         [
             'icon' => 'trello',
             'title' => 'Profile',
-            'link' => 'profile'
+            'link' => '/profile'
         ],
         [
             'icon' => 'toggle-right',
             'title' => 'Withdrawal',
-            'link' => 'withdrawal'
+            'link' => '/withdrawal'
         ],
         [
             'icon' => 'users',
             'title' => 'Downline',
-            'link' => 'downline'
+            'link' => '/downline'
         ],
         [
             'icon' => 'gift',
             'title' => 'Reward',
-            'link' => 'Reward'
+            'link' => '/reward'
         ],
         [
             'icon' => 'framer',
             'title' => 'Extension',
-            'link' => 'extension'
+            'link' => '/extension'
         ],
         [
             'icon' => 'list',
             'title' => 'Transaction',
-            'link' => 'transaction'
+            'link' => '/transaction'
         ],
     ]
 ];

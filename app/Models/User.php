@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +12,7 @@ use Hexters\CoinPayment\Entities\CoinpaymentTransaction;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'user';
 
@@ -20,12 +22,18 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'actived_at'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    public function rating()
+    {
+        return $this->belongsTo('App\Models\Rating', 'id_rating', 'id');
+    }
 
     public function contract()
     {
@@ -44,23 +52,23 @@ class User extends Authenticatable
 
     public function left_child()
     {
-        return $this->hasMany('App\Models\Member', 'parent', 'id')->with('invalid_left_turnover')->with('invalid_right_turnover')->where('member_position', 0)->whereNotNull('password')->select("id", "username", "email", "rating", "parent", "position", "contract_price", "name", "network", "due_date", "deleted_at",
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.password is not null and left(a.network, length(concat(member.network, member.id, "ki")))=concat(member.network, member.id, "ki") ) left_turnover'),
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.password is not null and left(a.network, length(concat(member.network, member.id, "ka")))=concat(member.network, member.id, "ka") ) right_turnover'))->orderBy('username');
+        return $this->hasMany('App\Models\User', 'upline', 'id')->where('role', 1)->with('invalid_left_turnover')->with('invalid_right_turnover')->where('position', 0)->whereNotNull('password')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.password is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'),
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.password is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->orderBy('username');
     }
 
     public function right_child()
     {
-        return $this->hasMany('App\Models\Member', 'parent', 'id')->with('invalid_left_turnover')->with('invalid_right_turnover')->where('member_position', 1)->whereNotNull('password')->select("id", "username", "email", "rating", "parent", "position", "contract_price", "name", "network", "due_date", "deleted_at",
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.password is not null and left(a.network, length(concat(member.network, member.id, "ki")))=concat(member.network, member.id, "ki") ) left_turnover'),
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.password is not null and left(a.network, length(concat(member.network, member.id, "ka")))=concat(member.network, member.id, "ka") ) right_turnover'))->orderBy('username');
+        return $this->hasMany('App\Models\User', 'upline', 'id')->where('role', 1)->with('invalid_left_turnover')->with('invalid_right_turnover')->where('position', 1)->whereNotNull('password')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.password is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'),
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.password is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->orderBy('username');
     }
 
     public function parent()
     {
-        return $this->hasOne('App\Models\Member', 'id', 'parent')->with('parent')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "email", "name", "username", "parent", "position", "contract_price", "network", "due_date", "deleted_at",
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.active_at is not null and left(a.network, length(concat(member.network, member.id, "ki")))=concat(member.network, member.id, "ki") ) left_turnover'),
-        DB::raw('(select ifnull(contract_price, 0) from member a where a.active_at is not null and left(a.network, length(concat(member.network, member.id, "ka")))=concat(member.network, member.id, "ka") ) right_turnover'))->withTrashed();
+        return $this->hasOne('App\Models\User', 'id', 'upline')->where('role', 1)->with('parent')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ki")))=concat(user.network, user.id, "ki") ) left_turnover'),
+        DB::raw('(select ifnull(contract_price, 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->withTrashed();
     }
 
     public function invalid_right_turnover()

@@ -9,4 +9,14 @@ class Deposit extends Model
 {
     use HasFactory;
     protected $table = 'deposit';
+
+    protected $fillable = [
+        'id_user',
+        'processed_at'
+    ];
+
+    public function member()
+    {
+        return $this->belongsTo('App\Models\User', 'id_member', 'id');
+    }
 }
