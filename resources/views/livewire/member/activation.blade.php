@@ -81,7 +81,7 @@
                 <div class="intro-y col-span-12 lg:col-span-12">
                     <div class="intro-y box p-5">
                         @if (auth()->user()->registration_waiting_fund->count() > 0)
-                        <div class="text-center ">
+                        <div class="text-center overflow-x-auto">
                             <h5 class="text-2xl">Waiting For Fund . . .</h5>
                             <br>
                             <table class="table">

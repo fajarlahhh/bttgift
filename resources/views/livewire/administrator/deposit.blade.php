@@ -21,7 +21,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="p-5" id="responsive-table">
+                <div class="p-5 overflow-x-auto" id="responsive-table">
                     <div class="overflow-x-auto">
                         <table class="table">
                             <thead>
