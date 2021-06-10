@@ -95,17 +95,19 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-center">
-                                        <div style="display: flex; justify-content: center;">
+                                        Send To {{ $name }} Address
+                                        <br>
+                                        <div style="display: flex; justify-content: center;" class="mt-3">
                                             {!! QrCode::size(200)->generate($wallet); !!}
-                                        </div>
+                                        </div><br>
+                                        {{ $wallet }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
-                                        Send To {{ $name }} Address
+
                                     </td>
                                     <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        {{ $wallet }}
                                     </td>
                                 </tr>
                                 <tr>
