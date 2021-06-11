@@ -34,7 +34,7 @@ class Withdrawal extends Component
         $this->validate([
             'information' => 'required'
         ]);
-        $wd = \App\Models\Withdrawal()::findOrFail($this->key);
+        $wd = \App\Models\Withdrawal::findOrFail($this->key);
         $wd->wallet = $wd->member->wallet;
         $wd->information = $this->information;
         $wd->id_user = auth()->id();
