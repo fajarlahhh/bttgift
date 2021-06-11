@@ -11,10 +11,10 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 10/06/2021 23:02:26
+ Date: 11/06/2021 16:41:56
 */
 
-SET NAMES latin1;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -25,19 +25,27 @@ CREATE TABLE `achievement` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `id_member` bigint DEFAULT NULL,
   `rating_reward` decimal(15,2) DEFAULT NULL,
-  `user_wallet` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `id_rating` bigint DEFAULT NULL,
   `btt_amount` decimal(15,5) DEFAULT NULL,
   `id_user` bigint DEFAULT NULL,
+  `user_wallet` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `proccessed_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  KEY `id_rating` (`id_rating`),
+  KEY `id_user` (`id_user`),
+  KEY `id_member` (`id_member`),
+  CONSTRAINT `achievement_ibfk_1` FOREIGN KEY (`id_rating`) REFERENCES `rating` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `achievement_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `achievement_ibfk_3` FOREIGN KEY (`id_member`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of achievement
 -- ----------------------------
 BEGIN;
+INSERT INTO `achievement` VALUES (1, 10, 10000.00, 1, 1000.00000, NULL, NULL, NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -58,12 +66,20 @@ CREATE TABLE `bonus` (
   PRIMARY KEY (`id`),
   KEY `id_withdrawal` (`id_withdrawal`),
   CONSTRAINT `bonus_ibfk_1` FOREIGN KEY (`id_withdrawal`) REFERENCES `withdrawal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of bonus
 -- ----------------------------
 BEGIN;
+INSERT INTO `bonus` VALUES (7, 'Referral 10% of 200.00 by fajasf', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:12:47', '2021-06-10 22:12:47', NULL);
+INSERT INTO `bonus` VALUES (8, 'Referral 10% of 200.00 by asdf', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:12:48', '2021-06-10 22:12:48', NULL);
+INSERT INTO `bonus` VALUES (9, 'Referral 10% of 200.00 by 2asdf', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:12:49', '2021-06-10 22:12:49', NULL);
+INSERT INTO `bonus` VALUES (10, 'Referral 10% of 200.00 by 2asdf124', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:12:50', '2021-06-10 22:12:50', NULL);
+INSERT INTO `bonus` VALUES (11, 'Referral 10% of 500.00 by 1234', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:19:52', '2021-06-10 22:19:52', NULL);
+INSERT INTO `bonus` VALUES (12, 'Referral 10% of 500.00 by asdf123', 0.000000000000000000000000000000, 0.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 22:46:55', '2021-06-10 22:46:55', NULL);
+INSERT INTO `bonus` VALUES (13, 'Referral 10% of 100.00 by asdf123', 0.000000000000000000000000000000, 10.000000000000000000000000000000, 'Referral', 10, NULL, '2021-06-10 23:12:56', '2021-06-10 23:12:56', NULL);
+INSERT INTO `bonus` VALUES (14, 'Pairing bonus 5% of 100.00 by asdf123', 0.000000000000000000000000000000, 5.000000000000000000000000000000, 'Turnover Growth', 10, NULL, '2021-06-10 23:12:56', '2021-06-10 23:12:56', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -120,14 +136,14 @@ CREATE TABLE `deposit` (
   PRIMARY KEY (`id`),
   KEY `id_member` (`id_member`),
   CONSTRAINT `deposit_ibfk_1` FOREIGN KEY (`id_member`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of deposit
 -- ----------------------------
 BEGIN;
-INSERT INTO `deposit` VALUES (4, 10, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1618.0000100000, 'Registration', 1, 'deposit/2021060905410613162321727360c05479b8e6d.png', 'tes\n', '2021-06-09 04:43:02', '2021-06-09 05:41:13', NULL, '2021-06-09 00:00:00');
-INSERT INTO `deposit` VALUES (5, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 01:32:50', NULL, '2021-06-10 01:32:50');
+INSERT INTO `deposit` VALUES (4, 10, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1618.0000100000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123', '2021-06-09 04:43:02', '2021-06-09 05:41:13', NULL, '2021-06-09 00:00:00');
+INSERT INTO `deposit` VALUES (5, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', 'transfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 01:32:50', NULL, '2021-06-10 01:32:50');
 INSERT INTO `deposit` VALUES (7, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 01:33:35', NULL, '2021-06-10 01:33:35');
 INSERT INTO `deposit` VALUES (8, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 01:33:37', NULL, '2021-06-10 01:33:37');
 INSERT INTO `deposit` VALUES (9, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 01:33:55', NULL, '2021-06-10 01:33:55');
@@ -138,6 +154,12 @@ INSERT INTO `deposit` VALUES (13, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZ
 INSERT INTO `deposit` VALUES (14, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 04:03:26', NULL, '2021-06-10 04:03:26');
 INSERT INTO `deposit` VALUES (15, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 04:04:33', NULL, '2021-06-10 04:04:33');
 INSERT INTO `deposit` VALUES (16, 11, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1611.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', '12312312312312313123123123123\ntransfer jam 028312 dari wallet as23234', '2021-06-09 04:52:12', '2021-06-10 05:14:08', NULL, '2021-06-10 05:14:08');
+INSERT INTO `deposit` VALUES (17, 12, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 632.0000100000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', 'asdf', '2021-06-10 15:38:01', '2021-06-10 22:12:47', NULL, '2021-06-10 22:12:47');
+INSERT INTO `deposit` VALUES (18, 13, 'BTT', 'TDsk4h4nomdqqEXShRpWyUXXrANESRhVgT', 57693.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', 'asdf', '2021-06-10 22:00:07', '2021-06-10 22:12:48', NULL, '2021-06-10 22:12:48');
+INSERT INTO `deposit` VALUES (19, 14, 'BTT', 'TDsk4h4nomdqqEXShRpWyUXXrANESRhVgT', 57693.0000200000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', 'asdf', '2021-06-10 22:02:03', '2021-06-10 22:12:49', NULL, '2021-06-10 22:12:49');
+INSERT INTO `deposit` VALUES (20, 15, 'BTT', 'TDsk4h4nomdqqEXShRpWyUXXrANESRhVgT', 57693.0000300000, 'Registration', 1, 'deposit/2021060905200602162321600260c04f82c3b4e.png', 'asdf', '2021-06-10 22:03:27', '2021-06-10 22:12:50', NULL, '2021-06-10 22:12:50');
+INSERT INTO `deposit` VALUES (21, 16, 'BTT', 'TDsk4h4nomdqqEXShRpWyUXXrANESRhVgT', 144231.0000100000, 'Registration', 1, 'deposit/1234-20210610-162336337760c28f31799fa.png', 'asdf', '2021-06-10 22:16:02', '2021-06-10 22:19:52', NULL, '2021-06-10 22:19:52');
+INSERT INTO `deposit` VALUES (22, 17, 'DOGE', 'D6amJueYAKWgNTQtELhbiVr9gqt1JZaqZA', 1579.0000200000, 'Registration', 1, 'deposit/asdf123-20210610-162336371760c2908513bbc.png', 'asdf', '2021-06-10 22:21:46', '2021-06-10 23:12:56', NULL, '2021-06-10 23:12:56');
 COMMIT;
 
 -- ----------------------------
@@ -304,7 +326,7 @@ CREATE TABLE `ticket` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of ticket
@@ -312,6 +334,12 @@ CREATE TABLE `ticket` (
 BEGIN;
 INSERT INTO `ticket` VALUES (1, 500.00, 1, '2021-06-09', NULL, NULL);
 INSERT INTO `ticket` VALUES (2, 500.00, 2, '2021-06-09', '2021-06-09 04:52:12', '2021-06-09 04:52:12');
+INSERT INTO `ticket` VALUES (3, 200.00, 1, '2021-06-10', '2021-06-10 15:38:01', '2021-06-10 15:38:01');
+INSERT INTO `ticket` VALUES (4, 200.00, 2, '2021-06-10', '2021-06-10 22:00:07', '2021-06-10 22:00:07');
+INSERT INTO `ticket` VALUES (5, 200.00, 2, '2021-06-10', '2021-06-10 22:02:03', '2021-06-10 22:02:03');
+INSERT INTO `ticket` VALUES (6, 200.00, 3, '2021-06-10', '2021-06-10 22:03:27', '2021-06-10 22:03:27');
+INSERT INTO `ticket` VALUES (7, 500.00, 1, '2021-06-10', '2021-06-10 22:16:02', '2021-06-10 22:16:02');
+INSERT INTO `ticket` VALUES (8, 500.00, 2, '2021-06-10', '2021-06-10 22:21:46', '2021-06-10 22:21:46');
 COMMIT;
 
 -- ----------------------------
@@ -335,7 +363,7 @@ CREATE TABLE `user` (
   `wallet` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `remember_token` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
   `google2fa_secret` text,
-  `role` tinyint(1) DEFAULT '0',
+  `role` tinyint(1) DEFAULT '1',
   `actived_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
@@ -345,17 +373,25 @@ CREATE TABLE `user` (
   UNIQUE KEY `member_email` (`email`) USING BTREE,
   KEY `anggota_paket_id_fkey` (`contract_price`),
   KEY `anggota_peringkat_id_fkey` (`id_rating`),
+  KEY `user_ibfk_3` (`upline`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`contract_price`) REFERENCES `contract` (`price`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`id_rating`) REFERENCES `rating` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`id_rating`) REFERENCES `rating` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `user_ibfk_3` FOREIGN KEY (`upline`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'administrator', '$2y$10$U7erDOvPPDdotV.k4fu/petdjxKLUH/EGu/9JL3XiiHjMn5JSx1sC', 'Andi Fajar Nugraha', 'admin@bttgift.com', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2021-05-05 00:00:00', '2021-06-10 05:12:28', NULL);
-INSERT INTO `user` VALUES (10, 'fajar', '$2y$10$rf/d6FPWnY0/X.rc.dTNG.25k6A0y65H0Lu0bNLyGIhMfDhs9KmXi', 'fajar', 'andifajarlahs@gmail.com', 500.00, '', NULL, NULL, '24bc50d85ad8fa9cda686145cf1f8aca0', '24bc50d85ad8fa9cda686145cf1f8aca1', NULL, NULL, '234234123', NULL, NULL, 1, '2021-06-09 00:00:00', '2021-06-09 04:30:35', '2021-06-10 07:35:48', NULL);
-INSERT INTO `user` VALUES (11, 'andi', '$2y$10$iXeeoDuBxwemD0/Tr00EKuR1fmWZQg5Oxfp9o7EpxzGmD.FZFy376', 'andi', 'andi@gmail.com', 500.00, '10ki', 10, 0, 'ce0e5bf55e4f71749eade7a8b95c4e460', 'ce0e5bf55e4f71749eade7a8b95c4e461', NULL, NULL, '1234567890', NULL, NULL, 1, '2021-06-10 05:14:08', '2021-06-09 04:43:43', '2021-06-10 05:22:24', NULL);
+INSERT INTO `user` VALUES (1, 'administrator', '$2y$10$7Apt6.YxianzCaEK4dp7K.C8aFqBEffbT5j2huz.e6JaXYtvg75Q6', 'Andi Fajar Nugraha', 'admin@bttgift.com', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2021-05-05 00:00:00', '2021-06-11 07:18:48', NULL);
+INSERT INTO `user` VALUES (10, 'fajar', '$2y$10$CvRFNEWVJO80I7ETb4XELO7RqisOXAVUqrLZY82TroGTVrfkc//m.', 'fajar', 'andifajarlahs@gmail.com', 500.00, '', NULL, NULL, '24bc50d85ad8fa9cda686145cf1f8aca0', '24bc50d85ad8fa9cda686145cf1f8aca1', NULL, NULL, '234234123', NULL, NULL, 1, '2021-06-09 00:00:00', '2021-06-09 04:30:35', '2021-06-11 07:18:57', NULL);
+INSERT INTO `user` VALUES (11, 'andi', '$2y$10$H/sLeWTykoQHnRJIEKpn9uiZdBP.wtD9xndCPfpeE6hrxlIcKfdVG', 'andi', 'andi@gmail.com', 200.00, '10ki', 10, 0, 'ce0e5bf55e4f71749eade7a8b95c4e460', 'ce0e5bf55e4f71749eade7a8b95c4e461', NULL, NULL, '1234567890', NULL, NULL, 1, '2021-06-10 05:14:08', '2021-06-09 04:43:43', '2021-06-10 23:16:44', NULL);
+INSERT INTO `user` VALUES (12, 'fajasf', '$2y$10$CxdhZm2uv9QT/dVtQEzGB.40zvXi9/I2byRGakDu6GUEdNsbQFcAC', '123', 'asdf@adf.casdf', 200.00, '10ki', 10, 0, 'a19e0863294c50a8833ce899ed52b0000', 'a19e0863294c50a8833ce899ed52b0001', NULL, NULL, NULL, NULL, NULL, 1, '2021-06-10 22:12:47', '2021-06-10 15:26:30', '2021-06-10 22:12:47', NULL);
+INSERT INTO `user` VALUES (13, 'asdf', '$2y$10$n4aocj6uMRKrGz9TtUeGweThrMWcTshXxkHmAA0LgsXXD66cMqBoW', 'asdf', 'asdf@adsf', 200.00, '10ki', 10, 0, '912ec803b2ce49e4a541068d495ab5700', '912ec803b2ce49e4a541068d495ab5701', NULL, NULL, NULL, NULL, NULL, 1, '2021-06-10 22:12:47', '2021-06-10 21:57:36', '2021-06-10 22:12:48', NULL);
+INSERT INTO `user` VALUES (14, '2asdf', '$2y$10$agXALWZr0J0F0G5eCaSSFu/87MpoLN.IxpSS1pYE63i6BZ2DVEdse', 'asdf', 'asd2123f@adf.casdf', 200.00, '10ki', 10, 0, 'a5f65d58f45b7c49649fbc3cae2cf1a70', 'a5f65d58f45b7c49649fbc3cae2cf1a71', NULL, NULL, NULL, NULL, NULL, 1, '2021-06-10 22:12:49', '2021-06-10 22:01:55', '2021-06-10 22:12:49', NULL);
+INSERT INTO `user` VALUES (15, '2asdf124', '$2y$10$YRtxO2Ayy9zVMlmPHO79gOvV/yrB5/gSjBHrJubEo/Hon9m4YWI7.', 'asdf', '123asd2123f@adf.casdf', 200.00, '10ki', 10, 0, 'acc8a01f01eb525d81b7b548637f55c40', 'acc8a01f01eb525d81b7b548637f55c41', NULL, NULL, NULL, NULL, NULL, 1, '2021-06-10 22:12:50', '2021-06-10 22:03:20', '2021-06-10 22:12:50', NULL);
+INSERT INTO `user` VALUES (16, '1234', '$2y$10$2turhWLUagC1CapYG1dRoujdmHe5ejYk1sLXDWhqybcRk7SWOgAAa', '1212123', 'asdf@asdfaf.asdf', 500.00, '10ka', 10, 1, '81dc9bdb52d04dc20036dbd8313ed0550', '81dc9bdb52d04dc20036dbd8313ed0551', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2021-06-10 22:15:56', '2021-06-10 22:19:52', NULL);
+INSERT INTO `user` VALUES (17, 'asdf123', '$2y$10$wO.fhqyhczwaUFbtmAqGb.7O0O0zgIaRS3U1uImgx3ncuRJaomz8.', 'asdf', 'asdf@asdf.asdf', 100.00, '10ka', 10, 1, '6572bdaff799084b973320f43f09b3630', '6572bdaff799084b973320f43f09b3631', NULL, NULL, NULL, NULL, NULL, 1, '2021-06-10 23:12:56', '2021-06-10 22:21:38', '2021-06-10 23:12:56', NULL);
 COMMIT;
 
 -- ----------------------------
