@@ -26,6 +26,6 @@ class Withdrawal extends Model
 
     public function member()
     {
-        $this->belongsTo('App\Models\Member', 'id_member', 'id');
+        $this->belongsTo('App\Models\User', 'id_member', 'id');
     }
 }

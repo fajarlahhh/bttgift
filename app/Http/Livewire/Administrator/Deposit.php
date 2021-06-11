@@ -117,7 +117,7 @@ class Deposit extends Component
                 $network = $data->member->network;
 
                 $persen = 5;
-                $level = 7;
+                $level = 1;
                 foreach (collect($this->parent)->filter(function($q) use($data){
                     return $q['id'] != $data->id_member;
                 }) as $key => $row) {
@@ -146,7 +146,7 @@ class Deposit extends Component
                         $child->save();
 
                         if($row['pair'] === 1) {
-                            $pairing = "Pairing bonus ".$persen."% of ";
+                            $pairing = "Pairing bonus level ".$level." ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
                                 if($row['left'] - $data->member->contract_price < $row['right']){
                                     $reward = 0;
@@ -197,8 +197,8 @@ class Deposit extends Component
                     $persen = $persen / 2;
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
                     $network = substr($network, 0, (strlen($network) - $parent_length));
-                    $level--;
-                    if ($level === 1) {
+                    $level++;
+                    if ($level === 7) {
                         break;
                     }
                 }
