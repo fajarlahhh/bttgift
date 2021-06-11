@@ -145,7 +145,7 @@ class Deposit extends Component
                         }
                         $child->save();
 
-                        if($row['pair'] === 1) {
+                        if($row['pair'] == 1) {
                             $pairing = "Pairing bonus level ".$level." ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
                                 if($row['left'] - $data->member->contract_price < $row['right']){
@@ -198,7 +198,7 @@ class Deposit extends Component
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
                     $network = substr($network, 0, (strlen($network) - $parent_length));
                     $level++;
-                    if ($level === 7) {
+                    if ($level > 7) {
                         break;
                     }
                 }
