@@ -12,7 +12,7 @@ class Gift extends Component
 
     public function render()
     {
-        $data = Bonus::orderBy('created_at','desc')->paginate(10);
+        $data = Bonus::orderBy('created_at','desc')->where('id_member', auth()->id())->paginate(10);
         return view('livewire.member.gift', [
             'data' => $data,
             'no' => ($this->page - 1) * 10,
