@@ -34,6 +34,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
+                                    <td>
+
+                                        <form wire:submit.prevent="send">
+                                            <input type="text" class="form-control" wire:mode.defer="information" placeholder="Information"><br>
+                                            <button class="btn btn-primary mt-1">Done</button>
+                                            <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>
+                                        </form>
+                                    </td>
+                                </tr>
                                 @foreach ($data as $row)
                                 <tr>
                                     <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
@@ -43,10 +53,10 @@
                                     <td class="border-b whitespace-nowrap">
                                         @if((int)$key===$row->getKey())
                                         <form wire:submit.prevent="send">
-                                            <input type="text" class="form-control" wire:mode.defer="information" placeholder="Information">
+                                            <input type="text" class="form-control" wire:mode.defer="information" placeholder="Information"><br>
                                             <button class="btn btn-primary mt-5">Done</button>
+                                            <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>
                                         </form>
-                                        <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>
                                         @else
                                         <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger">Proccess</a>
                                         @endif
