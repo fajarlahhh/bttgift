@@ -14,7 +14,7 @@
             </div>
             @if ($exist == true)
             <div class="alert intro-y alert-warning text-1xl gap-6 show mt-10 mb-2 text-center" role="alert">
-                We have received your withdrawal request at {{ $total_wd->first()->created_at }}.<br>Please wait for this process for 2 x 24 hours
+                We have received your withdrawal request at {{ $total_wd->first()->created_at }}.<br>You can withdraw after 2 x 24 hours
             </div>
             <div class="intro-y col-span-12 lg:col-span-12">
                 <div class="intro-y box p-5">
@@ -45,6 +45,11 @@
                             <td> BTT</td>
                             <td> : </td>
                             <td class="text-right">{{ number_format($total_wd->first()->accepted_btt) }}</td>
+                        </tr>
+                        <tr>
+                            <td> Status</td>
+                            <td> : </td>
+                            <td class="text-right">{{ $this->total_wd->first()->processed_at? "Success, ".$this->total_wd->first()->processed_at." ".$this->total_wd->first()->information: "The withdrawal process takes less than 2 x 24 hours"}}</td>
                         </tr>
                     </table>
                 </div>

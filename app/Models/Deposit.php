@@ -19,4 +19,9 @@ class Deposit extends Model
     {
         return $this->belongsTo('App\Models\User', 'id_member', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'id_user', 'id');
+    }
 }

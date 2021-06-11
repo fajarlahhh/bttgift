@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', \App\Http\Livewire\Administrator\Dashboard::class);
             Route::get('/dashboard', \App\Http\Livewire\Administrator\Dashboard::class);
             Route::get('/deposit', \App\Http\Livewire\Administrator\Deposit::class);
+            Route::get('/withdrawal', \App\Http\Livewire\Administrator\Withdrawal::class);
         });
     });
 });

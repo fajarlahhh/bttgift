@@ -96,7 +96,7 @@ class Deposit extends Component
             $bonus = [];
 
             array_push($bonus,[
-                'description' => "Referral 10% of ".number_format($data->member->contract_price)." by ".$data->member->username,
+                'description' => ($data->member->position == 0? "Left side": "Right side")." referral 10% of ".number_format($data->member->contract_price)." by ".$data->member->username,
                 'type' => "Referral",
                 'debit' => 0,
                 'credit' => $data->member->contract_price * 10 /100,

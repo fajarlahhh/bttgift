@@ -13,13 +13,19 @@ class Withdrawal extends Model
 
     protected $table = 'withdrawal';
 
+    protected $fillable = [
+        'id_user',
+        'processed_at',
+        'information'
+    ];
+
     public function user()
     {
-        $this->belongsTo('App\Models\User', 'id', 'id_user');
+        $this->belongsTo('App\Models\User', 'id_user', 'id');
     }
 
     public function member()
     {
-        $this->belongsTo('App\Models\Member', 'id', 'id_member');
+        $this->belongsTo('App\Models\Member', 'id_member', 'id');
     }
 }
