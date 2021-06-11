@@ -13,11 +13,6 @@ return [
             'link' => '/admin-area/deposit'
         ],
         [
-            'icon' => 'zap',
-            'title' => 'Renewal',
-            'link' => '/admin-area/renewal'
-        ],
-        [
             'icon' => 'command',
             'title' => 'Withdrawal',
             'link' => '/admin-area/withdrawal'
@@ -45,19 +40,24 @@ return [
             'link' => '/downline'
         ],
         [
+            'icon' => 'check',
+            'title' => 'Achievement',
+            'link' => '/achievement'
+        ],
+        [
             'icon' => 'gift',
-            'title' => 'Reward',
-            'link' => '/reward'
+            'title' => 'Gift History',
+            'link' => '/gift'
         ],
         [
             'icon' => 'framer',
-            'title' => 'Extension',
-            'link' => '/extension'
+            'title' => 'Renewal',
+            'link' => '/renewal'
         ],
         [
-            'icon' => 'list',
-            'title' => 'Transaction',
-            'link' => '/transaction'
+            'icon' => 'key',
+            'title' => 'Security',
+            'link' => '/security'
         ],
     ]
 ];

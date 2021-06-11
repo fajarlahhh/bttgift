@@ -21,6 +21,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/profile', \App\Http\Livewire\Member\Profile::class);
             Route::get('/withdrawal', \App\Http\Livewire\Member\Withdraw::class);
             Route::get('/downline', \App\Http\Livewire\Member\Downline::class);
+            Route::get('/gift', \App\Http\Livewire\Member\Gift::class);
+            Route::get('/renewal', \App\Http\Livewire\Member\Renewal::class);
+            Route::get('/achievement', \App\Http\Livewire\Member\Achievement::class);
+            Route::get('/security', \App\Http\Livewire\Member\Security::class);
         });
         Route::group(['middleware' => ['inactive']], function () {
             Route::get('/activation', \App\Http\Livewire\Member\Activation::class);

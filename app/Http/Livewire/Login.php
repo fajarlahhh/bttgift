@@ -61,7 +61,7 @@ class Login extends Component
 
             Auth::logoutOtherDevices($this->password, 'password');
             if (auth()->user()->role == 1){
-                return redirect()->intended('dashboard');
+                return redirect('dashboard');
             }else{
                 return redirect('/admin-area');
             }
