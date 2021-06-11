@@ -43,7 +43,10 @@
                                     <td class="border-b whitespace-nowrap">
                                         @if((int)$key===$row->getKey())
                                         <form wire:submit.prevent="send">
-                                            <input type="text" class="form-control" wire:mode.defer="information" placeholder="Information"><br>
+                                            @error('information')
+                                            <div class="text-theme-6">This field is required</div>
+                                            @enderror
+                                            <input type="text" class="form-control" wire:model.defer="information" placeholder="Information"><br>
                                             <button class="btn btn-primary mt-1">Done</button>
                                             <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>
                                         </form>
