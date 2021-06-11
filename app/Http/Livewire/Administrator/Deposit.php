@@ -139,6 +139,7 @@ class Deposit extends Component
                                 $pcp = new Achievement();
                                 $pcp->id_member = $row['id'];
                                 $pcp->id_rating = $rating->id_rating;
+                                $pcp->rating_reward = $rating->reward;
                                 $pcp->save();
                             }
                         }
