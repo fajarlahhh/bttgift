@@ -21,11 +21,11 @@ class Withdrawal extends Model
 
     public function user()
     {
-        $this->belongsTo('App\Models\User', 'id_user', 'id');
+        return $this->belongsTo('App\Models\User', 'id_user', 'id');
     }
 
     public function member()
     {
-        $this->belongsTo('App\Models\User', 'id_member', 'id');
+        return $this->belongsTo('App\Models\User', 'id_member', 'id');
     }
 }
