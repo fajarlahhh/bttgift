@@ -117,25 +117,24 @@ class Deposit extends Component
                 $network = $data->member->network;
 
                 $persen = 5;
-                $level = 1;
                 foreach (collect($this->parent)->filter(function($q) use($data){
                     return $q['id'] != $data->id_member;
-                }) as $key => $row) {
+                })->take(7) as $key => $row) {
                     $achievement_id = 0;
                     if(is_null($row['due_date']) == 1 && $row['active'] == 1){
                         $kaki_kecil = collect([$row['left'], $row['right']])->min();
 
-                        $child = User::findOrFail($row['id']);
+                        $parent = User::findOrFail($row['id']);
 
                         $rating = $data_rating->filter(function ($q) use ($kaki_kecil)
                         {
                             return $q->min_turnover <= $kaki_kecil;
                         })->sortByDesc('min_turnover')->first();
 
-                        if ($rating && strlen($child->upline) > 1 && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id_rating)->get()->count() == 0) {
-                            $child->id_rating = $rating->id_rating;
+                        if ($rating && strlen($parent->upline) > 1 && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id_rating)->get()->count() == 0) {
+                            $parent->id_rating = $rating->id_rating;
 
-                            if(User::where('username', $child->username)->where('id_rating', $rating->id_rating)->get()->count() == 0){
+                            if(User::where('username', $parent->username)->where('id_rating', $rating->id_rating)->get()->count() == 0){
                                 $pcp = new Achievement();
                                 $pcp->id_member = $row['id'];
                                 $pcp->id_rating = $rating->id_rating;
@@ -143,10 +142,10 @@ class Deposit extends Component
                                 $pcp->save();
                             }
                         }
-                        $child->save();
+                        $parent->save();
 
                         if($row['pair'] == 1) {
-                            $pairing = "Pairing bonus level ".$level." ".$persen."% of ";
+                            $pairing = "Pairing bonus level ".$key+1." ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
                                 if($row['left'] - $data->member->contract_price < $row['right']){
                                     $reward = 0;
@@ -197,10 +196,6 @@ class Deposit extends Component
                     $persen = $persen / 2;
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
                     $network = substr($network, 0, (strlen($network) - $parent_length));
-                    $level++;
-                    if ($level > 7) {
-                        break;
-                    }
                 }
                 $data_invalid_turnover = collect($invalid_turnover)->chunk(10);
                 foreach ($data_invalid_turnover as $item)
