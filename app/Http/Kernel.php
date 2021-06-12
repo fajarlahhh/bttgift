@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'active' => \App\Http\Middleware\Active::class,
         'admin' => \App\Http\Middleware\Administrator::class,

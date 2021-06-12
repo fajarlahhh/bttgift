@@ -19,7 +19,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', \App\Http\Livewire\Member\Dashboard::class);
             Route::get('/dashboard', \App\Http\Livewire\Member\Dashboard::class);
             Route::get('/profile', \App\Http\Livewire\Member\Profile::class);
-            Route::get('/withdrawal', \App\Http\Livewire\Member\Withdraw::class);
+            Route::get('/withdrawal', \App\Http\Livewire\Member\Withdrawal::class);
             Route::get('/downline', \App\Http\Livewire\Member\Downline::class);
             Route::get('/gift', \App\Http\Livewire\Member\Gift::class);
             Route::get('/renewal', \App\Http\Livewire\Member\Renewal::class);

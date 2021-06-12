@@ -75,9 +75,11 @@ class Deposit extends Component
             $time = now();
             $data = \App\Models\Deposit::with('member')->findOrFail($this->key);
 
+            $google2fa = app('pragmarx.google2fa');
             $data->update([
                 'id_user' => auth()->id(),
-                'processed_at' => $time
+                'processed_at' => $time,
+                'google2fa_secret' => $google2fa->generateSecretKey(32)
             ]);
 
             File::delete(public_path(Storage::url($data->file)));
@@ -145,7 +147,7 @@ class Deposit extends Component
                         $parent->save();
 
                         if($row['pair'] == 1) {
-                            $pairing = "Pairing bonus level ".$key+1." ".$persen."% of ";
+                            $pairing = "Pairing bonus level ".($key+1)." ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
                                 if($row['left'] - $data->member->contract_price < $row['right']){
                                     $reward = 0;

@@ -30,8 +30,8 @@
                                 <tr>
                                     <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
                                     <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
-                                    <td class="border-b whitespace-nowrap">{{ $row->rating->min_turnover }}</td>
-                                    <td class="border-b whitespace-nowrap">{{ $row->rating_reward }}</td>
+                                    <td class="border-b whitespace-nowrap text-right">{{ number_format($row->rating->min_turnover) }}</td>
+                                    <td class="border-b whitespace-nowrap text-right">{{ number_format($row->rating_reward) }}</td>
                                     <td class="border-b whitespace-nowrap">{{ $row->processed_at?: "Waiting..." }}</td>
                                 </tr>
                                 @endforeach

@@ -6,17 +6,16 @@ use Carbon\Carbon;
 use App\Models\Bonus;
 use App\Models\User;
 use Livewire\Component;
-use App\Models\Withdrawal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class Withdraw extends Component
+class Withdrawal extends Component
 {
     public $amount, $address, $fee_percentage, $fee = 0, $error, $total_wd, $max_wd, $min_wd, $remaining_contract, $success, $bonus, $btt_price, $btt = 0, $submit = true, $exist = false;
 
     public function mount()
     {
-        $this->total_wd = Withdrawal::where('id_member', auth()->id())->orderBy('created_at', 'desc')->get();
+        $this->total_wd = \App\Models\Withdrawal::where('id_member', auth()->id())->orderBy('created_at', 'desc')->get();
         if ($this->total_wd->count() > 0) {
             $last_wd = new Carbon($this->total_wd->first()->created_at);
             $now = new Carbon();
@@ -92,7 +91,7 @@ class Withdraw extends Component
         }
 
         DB::transaction(function () {
-            $withdrawal = new Withdrawal();
+            $withdrawal = new \App\Models\Withdrawal();
             $withdrawal->wallet = $this->address;
             $withdrawal->amount = $this->amount;
             $withdrawal->fee = $this->fee;
@@ -116,8 +115,8 @@ class Withdraw extends Component
             User::where('id_member', auth()->id())->updated([
                 'due_date' => Carbon::now()->addDays(2)
             ]);
-            Withdrawal::where('id_member', auth()->id())->delete();
-            Bonus::where('id_member', auth()->id())->delete();
+            // \App\Models\Withdrawal::where('id_member', auth()->id())->delete();
+            // Bonus::where('id_member', auth()->id())->delete();
         }
 
         redirect('/withdrawal');
@@ -126,7 +125,9 @@ class Withdraw extends Component
 
     public function render()
     {
-        return view('livewire.member.withdraw', [
+        $data = \App\Models\Withdrawal::where('id_member', auth()->id())->get();
+        return view('livewire.member.withdrawal', [
+            'data' => $data,
             'menu' => 'withdrawal'
         ])->extends('layouts.default');
     }
