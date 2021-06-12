@@ -39,7 +39,7 @@
                         <form wire:submit.prevent="submit">
                             <div>
                                 <label for="bonus" class="form-label font-bold">Gift Available</label>
-                                <input id="bonus" type="number" class="form-control font-bold" value="{{ number_format($bonus) }}" placeholder="Bonus Available" readonly>
+                                <input id="bonus" type="text" class="form-control font-bold" value="{{ number_format($bonus) }}" placeholder="Bonus Available" readonly>
                                 @error('bonus')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
@@ -62,14 +62,14 @@
                             <hr class="mt-3 mb-3">
                             <div>
                                 <label for="fee" class="form-label">Fee</label>
-                                <input id="fee" step="any" type="number" class="form-control" value="{{ $fee }}" placeholder="Fee" readonly>
+                                <input id="fee" type="text" class="form-control" value="{{ $fee }}" placeholder="Fee" readonly>
                                 @error('fee')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
                             </div>
                             <div class="mt-3">
                                 <label for="btt" class="form-label">BTT You Get <small class="text-theme-6">(1 BTT = $ {{ number_format($btt_price, 8) }})</small></label>
-                                <input id="btt" step="any" type="number" class="form-control" value="{{ $btt }}" placeholder="BTT" readonly>
+                                <input id="btt" type="text" class="form-control" value="{{ $btt }}" placeholder="BTT" readonly>
                                 @error('btt')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
