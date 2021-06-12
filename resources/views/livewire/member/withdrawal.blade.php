@@ -98,7 +98,7 @@
                         <div style="overflow-y: auto; max-height: 630px; height: 630px">
                             <table class="table">
                                 <tbody>
-                                    @foreach ($data as $item)
+                                    @foreach ($data as $row)
                                     <tr>
                                         <td>{{ $row->created_at }}</td>
                                         <td>{{ $row->acceptance }}</td>
