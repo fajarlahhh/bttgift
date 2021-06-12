@@ -20,6 +20,7 @@
                                 Google Authenticator
                             </h2>
                         </div>
+                        @if (!auth()->user()->google2fa_secret)
                         <div class="p-5 text-center">
                             Scan the barcode below with Google Authenticator, then enter the generated PIN
                             <br>
@@ -27,12 +28,25 @@
                                 <img src="{{ $qr }}">
                             </div>
                             {{ $secret }}
+                            <br>
                         </div>
-                        <div class="flex flex-col sm:flex-row items-center p-5 border-t border-gray-200 dark:border-dark-5">
+                        <div class="flex flex-col sm:flex-row items-center pl-5 pt-5 pr-5 border-t border-gray-200 dark:border-dark-5">
+                            <input type="text" class="form-control" placeholder="Enter Your Google Authenticator PIN Here" wire:model.defer="pin">
+                            &nbsp;
                             <button wire:click="registration()" class="btn btn-success">
-                                Complete Registration
+                                Submit
                             </button>
                         </div>
+                        <p class="text-theme-6 pl-5 pb-5">
+                            @error('pin')
+                            This field is required
+                            @enderror
+                        </p>
+                        @else
+                        <div class="p-5 text-center">
+                            Your google authenticator is actived
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

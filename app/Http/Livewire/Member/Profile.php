@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\URL;
 
 class Profile extends Component
 {
-    public $data, $username, $left_referral, $right_referral, $email, $contract, $parent, $wallet, $upline, $name, $left_turnover, $right_turnover;
+    public $success, $error, $data, $username, $left_referral, $right_referral, $email, $contract, $parent, $wallet, $upline, $name, $left_turnover, $right_turnover, $pin;
 
     public function mount()
     {
@@ -32,6 +32,8 @@ class Profile extends Component
 
     public function submit()
     {
+        $this->error = null;
+        $this->success = null;
         $this->validate([
             'name' => 'required',
             'username' => 'required',
@@ -40,13 +42,21 @@ class Profile extends Component
             'wallet' => 'required',
             'left_referral' => 'required',
             'right_referral' => 'required',
+            'pin' => 'required'
         ]);
+
+        $google2fa = app('pragmarx.google2fa');
+        if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
+            $this->error .= "Invalid Google Authenticator PIN";
+            return;
+        }
 
         $user = User::findOrFail(auth()->id());
         $user->name = $this->name;
         $user->email = $this->email;
         $user->wallet = $this->wallet;
         $user->save();
+        $this->success = "Your profile has been updated";
     }
 
     public function render()

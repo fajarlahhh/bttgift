@@ -78,8 +78,7 @@ class Deposit extends Component
             $google2fa = app('pragmarx.google2fa');
             $data->update([
                 'id_user' => auth()->id(),
-                'processed_at' => $time,
-                'google2fa_secret' => $google2fa->generateSecretKey(32)
+                'processed_at' => $time
             ]);
 
             File::delete(public_path(Storage::url($data->file)));

@@ -2,21 +2,14 @@
 
 namespace App\Http\Livewire\Member;
 
+use App\Models\User;
 use Livewire\Component;
 
 class Security extends Component
 {
-    public $error;
-    public $google2fa_secret, $email, $data;
+    public $error, $google2fa_secret, $pin, $qr_image;
 
-    public function registration()
-    {
-        User::findOrFail(auth()->id())->update([
-            'google2fa_secret' => $this->google2fa_secret
-        ]);
-    }
-
-    public function render()
+    public function mount()
     {
         $google2fa = app('pragmarx.google2fa');
 
@@ -26,14 +19,35 @@ class Security extends Component
             $this->google2fa_secret = auth()->user()->google2fa_secret;
         }
 
-        $QR_Image = $google2fa->getQRCodeInline(
+        $this->qr_image = $google2fa->getQRCodeInline(
             config('app.name'),
             auth()->user()->username,
             $this->google2fa_secret
         );
+    }
+
+    public function registration()
+    {
+        $this->error = null;
+        $this->validate([
+            'pin' => 'required'
+        ]);
+
+        $google2fa = app('pragmarx.google2fa');
+        if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
+            $this->error .= "Invalid Google Authenticator PIN";
+            return;
+        }
+        User::findOrFail(auth()->id())->update([
+            'google2fa_secret' => $this->google2fa_secret
+        ]);
+    }
+
+    public function render()
+    {
         return view('livewire.member.security',[
             'menu' => 'security',
-            'qr' => $QR_Image,
+            'qr' => $this->qr_image,
             'secret' => $this->google2fa_secret
         ])->extends('layouts.default');
     }
