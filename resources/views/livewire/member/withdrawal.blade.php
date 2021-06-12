@@ -16,7 +16,7 @@
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="intro-y box p-5">
                         @if ($exist == true)
-                        <div class="alert intro-y alert-warning text-1xl gap-6 show mt-10 mb-2 text-center" role="alert">
+                        <div class="alert intro-y alert-warning text-1xl gap-6 show text-center" role="alert">
                             We have received your withdrawal request at {{ $total_wd->first()->created_at }}.<br>You can withdraw after 2 x 24 hours
                         </div>
                         @else
@@ -38,7 +38,7 @@
                         </div>
                         <form wire:submit.prevent="submit">
                             <div>
-                                <label for="bonus" class="form-label font-bold">Bonus Available</label>
+                                <label for="bonus" class="form-label font-bold">Gift Available</label>
                                 <input id="bonus" type="number" class="form-control font-bold" value="{{ number_format($bonus) }}" placeholder="Bonus Available" readonly>
                                 @error('bonus')
                                 <div class="text-theme-6 mt-2">This field is required</div>
@@ -101,8 +101,8 @@
                                     @foreach ($data as $row)
                                     <tr>
                                         <td>{{ $row->created_at }}</td>
-                                        <td>{{ $row->acceptance }}</td>
-                                        <td>{{ $row->accepted_btt }}</td>
+                                        <td class="text-right">{{ number_format($row->acceptance) }}</td>
+                                        <td class="text-right">{{ number_format($row->accepted_btt, 5)}}</td>
                                         <td>{{ $row->processed_at? "Success": "" }}</td>
                                     </tr>
                                     @endforeach
