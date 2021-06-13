@@ -10,7 +10,7 @@
                 <div class="p-5">
                     <div>
                         <label for="old_password" class="form-label">Old Password</label>
-                        <input id="old_password" type="text" class="form-control" wire:model.defer="old_password" placeholder="Old Password" autocomplete="off">
+                        <input id="old_password" type="password" class="form-control" wire:model.defer="old_password" placeholder="Old Password" autocomplete="off">
                         @error('old_password')
                         <div class="text-theme-6 mt-2">This field is required</div>
                         @enderror

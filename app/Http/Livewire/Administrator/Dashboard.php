@@ -10,6 +10,6 @@ class Dashboard extends Component
     {
         return view('livewire.administrator.dashboard', [
             'menu' => 'activation'
-        ])->extends('layouts.default');
+        ])->extends('layouts.dashboard');
     }
 }

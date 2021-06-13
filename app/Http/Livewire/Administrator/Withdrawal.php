@@ -56,8 +56,9 @@ class Withdrawal extends Component
         $data = $data->paginate(10);
         return view('livewire.administrator.withdrawal', [
             'data' => $data,
-            'no' => ($this->page - 1) * 10,
+            'no' => ($this->page - 1) * 10
+        ])->extends('layouts.default', [
             'menu' => 'withdrawal'
-        ])->extends('layouts.default');
+        ]);
     }
 }

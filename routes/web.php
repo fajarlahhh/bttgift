@@ -42,3 +42,5 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/registration', \App\Http\Livewire\Registration::class);
+Route::get('/forgot', \App\Http\Livewire\Forgot::class);
+Route::get('/recovery', \App\Http\Livewire\Recovery::class);

@@ -26,6 +26,7 @@
                     {{ ucfirst($menu) }}
                 </h2>
             </div>
+            @if (auth()->user()->role == 1)
             @if (auth()->user()->due_date)
             <div class='alert intro-y alert-warning text-1xl gap-6 show mt-2' role='alert'>
                 Your account is in grace period. Renew your contract <strong><a href='/renewal' class='text-danger'>here</a></strong> before {{ auth()->user()->due_date }}
@@ -35,6 +36,7 @@
             <div class='alert intro-y alert-danger-soft text-1xl gap-6 show mt-2' role='alert'>
                 You need to activate google authenticator <strong><a href='/security' class='text-danger'>here</a></strong>
             </div>
+            @endif
             @endif
             @yield('content')
         </div>

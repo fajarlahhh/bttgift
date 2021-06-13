@@ -16,7 +16,27 @@ return [
             'icon' => 'command',
             'title' => 'Withdrawal',
             'link' => '/admin-area/withdrawal'
-        ]
+        ],
+        [
+            'icon' => 'check',
+            'title' => 'Achievement',
+            'link' => '/achievement'
+        ],
+        [
+            'icon' => 'info',
+            'title' => 'Information',
+            'link' => '/information'
+        ],
+        [
+            'icon' => 'gift',
+            'title' => 'Gift',
+            'link' => '/gift'
+        ],
+        [
+            'icon' => 'key',
+            'title' => 'Security',
+            'link' => '/security'
+        ],
     ],
     'member' => [
         [

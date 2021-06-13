@@ -12,7 +12,7 @@ class Login extends Component
 {
     use WithRecaptcha;
 
-    public $username, $password, $referral_token, $remember = false;
+    public $error, $username, $password, $referral_token, $remember = false;
     public $message;
 
     protected $rules = [
@@ -22,30 +22,13 @@ class Login extends Component
 
     public function login()
     {
+        $this->reset('error');
         $this->validate();
 
-        // if($this->recaptchaPasses() === false){
-        //     $this->notification = [
-        //         'tipe' => 'danger',
-        //         'pesan' => '<li>Recaptcha Failed</li>'
-        //     ];
-        //     return;
-        // }
-        // $member = User::where('username', $this->username)->get();
-        // if($member){
-        //     $member = $member->first();
-        //     $wd_total = TransactionExchange::select('transaction_exchange_amount')->where('transaction_exchange_type', 'Reward')->where('member_id', $member->member_id)->get()->sum('transaction_exchange_amount');
-        //     if(($member->contract_price * 3) - $wd_total < $member->contract->contract_reward_exchange_min){
-        //         $member = User::findOrFail($member->member_id);
-        //         $member->due_date = Carbon::now()->addDays(5)->format('Y-m-d');
-        //         $member->save();
-        //     }
-        // }else{
-		// 	$this->notification = [
-		// 		'tipe' => 'danger',
-		// 		'pesan' => '<li><strong>Sign In notification!!!</strong><br>Wrong username or password</li>'
-		// 	];
-		// }
+        if($this->recaptchaPasses() === false){
+            $this->error = "<p class='text-theme-6'>Recaptcha Failed</p>";
+            return;
+        }
 
         $remember = $this->remember == 'on';
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $remember)) {
@@ -61,18 +44,18 @@ class Login extends Component
 
             Auth::logoutOtherDevices($this->password, 'password');
             if (auth()->user()->role == 1){
-                return redirect('dashboard');
+                return redirect('/dashboard');
             }else{
                 return redirect('/admin-area');
             }
         }
-        $this->message = "<p class='text-theme-6'>Wrong username or password!!!</p>";
+        $this->error = "<p class='text-theme-6'>Wrong username or password!!!</p>";
         return;
     }
 
     public function updated()
     {
-        $this->reset('message');
+        $this->reset('error');
     }
 
     public function render()
