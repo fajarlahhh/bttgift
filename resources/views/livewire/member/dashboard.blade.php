@@ -30,6 +30,11 @@
                                         You need to activate google authenticator <strong><a href='/security' class='text-danger'>here</a></strong>
                                     </div>
                                     @endif
+                                    @if (!auth()->user()->wallet)
+                                    <div class='alert intro-y alert-warning-soft text-1xl gap-6 show mt-2' role='alert'>
+                                        Insert your BTT wallet address <strong><a href='/profile' class='text-danger'>here</a></strong>
+                                    </div>
+                                    @endif
                                 </div>
                                 <div class="col-span-12 md:col-span-12 xl:col-span-12">
                                     <div class="intro-x">
