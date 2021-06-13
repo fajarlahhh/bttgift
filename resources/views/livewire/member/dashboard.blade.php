@@ -19,8 +19,20 @@
                                 <a href="" class="ml-auto flex items-center text-theme-1 dark:text-theme-10"> <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Reload </a>
                             </div>
                             <div class="grid grid-cols-12 gap-6">
-                                <div class="col-span-12 md:col-span-12 xl:col-span-12 mt-3 ">
-                                    <div class="mt-5 intro-x">
+                                <div class="col-span-12 md:col-span-12 xl:col-span-12">
+                                    @if (auth()->user()->due_date)
+                                    <div class='alert intro-y alert-warning text-1xl gap-6 show mt-2' role='alert'>
+                                        Your account is in grace period. Renew your contract <strong><a href='/renewal' class='text-danger'>here</a></strong> before {{ auth()->user()->due_date }}
+                                    </div>
+                                    @endif
+                                    @if (!auth()->user()->google2fa_secret)
+                                    <div class='alert intro-y alert-danger-soft text-1xl gap-6 show mt-2' role='alert'>
+                                        You need to activate google authenticator <strong><a href='/security' class='text-danger'>here</a></strong>
+                                    </div>
+                                    @endif
+                                </div>
+                                <div class="col-span-12 md:col-span-12 xl:col-span-12">
+                                    <div class="intro-x">
                                         <div class="box">
                                             <div class="tns-outer" id="important-notes-ow">
                                                 <div id="important-notes-mw" class="tns-ovh">
@@ -40,13 +52,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($notification)
-                                <div class="col-span-12 md:col-span-12 xl:col-span-12">
-                                    @foreach ($notification as $item)
-                                    {!! $item !!}
-                                    @endforeach
-                                    </div>
-                                @endif
                                 <div class="col-span-12 sm:col-span-6 xl:col-span-6 intro-y">
                                     <div class="grid grid-cols-12 gap-6">
                                         <div class="col-span-12 sm:col-span-12 xl:col-span-6 intro-y">

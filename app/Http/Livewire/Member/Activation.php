@@ -115,6 +115,6 @@ class Activation extends Component
     {
         return view('livewire.member.activation', [
             'menu' => 'activation'
-        ])->extends('layouts.default');
+        ])->extends('layouts.dashboard');
     }
 }

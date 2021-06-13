@@ -31,8 +31,9 @@ class Downline extends Component
         DB::raw('(select ifnull(sum(contract_price), 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->where('username', $this->key);
 
         return view('livewire.member.downline', [
-            'data' => $data->first(),
+            'data' => $data->first()
+        ])->extends('layouts.default', [
             'menu' => 'downline'
-        ])->extends('layouts.default');
+        ]);
     }
 }

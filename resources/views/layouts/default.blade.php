@@ -13,7 +13,33 @@
     @livewireStyles
 </head>
 <body class="main">
-    @yield('content')
+    @include('includes.mobile-menu')
+    <div class="flex">
+        @include('includes.side-menu')
+        <!-- BEGIN: Content -->
+        <div class="content">
+            @include('includes.top-bar', [
+                'menu' => $menu
+            ])
+            <div class="intro-y flex items-center mt-8">
+                <h2 class="text-lg font-medium mr-auto">
+                    {{ ucfirst($menu) }}
+                </h2>
+            </div>
+            @if (auth()->user()->due_date)
+            <div class='alert intro-y alert-warning text-1xl gap-6 show mt-2' role='alert'>
+                Your account is in grace period. Renew your contract <strong><a href='/renewal' class='text-danger'>here</a></strong> before {{ auth()->user()->due_date }}
+            </div>
+            @endif
+            @if (!auth()->user()->google2fa_secret)
+            <div class='alert intro-y alert-danger-soft text-1xl gap-6 show mt-2' role='alert'>
+                You need to activate google authenticator <strong><a href='/security' class='text-danger'>here</a></strong>
+            </div>
+            @endif
+            @yield('content')
+        </div>
+        <!-- END: Content -->
+    </div>
 
     @livewireScripts
     <script src="/js/app.js"></script>

@@ -61,8 +61,8 @@ class Profile extends Component
 
     public function render()
     {
-        return view('livewire.member.profile', [
+        return view('livewire.member.profile')->extends('layouts.default', [
             'menu' => 'profile'
-        ])->extends('layouts.default');
+        ]);
     }
 }

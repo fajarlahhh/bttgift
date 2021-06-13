@@ -89,9 +89,10 @@ class Security extends Component
     public function render()
     {
         return view('livewire.member.security',[
-            'menu' => 'security',
             'qr' => $this->qr_image,
             'secret' => $this->google2fa_secret
-        ])->extends('layouts.default');
+        ])->extends('layouts.default', [
+            'menu' => 'security'
+        ]);
     }
 }

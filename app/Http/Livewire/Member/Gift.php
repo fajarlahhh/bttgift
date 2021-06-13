@@ -16,8 +16,9 @@ class Gift extends Component
         return view('livewire.member.gift', [
             'balance' => 0,
             'data' => $data,
-            'no' => ($this->page - 1) * 10,
+            'no' => ($this->page - 1) * 10
+        ])->extends('layouts.default', [
             'menu' => 'gift History'
-        ])->extends('layouts.default');
+        ]);
     }
 }

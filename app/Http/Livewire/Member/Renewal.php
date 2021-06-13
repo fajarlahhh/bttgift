@@ -117,8 +117,9 @@ class Renewal extends Component
     {
         $data = Deposit::where('id_member', auth()->id())->get();
         return view('livewire.member.renewal', [
-            'data' => $data,
+            'data' => $data
+        ])->extends('layouts.default', [
             'menu' => 'renewal'
-        ])->extends('layouts.default');
+        ]);
     }
 }

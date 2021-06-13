@@ -63,6 +63,11 @@ class Withdrawal extends Component
             return;
         }
 
+        if (auth()->user()->due_date) {
+            $this->error .= "Your account is in grace period. Renew your contract here before ".auth()->user()->due_date;
+            return;
+        }
+
         if ($this->submit == false || $this->exist == true) {
             $this->error .= "You can't do this action now<br>";
             return;
@@ -131,8 +136,9 @@ class Withdrawal extends Component
     {
         $data = \App\Models\Withdrawal::where('id_member', auth()->id())->get();
         return view('livewire.member.withdrawal', [
-            'data' => $data,
+            'data' => $data
+        ])->extends('layouts.default',[
             'menu' => 'withdrawal'
-        ])->extends('layouts.default');
+        ]);
     }
 }

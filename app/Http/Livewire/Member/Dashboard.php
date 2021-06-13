@@ -16,16 +16,6 @@ class Dashboard extends Component
 
     public function mount()
     {
-        if (auth()->user()->due_date) {
-            $this->notification[] = "<div class='alert intro-y alert-warning text-1xl gap-6 show mt-2' role='alert'>
-            Your account is in grace period. Renew your contract <strong><a href='/renewal' class='text-danger'>here</a></strong> before ".auth()->user()->due_date."
-        </div>";
-        }
-        if (!auth()->user()->google2fa_secret) {
-            $this->notification[] = "<div class='alert intro-y alert-danger-soft text-1xl gap-6 show mt-2' role='alert'>
-            You need to activate google authenticator <strong><a href='/renewal' class='text-danger'>here</a></strong>
-        </div>";
-        }
         $this->total_wd = Withdrawal::where('id_member', auth()->id())->orderBy('created_at', 'desc')->get();
         $this->gift = Bonus::where('id_member', auth()->id())->orderBy('created_at', 'desc')->get();
         $this->information = Information::all();
@@ -40,6 +30,6 @@ class Dashboard extends Component
     {
         return view('livewire.member.dashboard', [
             'menu' => 'dashboard'
-        ])->extends('layouts.default');
+        ])->extends('layouts.dashboard');
     }
 }
