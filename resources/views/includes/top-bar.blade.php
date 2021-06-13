@@ -11,7 +11,7 @@
         <div class="dropdown-menu w-56">
             <div class="dropdown-menu__content box bg-theme-26 dark:bg-dark-6 text-white">
                 <div class="p-4 border-b border-theme-27 dark:border-dark-3">
-                    <div class="font-medium">{{ auth()->user()->name }}</div>
+                    <div class="font-medium">{{ auth()->user()->username }}</div>
                     <div class="text-xs text-theme-28 mt-0.5 dark:text-gray-600">{{ auth()->user()->role == 0? 'Administrator': 'Member' }}</div>
                 </div>
                 <div class="p-2">

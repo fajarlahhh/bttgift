@@ -78,10 +78,10 @@
                 </div>
                 <hr class="mt-1">
                 <div class="mt-2">
-                    <label for="left_referral" class="form-label text-white">Referral Link</label>
+                    <label for="right_turnover" class="form-label text-white">Referral Link</label>
                     <div class="input-group">
-                        <input id="crud-form-3" type="text" class="form-control text-gray-700" value="{{ $left_referral }}" aria-describedby="input-group-1">
-                        <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $left_referral }}')">Copy</a>
+                        <input id="crud-form-3" type="text" class="form-control text-gray-700" value="{{ $right_turnover }}" aria-describedby="input-group-1">
+                        <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $right_turnover }}')">Copy</a>
                     </div>
                 </div>
             </div>
