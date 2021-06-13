@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Yadahan\AuthenticationLog\AuthenticationLogable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hexters\CoinPayment\Entities\CoinpaymentTransaction;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, AuthenticationLogable;
 
     protected $table = 'user';
 
@@ -23,7 +24,8 @@ class User extends Authenticatable
         'email',
         'phone',
         'actived_at',
-        'google2fa_secret'
+        'google2fa_secret',
+        'due_date'
     ];
 
     protected $hidden = [
@@ -49,6 +51,16 @@ class User extends Authenticatable
     public function registration_waiting_process()
     {
         return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Registration')->whereNotNull('file')->whereNotNull('information')->whereNull('id_user')->whereNull('processed_at');
+    }
+
+    public function renewal_waiting_fund()
+    {
+        return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Renewal')->whereNull('file')->whereNull('information')->whereNull('id_user')->whereNull('processed_at');
+    }
+
+    public function renewal_waiting_process()
+    {
+        return $this->hasMany('App\Models\Deposit', 'id_member', 'id')->where('requisite', 'Renewal')->whereNotNull('file')->whereNotNull('information')->whereNull('id_user')->whereNull('processed_at');
     }
 
     public function left_child()

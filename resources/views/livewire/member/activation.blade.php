@@ -54,12 +54,9 @@
                                 <div class="font-medium">{{ auth()->user()->name }}</div>
                                 <div class="text-xs text-theme-28 mt-0.5 dark:text-gray-600">{{ auth()->user()->kode }}</div>
                             </div>
-                            {{-- <div class="p-2">
-                                <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile </a>
-                                <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account </a>
-                                <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password </a>
-                                <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a>
-                            </div> --}}
+                            <div class="p-2">
+                                <a href="mailto:cs@bttgift.com" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"> <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help </a>
+                            </div>
                             <div class="p-2 border-t border-theme-27 dark:border-dark-3">
                                 <a href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -79,118 +76,117 @@
             </div>
             <div class="grid grid-cols-12 gap-12 mt-5">
                 <div class="intro-y col-span-12 lg:col-span-12">
-                    <div class="">
-                        @if (auth()->user()->registration_waiting_fund->count() > 0)
-                        <div class="intro-y box p-5 text-center overflow-x-auto">
-                            <h5 class="text-2xl">Waiting For Fund . . .</h5>
-                            <br>
-                            <table class="table">
-                                <tr>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
-                                        Amount {{ $name }}
-                                    </td>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        {{ number_format($amount, 5) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-center">
-                                        Send To {{ $name }} Address
-                                        <br>
-                                        <div style="display: flex; justify-content: center;" class="mt-3">
-                                            {!! QrCode::size(200)->generate($wallet); !!}
-                                        </div><br>
-                                        {{ $wallet }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
+                    @if (auth()->user()->registration_waiting_fund->count() > 0)
+                    <div class="intro-y box p-5 text-center overflow-x-auto">
+                        <h5 class="text-2xl">Waiting For Fund . . .</h5>
+                        <br>
+                        <table class="table">
+                            <tr>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
+                                    Amount {{ $name }}
+                                </td>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                    {{ number_format($amount, 5) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-center">
+                                    Send To {{ $name }} Address
+                                    <br>
+                                    <div style="display: flex; justify-content: center;" class="mt-3">
+                                        {!! QrCode::size(200)->generate($wallet); !!}
+                                    </div><br>
+                                    {{ $wallet }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
 
-                                    </td>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
-                                        Time Left
-                                    </td>
-                                    <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        @php
-                                            $until = \Carbon\Carbon::parse($time)->addHours(5);
-                                            echo $until->diff(now())->format('%Hh :%Im :%Ss ');
-                                        @endphp
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrapt text-center" >
-                                        <form wire:submit.prevent="done">
-                                            Upload your proof of deposit here  <input type="file" wire:model="file" accept="image/*"><br>
-                                            @error('file')
-                                            <div class="text-theme-6 mt-2">Image file is required</div>
-                                            @enderror
-                                            <textarea wire:model="information" class="form-control mt-3" cols="30" rows="2" placeholder="Deposit Information">
-                                            </textarea>
-                                            @error('information')
-                                            <div class="text-theme-6 mt-2">This field is required</div>
-                                            @enderror
-                                            <input type="submit" class="btn btn-success mt-3" value="Done">
-                                        </form>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <small>The amount of {{ $name }} to be transferred must match the amount above</small>
-                        </div>
-                        @else
-                        @if (auth()->user()->registration_waiting_process->count() > 0)
-                        <div class="alert alert-success show">
-                            <h1 class="text-center"><strong>We have received your funds.</strong><br>Account activation process takes at least 2 x 24 hours</h1>
-                        </div>
-                        @else
-                        <div class="intro-y box p-5">
-                            <form wire:submit.prevent="submit">
-                                <div>
-                                    <label for="contract" class="form-label">Contract</label>
-                                    <input id="contract" type="text" class="form-control" wire:model="contract" placeholder="Contract" readonly>
-                                    @error('contract')
-                                    <div class="text-theme-6 mt-2">This field is required</div>
-                                    @enderror
-                                </div>
-                                <div class="mt-3">
-                                    <label for="method" class="form-label">Activation Method</label>
-                                    <select data-placeholder="Contract" wire:model="method" class="form-select w-full">
-                                        <option value="" selected>-- Choose Method --</option>
-                                        @foreach ($data_payment as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->description }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('method')
-                                    <div class="text-theme-6 mt-2">This field is required</div>
-                                    @enderror
-                                </div>
-                                @if ($method)
-                                <hr class="mt-3 mb-3">
-                                <strong>Please Send {{ $description }} ({{ $name}})</strong>
-                                <div class="mt-3">
-                                    <label for="amount" class="form-label">Amount</label>
-                                    <input id="amount" type="text" class="form-control" value="{{ $amount }}" placeholder="Amount" readonly>
-                                    @error('name')
-                                    <div class="text-theme-6 mt-2">This field is required</div>
-                                    @enderror
-                                </div>
-                                <div class="mt-3">
-                                    <label for="wallet" class="form-label">To Wallet</label>
-                                    <input id="wallet" type="text" class="form-control" value="{{ $wallet }}" placeholder="Wallet" readonly>
-                                    @error('wallet')
-                                    <div class="text-theme-6 mt-2">This field is required</div>
-                                    @enderror
-                                </div>
-                                <button class="btn btn-primary mt-5">Submit</button>
-                                @endif
-                            </form>
-                        </div>
-                        @endif
-                        @endif
+                                </td>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap text-right">
+                                    Time Left
+                                </td>
+                                <td width="50%" class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                    @php
+                                        $until = \Carbon\Carbon::parse($time)->addHours(5);
+                                        echo $until->diff(now())->format('%Hh :%Im :%Ss ');
+                                    @endphp
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border border-b-2 dark:border-dark-5 whitespace-nowrapt text-center" >
+                                    <form wire:submit.prevent="done">
+                                        Upload your proof of deposit here  <input type="file" wire:model="file" accept="image/*"><br>
+                                        @error('file')
+                                        <div class="text-theme-6 mt-2">Image file is required</div>
+                                        @enderror
+                                        <textarea wire:model="information" class="form-control mt-3" cols="30" rows="2" placeholder="Deposit Information">
+                                        </textarea>
+                                        @error('information')
+                                        <div class="text-theme-6 mt-2">This field is required</div>
+                                        @enderror
+                                        <input type="submit" class="btn btn-success mt-3" value="Done">
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <small>The amount of {{ $name }} to be transferred must match the amount above</small>
+                    </div>
+                    @else
+                    @if (auth()->user()->registration_waiting_process->count() > 0)
+                    <div class="alert alert-success show">
+                        <h1 class="text-center"><strong>We have received your funds.</strong><br>Account activation process takes at least 2 x 24 hours</h1>
+                    </div>
+                    @else
+                    <div class="intro-y box p-5">
+                        <form wire:submit.prevent="submit">
+                            <div>
+                                <label for="contract" class="form-label">Contract</label>
+                                <input id="contract" type="text" class="form-control" value="{{ $contract }}" placeholder="Contract" readonly>
+                                @error('contract')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
+                            </div>
+                            <div class="mt-3">
+                                <label for="method" class="form-label">Activation Method</label>
+                                <select data-placeholder="Contract" wire:model="method" class="form-select w-full">
+                                    <option value="" selected>-- Choose Method --</option>
+                                    @foreach ($data_payment as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->description }}</option>
+                                    @endforeach
+                                </select>
+                                @error('method')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
+                            </div>
+                            @if ($method)
+                            <hr class="mt-3 mb-3">
+                            <strong>Please Send {{ $description }} ({{ $name}})</strong>
+                            <div class="mt-3">
+                                <label for="amount" class="form-label">Amount</label>
+                                <input id="amount" type="text" class="form-control" value="{{ $amount }}" placeholder="Amount" readonly>
+                                @error('name')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
+                            </div>
+                            <div class="mt-3">
+                                <label for="wallet" class="form-label">To Wallet</label>
+                                <input id="wallet" type="text" class="form-control" value="{{ $wallet }}" placeholder="Wallet" readonly>
+                                @error('wallet')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
+                            </div>
+                            <button class="btn btn-primary mt-5">Submit</button>
+                            @endif
+                        </form>
+                    </div>
+                    @endif
+                    @endif
                 </div>
             </div>
         </div>

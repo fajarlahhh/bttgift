@@ -4,10 +4,11 @@ namespace App\Http\Livewire\Member;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Hash;
 
 class Security extends Component
 {
-    public $error, $google2fa_secret, $pin, $qr_image;
+    public $success, $error, $google2fa_secret, $pin, $qr_image, $type = 'password', $show = 'Show', $new_password, $old_password;
 
     public function mount()
     {
@@ -26,8 +27,49 @@ class Security extends Component
         );
     }
 
+    public function showHide($type)
+    {
+        if ($type == 'Show') {
+            $this->show = "Hide";
+            $this->type = "text";
+        } else {
+            $this->show = "Show";
+            $this->type = "password";
+        }
+
+    }
+
+    public function password()
+    {
+        $this->success = null;
+        $this->error = null;
+        $this->validate([
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'pin' => 'required'
+        ]);
+
+        // $google2fa = app('pragmarx.google2fa');
+        // if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
+        //     $this->error .= "Invalid Google Authenticator PIN";
+        //     return;
+        // }
+
+        $user = User::findOrFail(auth()->id());
+
+        if (Hash::check($this->old_password, $user->password)) {
+            User::findOrFail(auth()->id())->update([
+                'password' => Hash::make($this->new_password)
+            ]);
+            $this->success = "Your password has been updated";
+        } else {
+            $this->error .= "Invalid old password";
+        }
+    }
+
     public function registration()
     {
+        $this->success = null;
         $this->error = null;
         $this->validate([
             'pin' => 'required'
@@ -41,6 +83,7 @@ class Security extends Component
         User::findOrFail(auth()->id())->update([
             'google2fa_secret' => $this->google2fa_secret
         ]);
+        $this->success = "Your profile has been updated";
     }
 
     public function render()

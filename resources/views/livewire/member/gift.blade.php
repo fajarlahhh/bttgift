@@ -23,17 +23,22 @@
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Debit</th>
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Credit</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($data as $index => $row)
+                                @php
+                                    $balance += $row->credit - $row->debit;
+                                @endphp
                                 <tr>
                                     <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
                                     <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
                                     <td class="border-b whitespace-nowrap">{{ $row->description }}</td>
                                     <td class="border-b whitespace-nowrap text-righr">{{ number_format($row->debit, 2) }}</td>
                                     <td class="border-b whitespace-nowrap text-right">{{ number_format($row->credit, 2) }}</td>
+                                    <td class="border-b whitespace-nowrap text-right">{{ number_format($balance, 2) }}</td>
                                     <td class="border-b whitespace-nowrap">{{ $row->type }}</td>
                                 </tr>
                                 @endforeach

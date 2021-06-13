@@ -86,7 +86,7 @@ class Deposit extends Component
             $update = [
                 'actived_at' => $time
             ];
-            if ($data->requisite == 'Reinvest') {
+            if ($data->requisite == 'Renewal') {
                 $update = [
                     'due_date' => null
                 ];
@@ -96,15 +96,17 @@ class Deposit extends Component
 
             $bonus = [];
 
-            array_push($bonus,[
-                'description' => ($data->member->position == 0? "Left side": "Right side")." referral 10% of ".number_format($data->member->contract_price)." by ".$data->member->username,
-                'type' => "Referral",
-                'debit' => 0,
-                'credit' => $data->member->contract_price * 10 /100,
-                'id_member' => $data->member->upline,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+            if($data->member->upline){
+                array_push($bonus,[
+                    'description' => ($data->member->position == 0? "Left side": "Right side")." referral 10% of ".number_format($data->member->contract_price)." by ".$data->member->username,
+                    'type' => "Referral",
+                    'debit' => 0,
+                    'credit' => $data->member->contract_price * 10 /100,
+                    'id_member' => $data->member->upline,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
 
             if ($data->requisite == 'Registration') {
                 $this->parent = [];

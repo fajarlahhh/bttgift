@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class Withdrawal extends Component
 {
-    public $amount, $address, $fee_percentage, $fee = 0, $error, $total_wd, $max_wd, $min_wd, $remaining_contract, $success, $bonus, $btt_price, $btt = 0, $submit = true, $exist = false;
+    public $amount, $address, $fee_percentage, $fee = 0, $error, $total_wd, $max_wd, $min_wd, $remaining_contract, $success, $bonus, $btt_price, $btt = 0, $submit = true, $exist = false, $pin;
 
     public function mount()
     {
@@ -40,7 +40,7 @@ class Withdrawal extends Component
     {
         $this->emit('reinitialize');
         $this->submit = false;
-        $this->fee = $this->amount * $this->fee_percentage / 100;
+        $this->fee = ($this->amount?:0) * $this->fee_percentage / 100;
         $this->btt = round(($this->amount - $this->fee) / $this->btt_price);
         $this->btt_price = (float)Http::get('https://indodax.com//api/summaries')->collect()->first()['btt_usdt']['low'];
         $this->submit = true;
@@ -53,8 +53,15 @@ class Withdrawal extends Component
         $this->validate([
             'amount' => 'required',
             'address' => 'required',
-            'fee' => 'required'
+            'fee' => 'required',
+            'pin' => 'required'
         ]);
+
+        $google2fa = app('pragmarx.google2fa');
+        if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
+            $this->error .= "Invalid Google Authenticator PIN";
+            return;
+        }
 
         if ($this->submit == false || $this->exist == true) {
             $this->error .= "You can't do this action now<br>";
@@ -120,7 +127,6 @@ class Withdrawal extends Component
         }
 
         redirect('/withdrawal');
-
     }
 
     public function render()

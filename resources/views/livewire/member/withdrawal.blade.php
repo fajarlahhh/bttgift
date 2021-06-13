@@ -13,6 +13,15 @@
                 </h2>
             </div>
             <div class="grid grid-cols-12 gap-6 mt-5 ">
+                @if (auth()->user()->due_date)
+                <div class="intro-y col-span-12 lg:col-span-6">
+                    <div class="intro-y box p-5">
+                        <div class="alert intro-y alert-warning text-1xl gap-6 show" role="alert">
+                            Your account is in grace period. Renew your contract <strong><a href="/renewal" class="text-danger">here</a> before</strong> {{ auth()->user()->due_date }}
+                        </div>
+                    </div>
+                </div>
+                @else
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="intro-y box p-5">
                         @if ($exist == true)
@@ -47,7 +56,7 @@
                             <hr class="mt-3 mb-3">
                             <div>
                                 <label for="amount" class="form-label">Amount</label>
-                                <input id="amount" step="any" type="number" class="form-control" wire:model="amount" placeholder="Amount" autocomplete="off">
+                                <input id="amount" step="any" type="number" class="form-control" wire:model.lazy="amount" placeholder="Amount" autocomplete="off">
                                 @error('amount')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
@@ -84,18 +93,26 @@
                                     </p>
                                 </small>
                             </div>
-                            @if ($submit)
+                            <hr class="mt-5">
+                            <div class="mt-3">
+                                <label for="username" class="form-label">Google Auth PIN</label>
+                                <input id="username" type="text" class="form-control" wire:model.defer="pin" placeholder="Enter Your Google Authenticator PIN" autocomplete="off">
+                                @error('pin')
+                                <div class="text-theme-6 mt-2">This field is required</div>
+                                @enderror
+                            </div>
+                            @if ($submit == true)
                             <button class="btn btn-success mt-3">Submit</button>
                             @endif
                         </form>
                         @endif
                     </div>
                 </div>
-                <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="intro-y alert alert-dark show">
+                <div class="col-span-12 lg:col-span-6">
+                    <div class="alert alert-dark show intro-x">
                         <h3>History</h3>
                         <hr class="mt-2">
-                        <div style="overflow-y: auto; max-height: 630px; height: 630px">
+                        <div style="overflow-y: auto; max-height: 500px; height: 500px">
                             <table class="table">
                                 <tbody>
                                     @foreach ($data as $row)
@@ -114,6 +131,7 @@
                         </h3>
                     </div>
                 </div>
+                @endif
             </div>
             @if ($error)
             <div class="alert alert-danger show mt-3 mb-2" role="alert">

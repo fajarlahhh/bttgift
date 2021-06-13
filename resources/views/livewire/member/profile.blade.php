@@ -65,40 +65,36 @@
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
                             </div>
-                            <button class="btn btn-primary mt-5">Save</button>
+                            <button class="btn btn-primary mt-5">Update</button>
                         </form>
                     </div>
                 </div>
-                <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="box p-5 bg-theme-12 intro-x">
-                        <div class="flex flex-wrap gap-3">
-                            <div class="w-full">
-                                <div class="text-white text-opacity-70 flex items-center leading-3"> LEFT TURNOVER </div>
-                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5 text-right">$ {{ number_format($left_turnover) }} </div>
-                                <hr class="mt-3">
-                                <div class="mt-3">
-                                    <label for="left_referral" class="form-label text-white">Referral Link</label>
-                                    <div class="input-group">
-                                        <input id="crud-form-3" type="text" class="form-control" value="{{ $left_referral }}" aria-describedby="input-group-1">
-                                        <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $left_referral }}')">Copy</a>
-                                    </div>
-                                </div>
+                <div class="col-span-12 lg:col-span-6">
+                    <div class="alert alert-dark show intro-x">
+                        <div class="flex items-center">
+                            <div class="font-medium text-lg"> LEFT TURNOVER </div>
+                            <div class="bg-white px-1 rounded-md text-gray-800 ml-auto">$ {{ number_format($left_turnover) }}</div>
+                        </div>
+                        <hr class="mt-1">
+                        <div class="mt-2">
+                            <label for="left_referral" class="form-label text-white">Referral Link</label>
+                            <div class="input-group">
+                                <input id="crud-form-3" type="text" class="form-control text-gray-700" value="{{ $left_referral }}" aria-describedby="input-group-1">
+                                <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $left_referral }}')">Copy</a>
                             </div>
                         </div>
                     </div>
-                    <div class="box p-5 bg-theme-9 intro-x mt-3">
-                        <div class="flex flex-wrap gap-3">
-                            <div class="w-full">
-                                <div class="text-white text-opacity-70 flex items-center leading-3"> RIGHT TURNOVER </div>
-                                <div class="text-white relative text-2xl font-medium leading-5 pl-3.5 mt-3.5 text-right"> $ {{ number_format($right_turnover) }} </div>
-                                <hr class="mt-3">
-                                <div class="mt-3">
-                                    <label for="right_referral" class="form-label text-white">Referral Link</label>
-                                    <div class="input-group">
-                                        <input id="crud-form-3" type="text" class="form-control" value="{{ $right_referral }}" aria-describedby="input-group-1">
-                                        <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $right_referral }}')">Copy</a>
-                                    </div>
-                                </div>
+                    <div class="alert alert-dark-soft show mt-2 intro-x">
+                        <div class="flex items-center">
+                            <div class="font-medium text-lg"> RIGHT TURNOVER </div>
+                            <div class="bg-white px-1 rounded-md text-gray-800 ml-auto">$ {{ number_format($right_turnover) }}</div>
+                        </div>
+                        <hr class="mt-1">
+                        <div class="mt-2">
+                            <label for="left_referral" class="form-label text-white">Referral Link</label>
+                            <div class="input-group">
+                                <input id="crud-form-3" type="text" class="form-control text-gray-700" value="{{ $left_referral }}" aria-describedby="input-group-1">
+                                <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $left_referral }}')">Copy</a>
                             </div>
                         </div>
                     </div>
