@@ -90,6 +90,7 @@ class Registration extends Component
 
     public function render()
     {
+        Auth::logout();
         if(!$this->ref){
             abort(403, 'Unauthorized action.');
         }
