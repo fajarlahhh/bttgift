@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Bonus;
 use App\Models\Rating;
 use Livewire\Component;
+use App\Models\Withdrawal;
 use App\Models\Achievement;
 use Livewire\WithPagination;
 use App\Models\InvalidTurnover;
@@ -90,6 +91,8 @@ class Deposit extends Component
                 $update = [
                     'due_date' => null
                 ];
+                Withdrawal::where('id_member', $data->member->id)->delete();
+                Bonus::where('id_member', $data->member->id)->delete();
             }
 
             User::findOrFail($data->id_member)->update($update);

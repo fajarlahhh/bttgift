@@ -122,8 +122,6 @@ class Withdrawal extends Component
             User::where('id_member', auth()->id())->updated([
                 'due_date' => Carbon::now()->addDays(2)
             ]);
-            // \App\Models\Withdrawal::where('id_member', auth()->id())->delete();
-            // Bonus::where('id_member', auth()->id())->delete();
         }
 
         redirect('/withdrawal');
