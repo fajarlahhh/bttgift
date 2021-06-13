@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 13/06/2021 17:34:00
+ Date: 13/06/2021 20:32:39
 */
 
 SET NAMES utf8mb4;
@@ -61,14 +61,12 @@ CREATE TABLE `authentication_log` (
   `logout_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `authentication_log_authenticatable_type_authenticatable_id_index` (`authenticatable_type`,`authenticatable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of authentication_log
 -- ----------------------------
 BEGIN;
-INSERT INTO `authentication_log` VALUES (1, 'App\\Models\\User', 10, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36', NULL, '2021-06-13 07:57:59');
-INSERT INTO `authentication_log` VALUES (2, 'App\\Models\\User', 10, '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36', '2021-06-13 07:58:04', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -234,6 +232,28 @@ BEGIN;
 COMMIT;
 
 -- ----------------------------
+-- Table structure for jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `jobs`;
+CREATE TABLE `jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
+  `reserved_at` int unsigned DEFAULT NULL,
+  `available_at` int unsigned NOT NULL,
+  `created_at` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of jobs
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for migrations
 -- ----------------------------
 DROP TABLE IF EXISTS `migrations`;
@@ -325,6 +345,28 @@ INSERT INTO `rating` VALUES (4, 500000.00, 10000.00, 4, '2021-06-07 00:00:00', '
 COMMIT;
 
 -- ----------------------------
+-- Table structure for recovery
+-- ----------------------------
+DROP TABLE IF EXISTS `recovery`;
+CREATE TABLE `recovery` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `token` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `email` (`email`),
+  CONSTRAINT `recovery_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of recovery
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for spammers
 -- ----------------------------
 DROP TABLE IF EXISTS `spammers`;
@@ -405,8 +447,8 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'administrator', '$2y$10$hVGTQSTmgpxuZykltOcuvu4Npj56CyPzx3TiGQs5NnL16NZ6f//7G', 'Andi Fajar Nugraha', 'admin@bttgift.com', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2021-05-05 00:00:00', '2021-06-13 06:48:57', NULL);
-INSERT INTO `user` VALUES (10, 'james', '$2y$10$rTcgB9bYjYLmlHOMHju6KelPt2.sfqYiqko6/TLadIdmaRzvvpeGO', 'Jaes Blund', 'andifajarlahs@gmail.com', 500.00, '', NULL, NULL, '24bc50d85ad8fa9cda686145cf1f8aca0', '24bc50d85ad8fa9cda686145cf1f8aca1', '2021-06-15', NULL, '234234123', NULL, NULL, 1, '2021-06-09 00:00:00', '2021-06-09 04:30:35', '2021-06-13 07:58:04', NULL);
+INSERT INTO `user` VALUES (1, 'administrator', '$2y$10$x7.wABGL.nWrpbTQjKBiZOSfmdlJUB6s4SZ/dRtHSAm8zaUcU82qi', 'Andi Fajar Nugraha', 'admin@bttgift.com', NULL, ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2021-05-05 00:00:00', '2021-06-13 12:26:00', NULL);
+INSERT INTO `user` VALUES (10, 'james', '$2y$10$6RWytVL6R1r0EeHX8kOzIO13MCN59toig1puotiIL5EpiEZ./oUJa', 'Jaes Blund', 'andifajarlah@gmail.com', 500.00, '', NULL, NULL, '24bc50d85ad8fa9cda686145cf1f8aca0', '24bc50d85ad8fa9cda686145cf1f8aca1', '2021-06-15', NULL, '234234123', NULL, NULL, 1, '2021-06-09 00:00:00', '2021-06-09 04:30:35', '2021-06-13 12:11:57', NULL);
 COMMIT;
 
 -- ----------------------------

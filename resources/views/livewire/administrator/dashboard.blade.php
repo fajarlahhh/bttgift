@@ -23,13 +23,12 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i>
+                                                Deposit Waiting
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="33% Higher than last month"> 33% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <i data-feather="pocket" class="report-box__icon text-theme-6"></i>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">4.710</div>
-                                            <div class="text-base text-gray-600 mt-1">Item Sales</div>
+                                            <div class="text-3xl font-bold leading-8 mt-6 text-right">{{ number_format($deposit) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -37,13 +36,12 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                <i data-feather="credit-card" class="report-box__icon text-theme-11"></i>
+                                                Withdrawal Waiting
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-6 tooltip cursor-pointer" title="2% Lower than last month"> 2% <i data-feather="chevron-down" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <i data-feather="command" class="report-box__icon text-theme-9"></i>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">3.721</div>
-                                            <div class="text-base text-gray-600 mt-1">New Orders</div>
+                                            <div class="text-3xl font-bold leading-8 mt-6 text-right">{{ number_format($withdrawal) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -51,13 +49,12 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                <i data-feather="monitor" class="report-box__icon text-theme-12"></i>
+                                                Achievement Waiting
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="12% Higher than last month"> 12% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <i data-feather="check" class="report-box__icon text-theme-9"></i>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">2.149</div>
-                                            <div class="text-base text-gray-600 mt-1">Total Products</div>
+                                            <div class="text-3xl font-bold leading-8 mt-6 text-right">{{ number_format($achievement) }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -65,16 +62,29 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                <i data-feather="user" class="report-box__icon text-theme-9"></i>
+                                                Members Total
                                                 <div class="ml-auto">
-                                                    <div class="report-box__indicator bg-theme-9 tooltip cursor-pointer" title="22% Higher than last month"> 22% <i data-feather="chevron-up" class="w-4 h-4 ml-0.5"></i> </div>
+                                                    <i data-feather="users" class="report-box__icon text-theme-6"></i>
                                                 </div>
                                             </div>
-                                            <div class="text-3xl font-bold leading-8 mt-6">152.040</div>
-                                            <div class="text-base text-gray-600 mt-1">Unique Visitor</div>
+                                            <div class="text-3xl font-bold leading-8 mt-6 text-right">{{ number_format($user) }}</div>
                                         </div>
                                     </div>
                                 </div>
+                                @if ($daily == 0)
+                                <div class="col-span-12 sm:col-span-6 xl:col-span-12 intro-y">
+                                    <div class="alert alert-dark show intro-x ">
+                                        <h3>Daily Gift</h3>
+                                        <hr class="mt-2">
+                                        <div class=" flex flex-col sm:flex-row">
+                                            <form wire:submit.prevent="daily">
+                                                <input type="number" step="any" class="form-control mt-3" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
+                                                <button class="btn btn-primary mt-3">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
