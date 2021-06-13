@@ -76,12 +76,10 @@
                                     <div class="alert alert-dark show intro-x ">
                                         <h3>Daily Gift</h3>
                                         <hr class="mt-2">
-                                        <div class=" flex flex-col sm:flex-row">
-                                            <form wire:submit.prevent="daily">
-                                                <input type="number" step="any" class="form-control mt-3" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
-                                                <button class="btn btn-primary mt-3">Submit</button>
-                                            </form>
-                                        </div>
+                                        <form wire:submit.prevent="daily" class="flex flex-col sm:flex-row">
+                                            <input type="number" step="any" class="form-control mt-3" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
+                                            <button class="btn btn-primary mt-3">Submit</button>
+                                        </form>
                                     </div>
                                 </div>
                                 @endif
