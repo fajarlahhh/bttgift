@@ -72,6 +72,7 @@ class Recovery extends Component
 
     public function render()
     {
+        Auth::logout();
         return view('livewire.recovery')->extends('layouts.auth');
     }
 }

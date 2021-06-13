@@ -151,7 +151,7 @@ class Deposit extends Component
                         $parent->save();
 
                         if($row['pair'] == 1) {
-                            $pairing = "Pairing bonus level ".($key+1)." ".$persen."% of ";
+                            $pairing = "Pairing bonus level ".$key." ".$persen."% of ";
                             if(substr($network, -2) == 'ki'){
                                 if($row['left'] - $data->member->contract_price < $row['right']){
                                     $reward = 0;

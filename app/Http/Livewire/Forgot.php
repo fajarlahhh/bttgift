@@ -59,6 +59,7 @@ class Forgot extends Component
 
     public function render()
     {
+        Auth::logout();
         return view('livewire.forgot')->extends('layouts.auth');
     }
 }
