@@ -27,6 +27,13 @@ class RedirectIfAuthenticated
             }
         }
 
+        if (auth()->check()) {
+            if (auth()->user()->role == 1) {
+                return redirect('/');
+            }else{
+                return redirect('/admin-area');
+            }
+        }
         return $next($request);
     }
 }
