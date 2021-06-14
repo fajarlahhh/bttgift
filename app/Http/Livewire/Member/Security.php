@@ -49,11 +49,11 @@ class Security extends Component
             'pin' => 'required'
         ]);
 
-        // $google2fa = app('pragmarx.google2fa');
-        // if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
-        //     $this->error .= "Invalid Google Authenticator PIN";
-        //     return;
-        // }
+        $google2fa = app('pragmarx.google2fa');
+        if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
+            $this->error .= "Invalid Google Authenticator PIN";
+            return;
+        }
 
         $user = User::findOrFail(auth()->id());
 
@@ -83,7 +83,7 @@ class Security extends Component
         User::findOrFail(auth()->id())->update([
             'google2fa_secret' => $this->google2fa_secret
         ]);
-        $this->success = "Your profile has been updated";
+        $this->success = "Google authenticator activated";
     }
 
     public function render()

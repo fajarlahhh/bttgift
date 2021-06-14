@@ -39,7 +39,7 @@
                     <hr class="mt-5">
                     <div class="mt-3">
                         <label for="wallet" class="form-label">BTT Wallet</label>
-                        <input id="wallet" type="text" class="form-control" value="{{ $wallet }}" placeholder="BTT Wallet">
+                        <input id="wallet" type="text" class="form-control" wire:model="wallet" placeholder="BTT Wallet">
                         @error('wallet')
                         <div class="text-theme-6 mt-2">This field is required</div>
                         @enderror
