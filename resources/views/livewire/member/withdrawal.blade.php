@@ -92,6 +92,11 @@
                     <button class="btn btn-success mt-3">Submit</button>
                     @endif
                 </form>
+                @if ($error)
+                <div class="alert alert-danger show mt-3 mb-2" role="alert">
+                    {!! $error !!}
+                </div>
+                @endif
                 @endif
             </div>
         </div>
@@ -120,9 +125,4 @@
             </div>
         </div>
     </div>
-    @if ($error)
-    <div class="alert alert-danger show mt-3 mb-2" role="alert">
-        {!! $error !!}
-    </div>
-    @endif
 </div>

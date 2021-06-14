@@ -61,6 +61,7 @@ class Security extends Component
             User::findOrFail(auth()->id())->update([
                 'password' => Hash::make($this->new_password)
             ]);
+            $this->reset(['old_password', 'new_password', 'pin']);
             $this->success = "Your password has been updated";
         } else {
             $this->error .= "Invalid old password";
@@ -83,7 +84,7 @@ class Security extends Component
         User::findOrFail(auth()->id())->update([
             'google2fa_secret' => $this->google2fa_secret
         ]);
-        $this->success = "Google authenticator activated";
+        redirect('security');
     }
 
     public function render()

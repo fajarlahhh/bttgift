@@ -56,7 +56,8 @@ class Profile extends Component
         $user->email = $this->email;
         $user->wallet = $this->wallet;
         $user->save();
-        $this->success = "Your profile has been updated";
+
+        redirect('/profile');
     }
 
     public function render()
