@@ -24,16 +24,19 @@ class Enrollment extends Component
     public function mount()
     {
         $this->upline = auth()->id();
-        $waiting = User::where('id_user', auth()->id())->whereNull('actived_at')->first();
-        $deposit = Deposit::where('id_member', $waiting->id)->whereNull('file')->whereNull('information')->get();
-        if ($deposit->count() > 0) {
-            $data = Deposit::where('id_member', $waiting->id)->first();
-            $this->payment_name = $data->coin_name;
-            $this->payment_wallet = $data->wallet;
-            $this->payment_amount = $data->amount;
-            $this->payment_time = $data->created_at;
-            $this->waiting = true;
-            return;
+        $waiting = User::where('id_user', auth()->id())->whereNull('actived_at')->get();
+        if ($waiting->count() > 0) {
+            $waiting = $waiting->first();
+            $deposit = Deposit::where('id_member', $waiting->id)->whereNull('file')->whereNull('information')->get();
+            if ($deposit->count() > 0) {
+                $data = Deposit::where('id_member', $waiting->id)->first();
+                $this->payment_name = $data->coin_name;
+                $this->payment_wallet = $data->wallet;
+                $this->payment_amount = $data->amount;
+                $this->payment_time = $data->created_at;
+                $this->waiting = true;
+                return;
+            }
         }
         $this->data_payment = Payment::all();
         $this->data_contract = Contract::all();
