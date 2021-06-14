@@ -36,7 +36,6 @@ class Security extends Component
             $this->show = "Show";
             $this->type = "password";
         }
-
     }
 
     public function password()

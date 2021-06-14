@@ -55,12 +55,12 @@
                     <button class="btn btn-primary mt-5">Update</button>
                 </form>
                 @if ($error)
-                <div class="alert alert-danger show col-span-12 lg:col-span-6" role="alert">
+                <div class="alert alert-danger show col-span-12 lg:col-span-6 mt-2" role="alert">
                     {!! $error !!}
                 </div>
                 @endif
                 @if ($success)
-                <div class="alert alert-success show col-span-12 lg:col-span-6" role="alert">
+                <div class="alert alert-success show col-span-12 lg:col-span-6 mt-2" role="alert">
                     {!! $success !!}
                 </div>
                 @endif

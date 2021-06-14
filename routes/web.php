@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/renewal', \App\Http\Livewire\Member\Renewal::class);
             Route::get('/achievement', \App\Http\Livewire\Member\Achievement::class);
             Route::get('/security', \App\Http\Livewire\Member\Security::class);
+            Route::get('/enrollment', \App\Http\Livewire\Member\Enrollment::class);
         });
         Route::group(['middleware' => ['inactive']], function () {
             Route::get('/activation', \App\Http\Livewire\Member\Activation::class);

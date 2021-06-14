@@ -50,6 +50,11 @@ return [
             'link' => '/profile'
         ],
         [
+            'icon' => 'plus-circle',
+            'title' => 'Enrollment',
+            'link' => '/enrollment'
+        ],
+        [
             'icon' => 'toggle-right',
             'title' => 'Withdrawal',
             'link' => '/withdrawal'

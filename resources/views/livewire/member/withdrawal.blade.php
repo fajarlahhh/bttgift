@@ -12,7 +12,7 @@
         <div class="intro-y col-span-12 lg:col-span-6">
             <div class="intro-y box p-5">
                 @if ($exist == true)
-                <div class="alert intro-y alert-warning text-1xl gap-6 show text-center" role="alert">
+                <div class="alert intro-y alert-warning text-1xl gap-6 show text-center mt-2" role="alert">
                     We have received your withdrawal request at {{ $total_wd->first()->created_at }}.<br>You can withdraw after 2 x 24 hours
                 </div>
                 @else
