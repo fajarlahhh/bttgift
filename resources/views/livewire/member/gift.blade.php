@@ -32,11 +32,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="flex flex-col sm:flex-row items-center mt-5">
-                <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
-                    {{ $data->links() }}
-                </div>
-            </div>
         </div>
     </div>
 </div>
