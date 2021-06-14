@@ -139,7 +139,9 @@
                         </div>
                     </div>
                 </div>
+                @if ($payment_method)
                 <button class="btn btn-primary mt-5">Submit</button>
+                @endif
                 @if ($error)
                 <div class="alert alert-danger show col-span-12 lg:col-span-6 mt-2" role="alert">
                     {!! $error !!}
