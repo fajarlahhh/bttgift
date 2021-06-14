@@ -112,6 +112,11 @@
                 </form>
                 @endif
                 @endif
+                @if ($error)
+                <div class="alert alert-danger show mt-3 mb-2" role="alert">
+                    {!! $error !!}
+                </div>
+                @endif
                 @else
                 <div class="alert alert-success show">
                     <h1 class="text-center">You don't need to do this action</h1>
@@ -123,7 +128,7 @@
             <div class="alert alert-dark show intro-x">
                 <h3>History</h3>
                 <hr class="mt-2">
-                <div style="overflow-y: auto; max-height: 500px; height: 500px">
+                <div style="overflow-y: auto; max-height: 300px; height: 300px">
                     <table class="table">
                         <tbody>
                             @foreach ($data as $row)
@@ -137,15 +142,7 @@
                         </tbody>
                     </table>
                 </div>
-                <h3 class="mt-2">
-                    Total : {{ number_format($data->sum('acceptance')) }} (BTT : {{ number_format($data->sum('accepted_btt')) }})
-                </h3>
             </div>
         </div>
     </div>
-    @if ($error)
-    <div class="alert alert-danger show mt-3 mb-2" role="alert">
-        {!! $error !!}
-    </div>
-    @endif
 </div>
