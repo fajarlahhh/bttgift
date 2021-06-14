@@ -77,6 +77,11 @@ class User extends Authenticatable
         DB::raw('(select ifnull(sum(contract_price), 0) from user a where a.actived_at is not null and left(a.network, length(concat(user.network, user.id, "ka")))=concat(user.network, user.id, "ka") ) right_turnover'))->orderBy('username')->withTrashed();
     }
 
+    public function child()
+    {
+        return $this->hasMany('App\Models\User', 'upline', 'id')->where('role', 1)->with('child');
+    }
+
     public function parent()
     {
         return $this->hasOne('App\Models\User', 'id', 'upline')->where('role', 1)->with('parent')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",

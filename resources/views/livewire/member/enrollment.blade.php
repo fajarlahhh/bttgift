@@ -110,11 +110,7 @@
                             <div class="mt-3">
                                 <label for="upline" class="form-label">Upline</label>
                                 <select data-placeholder="Contract" id="upline" wire:model.defer="upline" class="form-select text-gray-700 border-gray-300" required>
-                                    <option value="{{ auth()->id() }}">{{ auth()->user()->username }}</option>
-                                    @foreach ($data_upline->left_child as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
-                                    @endforeach
-                                    @foreach ($data_upline->right_child as $row)
+                                    @foreach ($data_upline as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
                                     @endforeach
                                 </select>

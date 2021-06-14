@@ -40,7 +40,7 @@ class Enrollment extends Component
         }
         $this->data_payment = Payment::all();
         $this->data_contract = Contract::all();
-        $this->data_upline = User::with('left_child')->with('right_child')->where('id', auth()->id())->get()->first();
+        $this->data_upline = User::where('role', 1)->get();
     }
 
     public function done()
