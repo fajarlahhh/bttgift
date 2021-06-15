@@ -63,8 +63,13 @@
                 <small>The amount of {{ $name }} to be transferred must match the amount above</small>
             </div>
             @else
-            <form wire:submit.prevent="submit">
-                <div class="grid grid-cols-12 gap-6">
+            <div wire:loading class="grid grid-cols-12 gap-6">
+                    <div class="col-span-12 lg:col-span-6">
+                        <h4>Mohon tunggu...</h4>
+                    </div>
+            </div>
+            <form wire:submit.prevent="submit" >
+                <div class="grid grid-cols-12 gap-6" wire:loading.remove>
                     <div class="col-span-12 lg:col-span-6">
                         <div>
                             <label for="username" class="form-label">Username</label>
@@ -100,7 +105,15 @@
                     </div>
                     <div class="col-span-12 lg:col-span-6">
                         <div class="alert alert-primary show">
-                            <div>
+                            <div wire:ignore>
+                                <label for="upline" class="form-label">Referral</label>
+                                <select data-placeholder="Contract" id="upline" class="form-select text-gray-700 border-gray-300" onchange="setUpline(this)" required>
+                                    @foreach ($data_upline as $row)
+                                    <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mt-3">
                                 <label for="position" class="form-label">Position</label>
                                 <select data-placeholder="Contract" id="position" wire:model.defer="position" class="form-select text-gray-700 border-gray-300" required>
                                     <option value="1" selected>Right Side</option>
@@ -108,16 +121,8 @@
                                 </select>
                             </div>
                             <div class="mt-3">
-                                <label for="upline" class="form-label">Upline</label>
-                                <select data-placeholder="Contract" id="upline" wire:model="upline" class="form-select text-gray-700 border-gray-300" required>
-                                    @foreach ($data_upline as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mt-3">
                                 <label for="contract" class="form-label">Contract</label>
-                                <select data-placeholder="Contract" id="contract" wire:model="contract" class="form-select text-gray-700 border-gray-300" required>
+                                <select data-placeholder="Contract" id="contract" wire:model.defer="contract" class="form-select text-gray-700 border-gray-300" required>
                                     <option value="" selected>-- Choose Contract --</option>
                                     @foreach ($data_contract as $item)
                                     <option value="{{ $item->price }}">$ {{ number_format($item->price) }} = $ {{ number_format($item->price * $item->max_claim/100) }}</option>
@@ -126,7 +131,7 @@
                             </div>
                             <div class="mt-3">
                                 <label for="metpayment_methodhod" class="form-label">Payment Method</label>
-                                <select data-placeholder="Contract" id="payment_method" wire:model="payment_method" class="text-gray-700 form-select w-full">
+                                <select data-placeholder="Contract" id="payment_method" wire:model.defer="payment_method" class="text-gray-700 form-select w-full">
                                     <option value="" selected>-- Choose Method --</option>
                                     @foreach ($data_payment as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->description }}</option>
@@ -150,12 +155,18 @@
         </div>
     </div>
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/tail.select.js@0.5.21/js/tail.select-full.min.js
-    "></script>
+    <script src="https://cdn.jsdelivr.net/npm/tail.select.js@0.5.21/js/tail.select-full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script>
+        function setUpline(select) {
+            var value = $(select).find(':selected').val();
+            window.livewire.emit('set:setupline', value);
+        }
+
         tail.select('#upline', {
             search: true
         });
+
         Livewire.on('reinitialize', () => {
             tail.select('#upline', {
                 search: true

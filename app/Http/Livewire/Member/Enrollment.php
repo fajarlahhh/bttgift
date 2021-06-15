@@ -21,6 +21,13 @@ class Enrollment extends Component
 
     public $file, $payment_method, $payment_information, $payment_time, $payment_name, $payment_wallet, $ticket, $payment_amount, $data_payment, $type = 'password', $show = 'Show', $username, $password, $name, $email, $contract, $message, $position = 1, $upline, $data_upline = [], $data_contract = [], $error, $waiting = false;
 
+    protected $listeners = ['set:setupline' => 'setUpline'];
+
+    public function setUpline($upline)
+    {
+        $this->upline = $upline;
+    }
+
     public function mount()
     {
         $this->upline = auth()->id();
@@ -75,14 +82,7 @@ class Enrollment extends Component
 
     public function updated()
     {
-        if ($this->payment_method) {
-            $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
-            $payment = $this->data_payment->where('id', $this->payment_method)->first();
-            $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
-            $this->payment_name = $payment->name;
-            $this->payment_wallet = $payment->wallet;
-            $this->payment_amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
-        }
+
     }
 
     public function showHide($type)
@@ -125,6 +125,13 @@ class Enrollment extends Component
         if($this->error){
             return;
         }
+
+        $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
+        $payment = $this->data_payment->where('id', $this->payment_method)->first();
+        $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
+        $this->payment_name = $payment->name;
+        $this->payment_wallet = $payment->wallet;
+        $this->payment_amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
 
         DB::transaction(function () {
             $referral = date('Ymd');
