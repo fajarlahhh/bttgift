@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Recovery;
 use Illuminate\Support\Str;
 use App\Jobs\SendRecoveryMail;
+use Illuminate\Support\Facades\Auth;
 use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
 
 class Forgot extends Component
