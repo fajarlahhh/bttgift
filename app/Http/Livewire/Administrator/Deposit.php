@@ -125,7 +125,7 @@ class Deposit extends Component
                 $persen = 5;
                 foreach (collect($this->parent)->filter(function($q) use($data){
                     return $q['id'] != $data->id_member;
-                })->take(7) as $key => $row) {
+                })->take(20) as $key => $row) {
                     $achievement_id = 0;
                     if(is_null($row['due_date']) == 1 && $row['active'] == 1){
                         $kaki_kecil = collect([$row['left'], $row['right']])->min();
@@ -199,7 +199,9 @@ class Deposit extends Component
                             'position' => substr($network, -2) == "ka"? 1: 0
                         ]);
                     }
-                    $persen = $persen / 2;
+                    if ($key < 5) {
+                        $persen--;
+                    }
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
                     $network = substr($network, 0, (strlen($network) - $parent_length));
                 }
