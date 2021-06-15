@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function upline_one()
     {
-        return $this->belongsTo('App\Models\User', 'id', 'upline');
+        return $this->hasOne('App\Models\User', 'id', 'upline');
     }
 
     public function parent()
