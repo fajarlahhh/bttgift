@@ -33,7 +33,7 @@
                         @enderror
                     </div>
                     <div class="mt-3">
-                        <label for="upline" class="form-label">Upline</label>
+                        <label for="upline" class="form-label">Referral</label>
                         <input id="upline" type="text" class="form-control" value="{{ $upline }}" placeholder="Upline" readonly>
                     </div>
                     <hr class="mt-5">
