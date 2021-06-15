@@ -19,7 +19,7 @@ class Profile extends Component
         $this->username = $this->data->username;
         $this->contract = $this->data->contract_price;
         $this->wallet = $this->data->wallet;
-        $this->upline = $this->data->upline->username;
+        $this->upline = $this->data->upline? $this->data->upline_one->username: null;
         $this->left_referral = URL::to('/registration?ref='.$this->data->left_referral);
         $this->right_referral = URL::to('/registration?ref='.$this->data->right_referral);
         $turnover = User::select(

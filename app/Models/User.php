@@ -82,6 +82,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\User', 'upline', 'id')->where('role', 1)->with('child');
     }
 
+    public function upline_one()
+    {
+        return $this->belongsTo('App\Models\User', 'id', 'upline');
+    }
+
     public function parent()
     {
         return $this->hasOne('App\Models\User', 'id', 'upline')->where('role', 1)->with('parent')->with('invalid_left_turnover')->with('invalid_right_turnover')->select("id", "username", "email", "id_rating", "upline", "position", "contract_price", "name", "network", "due_date", "deleted_at",
