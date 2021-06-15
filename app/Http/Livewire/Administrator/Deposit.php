@@ -200,7 +200,7 @@ class Deposit extends Component
                         ]);
                     }
                     if ($key < 5) {
-                        $persen--;
+                        $persen = $persen - 1;
                     }
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
                     $network = substr($network, 0, (strlen($network) - $parent_length));
