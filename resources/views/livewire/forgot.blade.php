@@ -39,7 +39,6 @@
                     @endif
                 </form>
                 @endif
-                <a class="btn btn-default py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" href="/login">Sign In</a>
             </div>
         </div>
         <!-- END: Login Form -->
