@@ -109,7 +109,7 @@
                             </div>
                             <div class="mt-3">
                                 <label for="upline" class="form-label">Upline</label>
-                                <select data-placeholder="Contract" id="upline" wire:model.defer="upline" class="form-select text-gray-700 border-gray-300" required>
+                                <select data-placeholder="Contract" id="upline" wire:model="upline" class="form-select text-gray-700 border-gray-300" required>
                                     @foreach ($data_upline as $row)
                                     <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
                                     @endforeach
