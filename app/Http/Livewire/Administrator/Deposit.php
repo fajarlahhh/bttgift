@@ -199,7 +199,7 @@ class Deposit extends Component
                             'position' => substr($network, -2) == "ka"? 1: 0
                         ]);
                     }
-                    if ($key < 5) {
+                    if ($key < 4) {
                         $persen = $persen - 1;
                     }
                     $parent_length = strlen($row['id'].($row['position'] == 0? 'ki': 'ka'));
