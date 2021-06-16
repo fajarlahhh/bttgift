@@ -61,7 +61,7 @@ class Deposit extends Component
                 'left' => $left_turnover,
                 'right' => $right_turnover,
                 'rating' => $data->id_rating? $data->rating->sort: null,
-                'active' => $data->deleted_at? 0: 1,
+                'active' => $data->deleted_at && $data->actived_at == null? 0: 1,
                 'due_date' => $data->due_date
             ]);
         }
@@ -76,7 +76,6 @@ class Deposit extends Component
             $time = now();
             $data = \App\Models\Deposit::with('member')->findOrFail($this->key);
 
-            $google2fa = app('pragmarx.google2fa');
             $data->update([
                 'id_user' => auth()->id(),
                 'processed_at' => $time
@@ -137,18 +136,16 @@ class Deposit extends Component
                             return $q->min_turnover <= $kaki_kecil;
                         })->sortByDesc('min_turnover')->first();
 
-                        if ($rating && strlen($parent->upline) > 1 && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id_rating)->get()->count() == 0) {
-                            $parent->id_rating = $rating->id_rating;
+                        if ($rating && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id_rating)->get()->count() == 0) {
+                            $parent->id_rating = $rating->id;
+                            $parent->save();
 
-                            if(User::where('username', $parent->username)->where('id_rating', $rating->id_rating)->get()->count() == 0){
-                                $pcp = new Achievement();
-                                $pcp->id_member = $row['id'];
-                                $pcp->id_rating = $rating->id_rating;
-                                $pcp->rating_reward = $rating->reward;
-                                $pcp->save();
-                            }
+                            $achievement = new Achievement();
+                            $achievement->id_member = $row['id'];
+                            $achievement->id_rating = $rating->id;
+                            $achievement->rating_reward = $rating->reward;
+                            $achievement->save();
                         }
-                        $parent->save();
 
                         if($row['pair'] == 1) {
                             $pairing = "Pairing bonus level ".$key." ".$persen."% of ";
