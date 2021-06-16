@@ -27,7 +27,7 @@
                     <input type="text" class="form-control" placeholder="Enter Your Google Authenticator PIN Here" wire:model.defer="pin">
                     &nbsp;
                     <button wire:click="password()" class="btn btn-primary">
-                        Change Password
+                        Submit
                     </button>
                 </div>
                 <p class="text-theme-6 pl-5 pb-5">

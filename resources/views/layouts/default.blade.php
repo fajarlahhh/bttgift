@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="#">
     <meta name="keywords" content="{{ config('app.name') }}">
+    <title>{{ config('app.name') }}</title>
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" href="/images/logo.png" type="image/x-icon">
