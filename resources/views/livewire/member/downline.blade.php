@@ -43,11 +43,11 @@
                         <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
                             <div class="mr-auto">
                                 <div class="font-medium">
-                                    <a href="/downline?key={{ $item->username }}" class="text-gray-700">{{ $item->username }}</a>
+                                    <a href="/downline?key={{ $item->username }}" >{{ $item->username }}</a>
                                 </div>
-                                <div class="text-gray-600 text-xs mt-0.5">$ {!! number_format($item->contract_price) !!}</div>
+                                <div class="text-gray-700 text-xs mt-0.5">$ {!! number_format($item->contract_price) !!}</div>
                             </div>
-                            <div class="text-gray-700">
+                            <div >
                                 {{ number_format($item->right_turnover - $item->invalid_right_turnover->sum('amount')) }} | {{ number_format($item->right_turnover - $item->invalid_right_turnover->sum('amount')) }}
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                     @endif
                     {{-- <a href="" class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-15 dark:border-dark-5 text-theme-16 dark:text-gray-600">View More</a> --}}
                 </div>
-                <h3 class="text-white mt-2 font-medium">Total : $ {{ number_format($data->right_turnover - $data->invalid_right_turnover->sum('amount')) }}</h3>
+                <h3 class="mt-2 font-medium">Total : $ {{ number_format($data->right_turnover - $data->invalid_right_turnover->sum('amount')) }}</h3>
             </div>
         </div>
         @else

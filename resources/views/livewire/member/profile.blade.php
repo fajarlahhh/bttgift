@@ -88,9 +88,9 @@
                 </div>
                 <hr class="mt-1">
                 <div class="mt-2">
-                    <label for="right_referral" class="form-label text-white">Referral Link</label>
+                    <label for="right_referral" class="form-label">Referral Link</label>
                     <div class="input-group">
-                        <input id="crud-form-3" type="text" class="form-control text-gray-700" value="{{ $right_referral }}" aria-describedby="input-group-1">
+                        <input id="crud-form-3" type="text" class="form-control" value="{{ $right_referral }}" aria-describedby="input-group-1">
                         <a href="javascript:;" id="input-group-1" class="input-group-text" onclick="copyToClipboard('{{ $right_referral }}')">Copy</a>
                     </div>
                 </div>

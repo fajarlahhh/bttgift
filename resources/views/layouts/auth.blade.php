@@ -9,7 +9,7 @@
     <title>{{ config('app.name') }}</title>
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" href="/images/logo.png" type="image/x-icon">
+    <link rel="icon" href="/images/logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="/css/app.css" />
     @livewireStyles
 </head>

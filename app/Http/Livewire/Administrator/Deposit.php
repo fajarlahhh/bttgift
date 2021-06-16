@@ -136,7 +136,7 @@ class Deposit extends Component
                             return $q->min_turnover <= $kaki_kecil;
                         })->sortByDesc('min_turnover')->first();
 
-                        if ($rating && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id_rating)->get()->count() == 0) {
+                        if ($rating && Achievement::where('id_member', $row['id'])->where('id_rating', $rating->id)->count() == 0) {
                             $parent->id_rating = $rating->id;
                             $parent->save();
 

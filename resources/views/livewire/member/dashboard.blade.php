@@ -100,7 +100,7 @@
                                                     <div class="font-medium text-lg"> RIGHT TURNOVER</div>
                                                 </div>
                                                 <hr class="mt-1">
-                                                <h3 class="text-white mt-2 font-medium text-right">$ {{ number_format($downline->right_turnover - $downline->invalid_right_turnover->sum('amount')) }}</h3>
+                                                <h3 class="mt-2 font-medium text-right">$ {{ number_format($downline->right_turnover - $downline->invalid_right_turnover->sum('amount')) }}</h3>
                                             </div>
                                         </div>
                                     </div>

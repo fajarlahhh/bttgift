@@ -2,16 +2,10 @@
     <div class="block xl:grid grid-cols-2 gap-4">
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
-            <a href="" class="-intro-x flex items-center pt-5">
-                <img alt="{{ config('app.name') }}" class="w-6" src="/images/logo.png">
-                <span class="text-white text-lg ml-3"> BTT<span class="font-medium">Gift</span> </span>
-            </a>
-            <div class="my-auto">">
-                <img alt="{{ config('app.name') }}" class="-intro-x w-1/2 -mt-16" src="/images/illustration.svg">
-                <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-                    A few more clicks to
-                    <br>
-                    sign up to your account.
+            <div class="my-auto">
+                <img alt="{{ config('app.name') }}" class="-intro-x w-1/2 -mt-16" src="/images/logo.png">
+                <div class="-intro-x text-white font-medium text-4xl pl-10 leading-tight mt-10">
+                    Diamond<span class="font-medium"> Glow</span>
                 </div>
             </div>
         </div>

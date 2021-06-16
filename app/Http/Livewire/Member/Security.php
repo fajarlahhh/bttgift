@@ -15,7 +15,7 @@ class Security extends Component
         $google2fa = app('pragmarx.google2fa');
 
         if (!auth()->user()->google2fa_secret) {
-            $this->google2fa_secret = $google2fa->generateSecretKey(32);
+            $this->google2fa_secret = $google2fa->generateSecretKey(16);
         }else{
             $this->google2fa_secret = auth()->user()->google2fa_secret;
         }
