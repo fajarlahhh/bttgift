@@ -10,7 +10,7 @@
                 </span>
             </a>
             <div class="-intro-x grid font-medium grid-cols-12 gap-6 mt-2 text-dark">
-                <div class="intro-y col-span-12 lg:col-span-8 box p-5" >
+                <div class="intro-y col-span-12 lg:col-span-8 box p-5"  style="max-height: 600px; overflow-y: auto;">
                     <div class="text-center"><strong>MARKETING PLAN</strong></div>
                     <hr class="mt-2 mb-2">
                     <strong>Contract :</strong>
@@ -38,6 +38,15 @@
                     <p><i data-feather="check"></i> Min. Turnover $ 50,000 GET $ 1,000</p>
                     <p><i data-feather="check"></i> Min. Turnover $ 100,000 GET $ 2,000</p>
                     <p><i data-feather="check"></i> Min. Turnover $ 500,000 GET $ 10,000</p>
+                    <br>
+                    <strong>Withdrawal :</strong>
+                    <p><i data-feather="check"></i> Withdrawal Using BTT</p>
+                    <p><i data-feather="check"></i> Min. Withdrawal 10 % Every 2 Days</p>
+                    <p><i data-feather="check"></i> Max. Withdrawal 50 % Every 2 Days</p>
+                    <br>
+                    <strong>Renewal :</strong>
+                    <p><i data-feather="check"></i> According To The Initial Package 2 Days Grace</p>
+                    <p><i data-feather="check"></i> Bonus Reset</p>
                 </div>
             </div>
         </div>
@@ -81,6 +90,15 @@
                             <p><i data-feather="check"></i> Min. Turnover $ 50,000 GET $ 1,000</p>
                             <p><i data-feather="check"></i> Min. Turnover $ 100,000 GET $ 2,000</p>
                             <p><i data-feather="check"></i> Min. Turnover $ 500,000 GET $ 10,000</p>
+                            <br>
+                            <strong>Withdrawal :</strong>
+                            <p><i data-feather="check"></i> Withdrawal Using BTT</p>
+                            <p><i data-feather="check"></i> Min. Withdrawal 10 % Every 2 Days</p>
+                            <p><i data-feather="check"></i> Max. Withdrawal 50 % Every 2 Days</p>
+                            <br>
+                            <strong>Renewal :</strong>
+                            <p><i data-feather="check"></i> According To The Initial Package 2 Days Grace</p>
+                            <p><i data-feather="check"></i> Bonus Reset</p>
                         </div>
                     </div>
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left mt-5">
