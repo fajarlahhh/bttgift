@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class Security extends Component
 {
-    public $success, $error, $google2fa_secret, $pin, $qr_image, $type = 'password', $show = 'Show', $new_password, $old_password;
+    public $success, $error, $google2fa_secret, $pin_google, $pin, $qr_image, $type = 'password', $show = 'Show', $new_password, $old_password;
 
     public function mount()
     {
@@ -72,11 +72,11 @@ class Security extends Component
         $this->success = null;
         $this->error = null;
         $this->validate([
-            'pin' => 'required'
+            'pin_google' => 'required'
         ]);
 
         $google2fa = app('pragmarx.google2fa');
-        if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
+        if ($google2fa->verifyKey($this->google2fa_secret, $this->pin_google) === false) {
             $this->error .= "Invalid Google Authenticator PIN";
             return;
         }

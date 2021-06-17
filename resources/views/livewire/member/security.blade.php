@@ -55,7 +55,7 @@
                     <br>
                 </div>
                 <div class="flex flex-col sm:flex-row items-center pl-5 pt-5 pr-5 border-t border-gray-200 dark:border-dark-5">
-                    <input type="text" class="form-control" placeholder="Enter Your Google Authenticator PIN Here" wire:model.defer="pin">
+                    <input type="text" class="form-control" placeholder="Enter Your Google Authenticator PIN Here" wire:model.defer="pin_google">
                     &nbsp;
                     <button wire:click="registration()" class="btn btn-success">
                         Submit
