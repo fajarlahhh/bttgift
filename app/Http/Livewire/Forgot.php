@@ -8,11 +8,9 @@ use App\Models\Recovery;
 use Illuminate\Support\Str;
 use App\Jobs\SendRecoveryMail;
 use Illuminate\Support\Facades\Auth;
-use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
 
 class Forgot extends Component
 {
-    use WithRecaptcha;
     public $error, $email, $success;
 
     protected $rules = [
@@ -23,11 +21,6 @@ class Forgot extends Component
     {
         $this->reset('error');
         $this->validate();
-
-        if($this->recaptchaPasses() === false){
-            $this->error = "<p class='text-theme-6'>Recaptcha Failed</p>";
-            return;
-        }
 
         $member = null;
         $user = User::where('email', $this->email)->get();

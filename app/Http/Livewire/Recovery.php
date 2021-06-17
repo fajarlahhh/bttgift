@@ -7,11 +7,9 @@ use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
 
 class Recovery extends Component
 {
-    use WithRecaptcha;
     public $data, $token, $error, $type = 'password', $show = 'Show', $new_password, $username, $id_member, $email, $name;
 
     protected $queryString = ['token'];

@@ -21,7 +21,6 @@
                         <input type="email" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Enter Your Registered Email" wire:model.defer="email" required>
                     </div>
                     <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                        <x-honey recaptcha/>
                         <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Recover</button>&nbsp;
                         <a class="btn btn-default py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" href="/login">Sign In</a>
                     </div>
@@ -30,6 +29,7 @@
                     @endif
                 </form>
                 @endif
+                @include('includes.footer')
             </div>
         </div>
         <!-- END: Login Form -->

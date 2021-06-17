@@ -26,7 +26,6 @@
                         @enderror
                     </div>
                     <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                        <x-honey recaptcha/>
                         <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Submit</button>&nbsp;
                         <a class="btn btn-default py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" href="/login">Sign In</a>
                     </div>
@@ -39,6 +38,7 @@
                     Link expired!!!
                 </h2>
                 @endif
+                @include('includes.footer')
             </div>
         </div>
         <!-- END: Login Form -->

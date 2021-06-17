@@ -178,6 +178,7 @@ return [
 
         PragmaRX\Google2FALaravel\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
     ],
 
 ];

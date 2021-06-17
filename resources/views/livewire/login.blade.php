@@ -11,6 +11,7 @@
         <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
             <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-dark-1 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
                 <form wire:submit.prevent="login">
+                    @csrf
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                         Sign In
                     </h2>
@@ -26,13 +27,13 @@
                         <a href="/forgot">Forgot Password?</a>
                     </div>
                     <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                        <x-honey recaptcha/>
                         <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Login</button>
                     </div>
                     @if ($error)
                         {!! $error !!}
                     @endif
                 </form>
+                @include('includes.footer')
             </div>
         </div>
         <!-- END: Login Form -->

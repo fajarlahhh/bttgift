@@ -6,11 +6,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use Lukeraymonddowning\Honey\Traits\WithRecaptcha;
 
 class Login extends Component
 {
-    use WithRecaptcha;
 
     public $error, $username, $password, $referral_token, $remember = false;
     public $message;
@@ -24,11 +22,6 @@ class Login extends Component
     {
         $this->reset('error');
         $this->validate();
-
-        if($this->recaptchaPasses() === false){
-            $this->error = "<p class='text-theme-6'>Recaptcha Failed</p>";
-            return;
-        }
 
         $remember = $this->remember == 'on';
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $remember)) {

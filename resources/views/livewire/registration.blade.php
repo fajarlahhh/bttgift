@@ -133,6 +133,7 @@
                     {!! $error !!}
                 </div>
                 @endif
+                @include('includes.footer')
             </div>
         </div>
         <!-- END: Login Form -->
