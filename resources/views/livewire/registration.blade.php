@@ -9,8 +9,10 @@
                     <hr class="text-white">
                 </span>
             </a>
-            <div class="-intro-x grid font-medium grid-cols-12 gap-6 mt-5 mt-5 text-white mr-10 pr-10">
-                <div class="intro-y col-span-12 lg:col-span-12 ">
+            <div class="-intro-x grid font-medium grid-cols-12 gap-6 mt-2 text-dark">
+                <div class="intro-y col-span-12 lg:col-span-8 box p-5" >
+                    <div class="text-center"><strong>MARKETING PLAN</strong></div>
+                    <hr class="mt-2 mb-2">
                     <strong>Contract :</strong>
                     <p><i data-feather="check"></i> $50 Get 150%</p>
                     <p><i data-feather="check"></i> $100 Get 175%</p>
@@ -98,8 +100,7 @@
                     </div>
                     <div class="intro-x flex items-center text-gray-700 dark:text-gray-600 mt-4 text-xs sm:text-sm">
                         <input id="remember-me" type="checkbox" class="form-check-input border mr-2">
-                        <label class="cursor-pointer select-none" for="remember-me">I agree to the Envato</label>
-                        <a class="text-theme-1 dark:text-theme-10 ml-1" href="">Privacy Policy</a>.
+                        <label class="cursor-pointer select-none" for="remember-me">Remember Me</label>
                     </div>
                     <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                         <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Register</button>
