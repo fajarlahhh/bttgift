@@ -46,9 +46,9 @@ class Withdrawal extends Component
     {
         $data = \App\Models\Withdrawal::with('member')->orderBy('created_at');
         if ($this->process == 1) {
-            $data = $data->whereNotNull('processed_at')->whereNotNull('id_user');
+            $data = $data->whereNotNull('processed_at');
         } else {
-            $data = $data->whereNull('processed_at')->whereNull('id_user');
+            $data = $data->whereNull('processed_at');
         }
 
         $data = $data->paginate(10);
