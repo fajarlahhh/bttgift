@@ -23,7 +23,7 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                Deposit Waiting
+                                                <a href="/admin-area/deposit">Deposit Waiting</a>
                                                 <div class="ml-auto">
                                                     <i data-feather="pocket" class="report-box__icon text-theme-6"></i>
                                                 </div>
@@ -36,7 +36,7 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                Withdrawal Waiting
+                                                <a href="/admin-area/withdrawal">Withdrawal Waiting</a>
                                                 <div class="ml-auto">
                                                     <i data-feather="command" class="report-box__icon text-theme-9"></i>
                                                 </div>
@@ -49,7 +49,7 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                Achievement Waiting
+                                                <a href="/admin-area/achievement">Achievement Waiting</a>
                                                 <div class="ml-auto">
                                                     <i data-feather="check" class="report-box__icon text-theme-9"></i>
                                                 </div>
@@ -62,7 +62,7 @@
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
-                                                Members Total
+                                                <a href="/admin-area/member">Members Total</a>
                                                 <div class="ml-auto">
                                                     <i data-feather="users" class="report-box__icon text-theme-6"></i>
                                                 </div>
@@ -77,7 +77,7 @@
                                         <h3>Daily Gift</h3>
                                         <hr class="mt-2">
                                         <form wire:submit.prevent="daily" class="flex flex-col sm:flex-row">
-                                            <input type="number" step="any" class="form-control mt-3" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
+                                            <input type="number" step="any" class="form-control mt-3 text-gray-700" max="100" min="0" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
                                             <button class="btn btn-primary mt-3">Submit</button>
                                         </form>
                                     </div>

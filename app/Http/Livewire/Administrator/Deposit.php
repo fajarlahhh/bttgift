@@ -122,6 +122,9 @@ class Deposit extends Component
                 $network = $data->member->network;
 
                 $persen = 5;
+
+                $btt_price = (float)Http::get('https://indodax.com/api/summaries')->collect()->first()['btt_usdt']['low'];
+
                 foreach (collect($this->parent)->filter(function($q) use($data){
                     return $q['id'] != $data->id_member;
                 })->take(10) as $key => $row) {
@@ -144,6 +147,7 @@ class Deposit extends Component
                             $achievement->id_member = $row['id'];
                             $achievement->id_rating = $rating->id;
                             $achievement->rating_reward = $rating->reward;
+                            $achievement->accepted_btt = $rating->reward / $btt_price;
                             $achievement->save();
                         }
 

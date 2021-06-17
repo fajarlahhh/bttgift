@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Administrator;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Bonus;
 use App\Models\Daily;
@@ -40,7 +41,7 @@ class Dashboard extends Component
             $bonus = [];
             foreach (User::whereNotNull('actived_at')->whereNull('due_date')->get() as $key => $row) {
                 array_push($bonus,[
-                    'description' => 'Daily Gift',
+                    'description' => 'Daily Gift '.$this->daily_gift.' %',
                     'type' => "Daily",
                     'debit' => 0,
                     'credit' => $row->contract_price * $this->daily_gift /100,

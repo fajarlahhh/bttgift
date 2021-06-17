@@ -35,7 +35,7 @@ class Activation extends Component
     public function updated()
     {
         if ($this->method) {
-            $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
+            $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
             $payment = $this->data_payment->where('id', $this->method)->first();
             $this->name = $payment->name;
             $this->alias = $payment->alias;

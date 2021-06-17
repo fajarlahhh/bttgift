@@ -6,12 +6,12 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Withdrawal extends Component
+class Achievement extends Component
 {
     use WithPagination;
 
-    public $process = 0, $month, $year, $key, $information;
-    protected $queryString = ['process'];
+    public $process = 0, $month, $year, $key, $information, $search;
+    protected $queryString = ['process', 'search'];
 
     public function cancel()
     {
@@ -34,29 +34,32 @@ class Withdrawal extends Component
         $this->validate([
             'information' => 'required'
         ]);
-        $wd = \App\Models\Withdrawal::findOrFail($this->key);
-        $wd->process_information = auth()->user()->username.", ".$this->information;
-        $wd->processed_at = Carbon::now();
-        $wd->save();
+
+        $achievement = \App\Models\Achievement::findOrFail($this->key);
+        $achievement->member_wallet = $achievement->member->wallet;
+        $achievement->process_information = auth()->user()->username.", ".$this->information;
+        $achievement->processed_at = Carbon::now();
+        $achievement->save();
         $this->key = null;
         $this->information = null;
     }
 
     public function render()
     {
-        $data = \App\Models\Withdrawal::with('member')->orderBy('created_at');
+
+        $data = \App\Models\Achievement::with('rating')->with('member')->orderBy('created_at');
         if ($this->process == 1) {
-            $data = $data->whereNotNull('processed_at')->whereNotNull('id_user');
+            $data = $data->where('processed_at', 'like', '%'.$this->search.'%')->whereNotNull('processed_at');
         } else {
-            $data = $data->whereNull('processed_at')->whereNull('id_user');
+            $data = $data->whereNull('processed_at');
         }
 
         $data = $data->paginate(10);
-        return view('livewire.administrator.withdrawal', [
+        return view('livewire.administrator.achievement', [
             'data' => $data,
             'no' => ($this->page - 1) * 10
         ])->extends('layouts.default', [
-            'menu' => 'withdrawal'
+            'menu' => 'achievement'
         ]);
     }
 }

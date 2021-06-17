@@ -41,8 +41,8 @@ class Withdrawal extends Component
         $this->emit('reinitialize');
         $this->submit = false;
         $this->fee = ($this->amount?:0) * $this->fee_percentage / 100;
+        $this->btt_price = (float)Http::get('https://indodax.com/api/summaries')->collect()->first()['btt_usdt']['low'];
         $this->btt = round(($this->amount - $this->fee) / $this->btt_price);
-        $this->btt_price = (float)Http::get('https://indodax.com//api/summaries')->collect()->first()['btt_usdt']['low'];
         $this->submit = true;
     }
 
@@ -104,7 +104,7 @@ class Withdrawal extends Component
 
         DB::transaction(function () {
             $withdrawal = new \App\Models\Withdrawal();
-            $withdrawal->wallet = $this->address;
+            $withdrawal->member_wallet = $this->address;
             $withdrawal->amount = $this->amount;
             $withdrawal->fee = $this->fee;
             $withdrawal->acceptance = $this->amount - $this->fee;

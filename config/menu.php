@@ -20,23 +20,33 @@ return [
         [
             'icon' => 'check',
             'title' => 'Achievement',
-            'link' => '/achievement'
+            'link' => '/admin-area/achievement'
         ],
         [
             'icon' => 'info',
             'title' => 'Information',
-            'link' => '/information'
+            'link' => '/admin-area/information'
         ],
         [
             'icon' => 'gift',
             'title' => 'Gift',
-            'link' => '/gift'
+            'link' => '/admin-area/gift'
         ],
         [
             'icon' => 'key',
             'title' => 'Security',
-            'link' => '/security'
+            'link' => '/admin-area/security'
         ],
+        [
+            'icon' => 'share-2',
+            'title' => 'Member',
+            'link' => '/admin-area/member'
+        ],
+        [
+            'icon' => 'users',
+            'title' => 'User',
+            'link' => '/admin-area/user'
+        ]
     ],
     'member' => [
         [
