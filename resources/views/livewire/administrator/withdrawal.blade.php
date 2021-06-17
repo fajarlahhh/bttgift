@@ -27,7 +27,7 @@
                             <td class="border-b whitespace-nowrap">{{ $row->member->username }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->member->wallet }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->accepted_btt }}</td>
-                            <td class="border-b whitespace-nowrap">
+                            <td class="border-b whitespace-nowrap text-right">
                                 @if((int)$key===$row->getKey())
                                 <form wire:submit.prevent="send">
                                     @error('information')

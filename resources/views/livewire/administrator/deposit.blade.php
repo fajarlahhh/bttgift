@@ -38,7 +38,7 @@
                                 <a href="{{ Storage::url($row->file) }}" target="_blank" class="btn btn-warning">File</a><br>
                                 {{ $row->information }}
                             </td>
-                            <td class="border-b whitespace-nowrap">
+                            <td class="border-b whitespace-nowrap text-right">
                                 @if((int)$key===$row->getKey())
                                 <a href="javascript:;" wire:click="proccess()" class="btn btn-danger">Yes, Proccess</a>
                                 <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>

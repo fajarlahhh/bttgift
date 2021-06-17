@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/deposit', \App\Http\Livewire\Administrator\Deposit::class);
             Route::get('/withdrawal', \App\Http\Livewire\Administrator\Withdrawal::class);
             Route::get('/achievement', \App\Http\Livewire\Administrator\Achievement::class);
+            Route::get('/information', \App\Http\Livewire\Administrator\Information\Index::class);
+            Route::get('/information/add', \App\Http\Livewire\Administrator\Information\Add::class);
         });
     });
 });
