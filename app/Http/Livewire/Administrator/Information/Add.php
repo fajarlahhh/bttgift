@@ -26,6 +26,7 @@ class Add extends Component
 
     public function render()
     {
+        $this->emit('reinitialize');
         return view('livewire.administrator.information.add')->extends('layouts.default', [
             'menu' => 'information'
         ]);

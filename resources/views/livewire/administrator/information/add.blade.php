@@ -5,14 +5,14 @@
                 <form wire:submit.prevent="save">
                     <div>
                         <label for="title" class="form-label">Title</label>
-                        <input id="title" type="text" class="form-control" wire:model="title" placeholder="Title" autocomplete="off">
+                        <input id="title" type="text" class="form-control" wire:model.defer="title" placeholder="Title" autocomplete="off">
                         @error('title')
                         <div class="text-theme-6 mt-2">This field is required</div>
                         @enderror
                     </div>
                     <div class="mt-3">
                         <label for="content" class="form-label">Content</label>
-                        <textarea id="mytextarea" id="content" wire:model="content"></textarea>
+                        <textarea id="mytextarea" id="content" wire:model.defer="content"></textarea>
                     </div>
                     <button class="btn btn-success mt-3">Submit</button>
                 </form>
@@ -29,6 +29,16 @@
             toolbar_mode: 'floating',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
+        });
+        Livewire.on('reinitialize', id => {
+            tinymce.init({
+                selector: 'mytextarea',
+                plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+                toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+                toolbar_mode: 'floating',
+                tinycomments_mode: 'embedded',
+                tinycomments_author: 'Author name',
+            });
         });
     </script>
     @endpush
