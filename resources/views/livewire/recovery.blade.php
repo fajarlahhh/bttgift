@@ -3,10 +3,7 @@
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
             <div class="my-auto">
-                <img alt="{{ config('app.name') }}" class="-intro-x w-1/2 -mt-16" src="/images/logo.png">
-                <div class="-intro-x text-white font-medium text-4xl pl-10 leading-tight mt-10">
-                    Diamond<span class="font-medium"> Glow</span>
-                </div>
+                <img alt="{{ config('app.name') }}" class="-intro-x w-1/2 -mt-16" src="/images/logo.svg">
             </div>
         </div>
         <!-- END: Login Info -->
