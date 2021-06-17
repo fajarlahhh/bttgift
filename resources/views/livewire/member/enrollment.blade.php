@@ -63,13 +63,8 @@
                 <small>The amount of {{ $name }} to be transferred must match the amount above</small>
             </div>
             @else
-            <div wire:loading class="grid grid-cols-12 gap-6">
-                    <div class="col-span-12 lg:col-span-6">
-                        <h4>Please Wait...</h4>
-                    </div>
-            </div>
             <form wire:submit.prevent="submit" >
-                <div class="grid grid-cols-12 gap-6" wire:loading.remove>
+                <div class="grid grid-cols-12 gap-6">
                     <div class="col-span-12 lg:col-span-6">
                         <div>
                             <label for="username" class="form-label">Username</label>

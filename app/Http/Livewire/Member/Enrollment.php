@@ -126,7 +126,7 @@ class Enrollment extends Component
             return;
         }
 
-        $indodax = Http::get('https://indodax.com//api/summaries')->collect()->first();
+        $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
         $payment = $this->data_payment->where('id', $this->payment_method)->first();
         $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
         $this->payment_name = $payment->name;
