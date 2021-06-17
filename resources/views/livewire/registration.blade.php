@@ -2,14 +2,14 @@
     <div class="block xl:grid grid-cols-2 gap-4">
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
-            <a href="" class="-intro-x flex items-center pt-5">
+            <a href="/" class="-intro-x flex items-center pt-5">
                 <img alt="{{ config('app.name') }}" class="w-10" src="/images/favicon.svg">
                 <span class="text-white text-lg ml-3">
                     Diamond <span class="font-medium">Glow</span>
                     <hr class="text-white">
                 </span>
             </a>
-            <div class="-intro-x grid grid-cols-12 gap-6 mt-5 mt-5 text-white mr-10 pr-10">
+            <div class="-intro-x grid font-medium grid-cols-12 gap-6 mt-5 mt-5 text-white mr-10 pr-10">
                 <div class="intro-y col-span-12 lg:col-span-12 ">
                     <strong>Contract :</strong>
                     <p><i data-feather="check"></i> $50 Get 150%</p>
@@ -22,7 +22,7 @@
                     <p><i data-feather="check"></i> $10,000 Get 350%</p>
                     <br>
                     <strong>Bonuses :</strong>
-                    <p><i data-feather="check"></i> Daily Passive 0.25% - UNLIMITED</p>
+                    <p><i data-feather="check"></i> Daily Passive 0.25% - Unlimited</p>
                     <p><i data-feather="check"></i> Referral Active 10%</p>
                     <br>
                     <strong>Pairing :</strong>
@@ -46,7 +46,13 @@
                 <form wire:submit.prevent="submit">
                     <div class="intro-y mt-2 xl:hidden">
                         <div class="alert alert-dark show">
-                            <h3 class="text-2xl text-center">Marketing Plan</h3>
+
+                            <h3 class="text-2xl text-center">
+
+                            <a href="/" class="-intro-x flex text-center">
+                                <img alt="{{ config('app.name') }}" class="w-20" style="margin:auto" src="/images/favicon.svg">
+                            </a>
+                            Marketing Plan</h3>
                             <hr class="mt-2 mb-2">
                             <strong>Contract :</strong>
                             <p><i data-feather="check"></i> $50 Get 150%</p>
@@ -59,7 +65,7 @@
                             <p><i data-feather="check"></i> $10,000 Get 350%</p>
                             <br>
                             <strong>Bonuses :</strong>
-                            <p><i data-feather="check"></i> Daily Passive 0.25% - UNLIMITED</p>
+                            <p><i data-feather="check"></i> Daily Passive 0.25% - Unlimited</p>
                             <p><i data-feather="check"></i> Referral Active 10%</p>
                             <br>
                             <strong>Pairing :</strong>
@@ -76,7 +82,7 @@
                         </div>
                     </div>
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left mt-5">
-                        Sign Up
+                        Sign Up Here
                     </h2>
                     <div class="intro-x mt-8">
                         <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" wire:model.defer="username" placeholder="Username" required>
