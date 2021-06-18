@@ -2,9 +2,9 @@
     <div class="intro-y box mt-5">
         <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
             <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
-                <select data-placeholder="Contract" wire:model="process" class="form-select w-full">
-                    <option value="0" selected>Not Processed</option>
-                    <option value="1" selected>Processed</option>
+                <select data-placeholder="Contract" wire:model="active" class="form-select w-full">
+                    <option value="0">Not Actived</option>
+                    <option value="1">Actived</option>
                 </select>
             </div>
         </div>
@@ -15,12 +15,12 @@
                         <tr class="bg-gray-700 dark:bg-dark-1 text-white">
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Requisite</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Method</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Amount</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">To Address</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Time</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Proof Of Payment</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Contract</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Turnover</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Registered At</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Actived At</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap"></th>
                         </tr>
                     </thead>
@@ -28,23 +28,24 @@
                         @foreach ($data as $row)
                         <tr>
                             <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
-                            <td class="border-b whitespace-nowrap">{{ $row->member->username }}</td>
-                            <td class="border-b whitespace-nowrap">{{ $row->requisite }}</td>
-                            <td class="border-b whitespace-nowrap">{{ $row->coin_name }}</td>
-                            <th class="border-b whitespace-nowrap">{{ number_format($row->amount, 5) }}</th>
+                            <td class="border-b whitespace-nowrap">{{ $row->username }}</td>
+                            <td class="border-b whitespace-nowrap">{{ $row->name }}</td>
+                            <th class="border-b whitespace-nowrap">{{ number_format($row->contract_price) }}</th>
                             <td class="border-b whitespace-nowrap">{{ $row->wallet }}</td>
-                            <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
-                            <td class="border-b">
-                                <a href="{{ Storage::url($row->file) }}" target="_blank" class="btn btn-warning">File</a><br>
-                                {{ $row->information }}
+                            <td class="border-b whitespace-nowrap">
+                                Left : $ {{ number_format($row->left_turnover) }}<br>
+                                Right : $ {{ number_format($row->right_turnover) }}
                             </td>
+                            <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
+                            <td class="border-b whitespace-nowrap">{{ $row->actived_at }}</td>
                             <td class="border-b whitespace-nowrap text-right">
+                                @if (!$row->actived_at)
                                 @if((int)$key===$row->getKey())
-                                <a href="javascript:;" wire:click="process()" class="btn btn-success">Activate</a>
-                                <a href="javascript:;" wire:click="delete()" class="btn btn-danger">Delete</a>
+                                <a href="javascript:;" wire:click="delete()" class="btn btn-danger">Yes</a>
                                 <a wire:click="cancel()" href="javascript:;" class="btn btn-warning">Cancel</a>
                                 @else
-                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-primary">Proccess</a>
+                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-warning">Delete</a>
+                                @endif
                                 @endif
                             </td>
                         </tr>
