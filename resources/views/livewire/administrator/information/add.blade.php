@@ -10,9 +10,9 @@
                         <div class="text-theme-6 mt-2">This field is required</div>
                         @enderror
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3" wire:ignore>
                         <label for="content" class="form-label">Content</label>
-                        <textarea id="mytextarea" id="content" wire:model.defer="content"></textarea>
+                        <div id="mytextarea" id="content" wire:model.defer="content" ></div>
                     </div>
                     <button class="btn btn-success mt-3">Submit</button>
                 </form>
@@ -23,22 +23,15 @@
     <script src="https://cdn.tiny.cloud/1/qqxdeqhgwbgfazzgno304z8rpf492vx5yid4pl10cguuxubb/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
+            height: 300,
+            menubar: false,
             selector: '#mytextarea',
-            plugins: 'autolink lists media table',
-            toolbar: 'addcomment showcomments checklist code permanentpen table',
             toolbar_mode: 'floating',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-        });
-        Livewire.on('reinitialize', id => {
-            tinymce.init({
-                selector: '#mytextarea',
-                plugins: 'autolink lists media table',
-                toolbar: 'addcomment showcomments checklist code permanentpen table',
-                toolbar_mode: 'floating',
-                tinycomments_mode: 'embedded',
-                tinycomments_author: 'Author name',
-            });
+            setup: function(editor) {
+                editor.on('change', function(e) {
+                    window.livewire.emit('set:setcontent', editor.getContent());
+                });
+            }
         });
     </script>
     @endpush

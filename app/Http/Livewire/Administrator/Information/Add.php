@@ -8,9 +8,15 @@ class Add extends Component
 {
     public $title, $content;
 
+    protected $listeners = ['set:setcontent' => 'setContent'];
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
     public function save()
     {
-        dd($this->content);
         $this->validate([
             'title' => 'required',
             'content' => 'required'
@@ -26,7 +32,6 @@ class Add extends Component
 
     public function render()
     {
-        $this->emit('reinitialize');
         return view('livewire.administrator.information.add')->extends('layouts.default', [
             'menu' => 'information'
         ]);
