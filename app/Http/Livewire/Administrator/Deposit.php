@@ -46,7 +46,9 @@ class Deposit extends Component
 
     public function delete()
     {
-        \App\Models\Deposit::findOrFail($this->key)->delete();
+        $data = \App\Models\Deposit::findOrFail($this->key);
+        File::delete(public_path(Storage::url($data->file)));
+        $data->delete();
     }
 
     public function setParent($data)
