@@ -124,7 +124,7 @@
                                         @error('file')
                                         <div class="text-theme-6 mt-2">Image file is required</div>
                                         @enderror
-                                        <textarea wire:model="information" class="form-control mt-3" cols="30" rows="2" placeholder="Deposit Information">
+                                        <textarea wire:model="information" class="form-control mt-3" cols="30" rows="2" placeholder="Insert TX ID Here">
                                         </textarea>
                                         @error('information')
                                         <div class="text-theme-6 mt-2">This field is required</div>
