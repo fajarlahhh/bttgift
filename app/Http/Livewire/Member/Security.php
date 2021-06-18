@@ -58,6 +58,7 @@ class Security extends Component
             $this->validate([
                 'old_password' => 'required',
                 'new_password' => 'required'
+            ]);
         }
 
         $user = User::findOrFail(auth()->id());
