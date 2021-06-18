@@ -86,12 +86,8 @@ class Activation extends Component
         if (auth()->user()->registration_waiting_fund->count() == 0) {
             DB::transaction(function () {
                 $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at', 'desc')->first();
-                if ($ticket) {
-                    $this->ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
-                }else{
-                    $this->ticket = "00001";
-                }
-                $this->amount = $this->amount.".".$this->ticket;
+
+                $this->amount = $this->amount + $this->ticket;
                 $ticket = new Ticket();
                 $ticket->contract_price = auth()->user()->contract_price;
                 $ticket->kode = $this->ticket;

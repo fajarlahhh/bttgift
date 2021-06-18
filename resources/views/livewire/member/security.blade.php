@@ -24,8 +24,10 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row items-center pl-5 pt-5 pr-5 border-t border-gray-200 dark:border-dark-5">
+                    @if (auth()->user()->google2fa_secret)
                     <input type="text" class="form-control" placeholder="Enter Your Google Authenticator PIN Here" wire:model.defer="pin">
                     &nbsp;
+                    @endif
                     <button wire:click="password()" class="btn btn-primary">
                         Submit
                     </button>

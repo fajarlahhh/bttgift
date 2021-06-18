@@ -50,18 +50,27 @@ class Withdrawal extends Component
     {
         $this->reset(['error', 'success']);
 
-        $this->validate([
-            'amount' => 'required',
-            'address' => 'required',
-            'fee' => 'required',
-            'pin' => 'required'
-        ]);
+        if (auth()->user()->google2fa_secret) {
+            $this->validate([
+                'amount' => 'required',
+                'address' => 'required',
+                'fee' => 'required',
+                'pin' => 'required'
+            ]);
 
-        $google2fa = app('pragmarx.google2fa');
-        if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
-            $this->error .= "Invalid Google Authenticator PIN";
-            return;
+            $google2fa = app('pragmarx.google2fa');
+            if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
+                $this->error .= "Invalid Google Authenticator PIN";
+                return;
+            }
+        } else {
+            $this->validate([
+                'amount' => 'required',
+                'address' => 'required',
+                'fee' => 'required'
+            ]);
         }
+
 
         if (auth()->user()->due_date) {
             $this->error .= "Your account is in grace period. Renew your contract here before ".auth()->user()->due_date;

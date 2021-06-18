@@ -34,21 +34,34 @@ class Profile extends Component
     {
         $this->error = null;
         $this->success = null;
-        $this->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required',
-            'contract' => 'required',
-            'wallet' => 'required',
-            'left_referral' => 'required',
-            'right_referral' => 'required',
-            'pin' => 'required'
-        ]);
 
-        $google2fa = app('pragmarx.google2fa');
-        if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
-            $this->error .= "Invalid Google Authenticator PIN";
-            return;
+        if (auth()->user()->google2fa_secret) {
+            $this->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'email' => 'required',
+                'contract' => 'required',
+                'wallet' => 'required',
+                'left_referral' => 'required',
+                'right_referral' => 'required',
+                'pin' => 'required'
+            ]);
+
+            $google2fa = app('pragmarx.google2fa');
+            if ($google2fa->verifyKey(auth()->user()->google2fa_secret, $this->pin) === false) {
+                $this->error .= "Invalid Google Authenticator PIN";
+                return;
+            }
+        }else{
+            $this->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'email' => 'required',
+                'contract' => 'required',
+                'wallet' => 'required',
+                'left_referral' => 'required',
+                'right_referral' => 'required'
+            ]);
         }
 
         $user = User::findOrFail(auth()->id());

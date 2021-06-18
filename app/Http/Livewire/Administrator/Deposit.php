@@ -20,8 +20,8 @@ class Deposit extends Component
 {
     use WithPagination;
 
-    public $proccess = 0, $month, $year, $key, $parent = [];
-    protected $queryString = ['proccess', 'month', 'year'];
+    public $process = 0, $month, $year, $key, $parent = [];
+    protected $queryString = ['process', 'month', 'year'];
 
     public function mount()
     {
@@ -42,6 +42,11 @@ class Deposit extends Component
     public function updated()
     {
         $this->resetPage();
+    }
+
+    public function delete()
+    {
+        \App\Models\Deposit::findOrFail($this->key)->delete();
     }
 
     public function setParent($data)
@@ -71,7 +76,7 @@ class Deposit extends Component
             $this->setParent($data->parent);
     }
 
-    public function proccess()
+    public function process()
     {
         DB::transaction(function () {
             $time = now();
@@ -229,7 +234,7 @@ class Deposit extends Component
     public function render()
     {
         $data = \App\Models\Deposit::with('member')->orderBy('created_at')->whereNotNull('file')->whereNotNull('information');
-        if ($this->proccess == 1) {
+        if ($this->process == 1) {
             $data = $data->whereNotNull('processed_at')->whereNotNull('id_user');
         } else {
             $data = $data->whereNull('processed_at')->whereNull('id_user');

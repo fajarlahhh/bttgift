@@ -40,10 +40,11 @@
                             </td>
                             <td class="border-b whitespace-nowrap text-right">
                                 @if((int)$key===$row->getKey())
-                                <a href="javascript:;" wire:click="proccess()" class="btn btn-danger">Yes, Proccess</a>
-                                <a wire:click="cancel()" href="javascript:;" class="btn btn-success">Cancel</a>
+                                <a href="javascript:;" wire:click="process()" class="btn btn-success">Activate</a>
+                                <a href="javascript:;" wire:click="delete()" class="btn btn-danger">Delete</a>
+                                <a wire:click="cancel()" href="javascript:;" class="btn btn-warning">Cancel</a>
                                 @else
-                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-danger">Proccess</a>
+                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-primary">Proccess</a>
                                 @endif
                             </td>
                         </tr>

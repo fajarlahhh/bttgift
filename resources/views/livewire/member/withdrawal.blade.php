@@ -80,6 +80,7 @@
                             </p>
                         </small>
                     </div>
+                    @if (auth()->user()->google2fa_secret)
                     <hr class="mt-5">
                     <div class="mt-3">
                         <label for="username" class="form-label">Google Auth PIN</label>
@@ -88,6 +89,7 @@
                         <div class="text-theme-6 mt-2">This field is required</div>
                         @enderror
                     </div>
+                    @endif
                     @if ($submit == true)
                     <button class="btn btn-success mt-3">Submit</button>
                     @endif

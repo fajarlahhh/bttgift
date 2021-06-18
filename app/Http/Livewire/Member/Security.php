@@ -42,16 +42,22 @@ class Security extends Component
     {
         $this->success = null;
         $this->error = null;
-        $this->validate([
-            'old_password' => 'required',
-            'new_password' => 'required',
-            'pin' => 'required'
-        ]);
+        if (auth()->user()->google2fa_secret) {
+            $this->validate([
+                'old_password' => 'required',
+                'new_password' => 'required',
+                'pin' => 'required'
+            ]);
 
-        $google2fa = app('pragmarx.google2fa');
-        if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
-            $this->error .= "Invalid Google Authenticator PIN";
-            return;
+            $google2fa = app('pragmarx.google2fa');
+            if ($google2fa->verifyKey($this->google2fa_secret, $this->pin) === false) {
+                $this->error .= "Invalid Google Authenticator PIN";
+                return;
+            }
+        }else{
+            $this->validate([
+                'old_password' => 'required',
+                'new_password' => 'required'
         }
 
         $user = User::findOrFail(auth()->id());
