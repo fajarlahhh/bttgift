@@ -41,7 +41,7 @@ class Member extends Component
             $data = $data->whereNull('actived_at');
         }
 
-        $data = $data->paginate(5);
+        $data = $data->paginate(10);
         return view('livewire.administrator.member', [
             'data' => $data,
             'no' => ($this->page - 1) * 10
