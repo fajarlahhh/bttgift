@@ -18,7 +18,7 @@ class Dashboard extends Component
 
     public function mount()
     {
-        $this->daily = Daily::where('date', date('Y-m-d'))->count();
+        $this->daily = Daily::where('date', date('Y-m-d'))->whereNotNull('file')->whereNotNull('information')->count();
 
         $this->deposit = Deposit::whereNull('processed_at')->count();
         $this->withdrawal = Withdrawal::whereNull('processed_at')->count();
