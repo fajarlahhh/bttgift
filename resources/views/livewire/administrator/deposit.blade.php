@@ -15,6 +15,8 @@
                         <tr class="bg-gray-700 dark:bg-dark-1 text-white">
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Contract</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Requisite</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Method</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Amount</th>
@@ -29,6 +31,8 @@
                         <tr>
                             <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->member->username }}</td>
+                            <td class="border-b whitespace-nowrap">{{ $row->member->email }}</td>
+                            <td class="border-b whitespace-nowrap">{{ $row->member->contract_price }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->requisite }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->coin_name }}</td>
                             <th class="border-b whitespace-nowrap">{{ number_format($row->amount, 5) }}</th>
