@@ -39,16 +39,20 @@
                             <td class="border-b whitespace-nowrap">{{ $row->wallet }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
                             <td class="border-b">
+                                @if ($row->file)
                                 <a href="{{ Storage::url($row->file) }}" target="_blank" class="btn btn-warning">File</a><br>
                                 {{ $row->information }}
+                                @endif
                             </td>
                             <td class="border-b whitespace-nowrap text-right">
+                                @if ($row->file)
                                 @if((int)$key===$row->getKey())
                                 <a href="javascript:;" wire:click="process()" class="btn btn-success">Activate</a>
                                 <a href="javascript:;" wire:click="delete()" class="btn btn-danger">Delete</a>
                                 <a wire:click="cancel()" href="javascript:;" class="btn btn-warning">Cancel</a>
                                 @else
                                 <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-primary">Proccess</a>
+                                @endif
                                 @endif
                             </td>
                         </tr>

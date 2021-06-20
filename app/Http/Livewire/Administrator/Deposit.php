@@ -235,7 +235,7 @@ class Deposit extends Component
 
     public function render()
     {
-        $data = \App\Models\Deposit::with('member')->orderBy('created_at')->whereNotNull('file')->whereNotNull('information');
+        $data = \App\Models\Deposit::with('member')->orderBy('created_at');
         if ($this->process == 1) {
             $data = $data->whereNotNull('processed_at');
         } else {
