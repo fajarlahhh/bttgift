@@ -154,7 +154,7 @@
                             </div>
                             <div class="mt-3">
                                 <label for="method" class="form-label">Activation Method</label>
-                                <select data-placeholder="Contract" wire:model="method" class="form-select w-full">
+                                <select data-placeholder="Contract" wire:model.defer="method" class="form-select w-full">
                                     <option value="" selected>-- Choose Method --</option>
                                     @foreach ($data_payment as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->description }}</option>
@@ -164,9 +164,9 @@
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
                             </div>
-                            @if ($method)
+                            {{-- @if ($method) --}}
                             <hr class="mt-3 mb-3">
-                            <strong>Please Send {{ $description }} ({{ $name}})</strong>
+                            {{-- <strong>Please Send {{ $description }} ({{ $name}})</strong>
                             <div class="mt-3">
                                 <label for="amount" class="form-label">Amount</label>
                                 <input id="amount" type="text" class="form-control" value="{{ $amount }}" placeholder="Amount" readonly>
@@ -180,9 +180,9 @@
                                 @error('wallet')
                                 <div class="text-theme-6 mt-2">This field is required</div>
                                 @enderror
-                            </div>
-                            <button class="btn btn-primary mt-5">Submit</button>
-                            @endif
+                            </div> --}}
+                            <button class="btn btn-primary">Submit</button>
+                            {{-- @endif --}}
                         </form>
                     </div>
                     @endif
