@@ -27,7 +27,14 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $row)
-                        <tr>
+                        @php
+                            $now = new \Carbon\Carbon();
+                            $registered = new \Carbon\Carbon($row->created_at);
+                        @endphp
+                        <tr
+                        @if ($registered->diffInDays($now) > 2 && $active == 0)
+                            class="bg-theme-6 text-white"
+                        @endif>
                             <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->username }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->email }}</td>
