@@ -16,7 +16,7 @@ class Activation extends Component
 {
     use WithFileUploads;
 
-    public $data_payment, $error, $contract, $method, $wallet, $coin, $amount, $name, $alias, $description, $deposit, $time, $ticket, $file, $information;
+    public $data_payment, $error, $contract, $method, $wallet, $coin, $amount, $name, $description, $deposit, $time, $ticket, $file, $information;
 
     public function mount()
     {
@@ -30,20 +30,6 @@ class Activation extends Component
         }
         $this->data_payment = Payment::all();
         $this->contract = "$ ".number_format(auth()->user()->contract_price);
-    }
-
-    public function updated()
-    {
-        // if ($this->method) {
-        //     $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
-        //     $payment = $this->data_payment->where('id', $this->method)->first();
-        //     $this->name = $payment->name;
-        //     $this->alias = $payment->alias;
-        //     $this->wallet = $payment->wallet;
-        //     $this->description = $payment->description;
-        //     $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
-        //     $this->amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
-        // }
     }
 
     public function done()
@@ -81,19 +67,12 @@ class Activation extends Component
             'method' => 'required',
         ]);
 
-
         if (auth()->user()->registration_waiting_fund->count() == 0) {
             DB::transaction(function () {
-
                 $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
                 $payment = $this->data_payment->where('id', $this->method)->first();
-                $this->name = $payment->name;
-                $this->alias = $payment->alias;
-                $this->wallet = $payment->wallet;
-                $this->description = $payment->description;
                 $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
                 $this->amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
-
                 $data_ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at', 'desc')->get();
                 if($data_ticket->count() > 0){
                     $this->ticket = $data_ticket->first()->kode;
@@ -109,8 +88,8 @@ class Activation extends Component
 
                 $deposit = new Deposit();
                 $deposit->id_member = auth()->id();
-                $deposit->coin_name = $this->name;
-                $deposit->wallet = $this->wallet;
+                $deposit->coin_name = $payment->name;
+                $deposit->wallet = $payment->wallet;
                 $deposit->amount = $this->amount + $this->ticket;
                 $deposit->requisite = 'Registration';
                 $deposit->save();
