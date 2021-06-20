@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Administrator;
 
 use App\Models\User;
+use App\Models\Deposit;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class Member extends Component
     public function delete()
     {
         $data = User::findOrFail($this->key);
-        if (Depost::where('id_member', $data->id)->count() > 0) {
+        if (Deposit::where('id_member', $data->id)->count() > 0) {
             $this->error = 'The member has already made a payment';
             return;
         }else{
