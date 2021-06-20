@@ -47,7 +47,7 @@ class Enrollment extends Component
         }
         $this->data_payment = Payment::all();
         $this->data_contract = Contract::all();
-        $this->data_upline = User::where('role', 1)->get();
+        $this->data_upline = User::where('role', 1)->whereRaw('network like "'.auth()->user()->network.auth()->user()->id.'%"')->get();
     }
 
     public function done()

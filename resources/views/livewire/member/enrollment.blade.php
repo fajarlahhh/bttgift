@@ -103,8 +103,11 @@
                             <div wire:ignore>
                                 <label for="upline" class="form-label">Referral</label>
                                 <select data-placeholder="Contract" id="upline" class="form-select text-gray-700 border-gray-300" onchange="setUpline(this)" required>
+                                    <option value="{{ auth()->id() }}">{{ auth()->user()->username }}</option>
                                     @foreach ($data_upline as $row)
-                                    <option value="{{ $row->getKey() }}">{{ $row->username }}</option>
+                                    <option value="{{ $row->getKey() }}" @if ($upline == $row->getKey())
+                                        selected
+                                    @endif>{{ $row->username }}</option>
                                     @endforeach
                                 </select>
                             </div>
