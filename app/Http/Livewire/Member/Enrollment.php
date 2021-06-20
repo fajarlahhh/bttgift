@@ -125,15 +125,16 @@ class Enrollment extends Component
         if($this->error){
             return;
         }
+        $this->ticket = 0;
+        $this->payment_amount = 0;
 
-        $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
-        $payment = $this->data_payment->where('id', $this->payment_method)->first();
-        $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
-        $this->payment_name = $payment->name;
-        $this->payment_wallet = $payment->wallet;
-        $this->payment_amount = (float)ceil(auth()->user()->contract_price * 15000 / $payment_idr);
 
         DB::transaction(function () {
+            $indodax = Http::get('https://indodax.com/api/summaries')->collect()->first();
+            $payment = $this->data_payment->where('id', $this->payment_method)->first();
+            $payment_idr = (float)$indodax[strtolower($payment->alias)]['last'];
+            $this->payment_amount = (float)ceil($this->contract * 15000 / $payment_idr);
+
             $referral = date('Ymd');
             $upline = User::where('id', $this->upline)->first();
 
@@ -151,13 +152,14 @@ class Enrollment extends Component
             $user->right_referral = md5($this->username)."1";
             $user->save();
 
-            $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', $this->contract)->orderBy('created_at', 'desc')->first();
-            if ($ticket) {
-                $this->ticket = sprintf('%05s', (integer)substr($ticket->kode, 0, 5) + 1);
+            $data_ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', $this->contract)->orderBy('created_at', 'desc')->get();
+            if($data_ticket->count() > 0){
+                $this->ticket = $data_ticket->first()->kode;
             }else{
-                $this->ticket = "00001";
+                $this->ticket = 1;
             }
-            $this->payment_amount = $this->payment_amount.".".$this->ticket;
+
+            $this->payment_amount = $this->payment_amount + $this->ticket;
             $ticket = new Ticket();
             $ticket->contract_price = $this->contract;
             $ticket->kode = $this->ticket;
@@ -166,8 +168,8 @@ class Enrollment extends Component
 
             $deposit = new Deposit();
             $deposit->id_member = $user->id;
-            $deposit->coin_name = $this->payment_name;
-            $deposit->wallet = $this->payment_wallet;
+            $deposit->coin_name = $payment->payment_name;
+            $deposit->wallet = $payment->payment_wallet;
             $deposit->amount = $this->payment_amount;
             $deposit->requisite = 'Registration';
             $deposit->save();

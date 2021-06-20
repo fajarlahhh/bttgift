@@ -35,7 +35,7 @@
                             <td class="border-b whitespace-nowrap">{{ $row->member->contract_price }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->requisite }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->coin_name }}</td>
-                            <th class="border-b whitespace-nowrap">{{ number_format($row->amount, 5) }}</th>
+                            <th class="border-b whitespace-nowrap">{{ $row->amount }}</th>
                             <td class="border-b whitespace-nowrap">{{ $row->wallet }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
                             <td class="border-b">
