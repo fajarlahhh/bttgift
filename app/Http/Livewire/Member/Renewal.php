@@ -89,7 +89,7 @@ class Renewal extends Component
             DB::transaction(function () {
 
                 $ticket = Ticket::where('date', date('Y-m-d'))->where('contract_price', auth()->user()->contract_price)->orderBy('created_at', 'desc')->get();
-                if($ticket->count() == 0){
+                if($ticket->count() > 0){
                     $this->ticket = $ticket->first()->kode;
                 }else{
                     $this->ticket = 1;
