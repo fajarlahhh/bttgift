@@ -29,7 +29,7 @@ class Member extends Component
     public function delete()
     {
         $data = User::findOrFail($this->key);
-        if (Deposit::where('id_member', $data->id)->get()->count() > 0) {
+        if (Deposit::where('id_member', $data->id)->whereNotNull('file')->whereNotNull('information')->count() > 0) {
             $this->error = 'The member has already made a payment';
             return;
         }else{
