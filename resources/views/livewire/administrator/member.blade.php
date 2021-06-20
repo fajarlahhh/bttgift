@@ -53,7 +53,7 @@
                                 <a href="javascript:;" wire:click="delete()" class="btn btn-danger">Yes</a>
                                 <a wire:click="cancel()" href="javascript:;" class="btn btn-warning">Cancel</a>
                                 @else
-                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-warning">Delete</a>
+                                <a href="javascript:;" wire:click="setKey({{ $row->getKey() }})" class="btn btn-warning">Delete {{ $row->username }}</a>
                                 @endif
                                 @endif
                             </td>
