@@ -54,6 +54,11 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if ($error)
+                <div class="alert alert-danger show mt-3 mb-2" role="alert">
+                    {!! $error !!}
+                </div>
+                @endif
             </div>
             <div class="flex flex-col sm:flex-row items-center mt-5">
                 <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">

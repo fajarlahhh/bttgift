@@ -11,7 +11,7 @@ class Member extends Component
 {
     use WithPagination;
 
-    public $key, $active = 1;
+    public $key, $active = 1, $error;
 
     protected $queryString = ['active'];
 
@@ -27,7 +27,13 @@ class Member extends Component
 
     public function delete()
     {
-        $data = User::findOrFail($this->key)->delete();
+        $data = User::findOrFail($this->key);
+        if (Depost::where('id_member', $data->id)->count() > 0) {
+            $this->error = 'The member has already made a payment';
+            return;
+        }else{
+            $data->$delete();
+        }
     }
 
     public function render()
