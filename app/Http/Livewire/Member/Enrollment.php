@@ -168,8 +168,8 @@ class Enrollment extends Component
 
             $deposit = new Deposit();
             $deposit->id_member = $user->id;
-            $deposit->coin_name = $payment->payment_name;
-            $deposit->wallet = $payment->payment_wallet;
+            $deposit->coin_name = $payment->name;
+            $deposit->wallet = $payment->wallet;
             $deposit->amount = $this->payment_amount;
             $deposit->requisite = 'Registration';
             $deposit->save();
