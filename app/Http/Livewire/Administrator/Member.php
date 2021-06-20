@@ -34,7 +34,7 @@ class Member extends Component
             $this->error = 'The member has already made a payment';
             return;
         }else{
-            $data->delete();
+            $data->forceDelete();
         }
     }
 

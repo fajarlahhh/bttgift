@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Hexters\CoinPayment\Entities\CoinpaymentTransaction;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, AuthenticationLogable;
+    use HasFactory, Notifiable, SoftDeletes, AuthenticationLogable;
 
     protected $table = 'user';
 
