@@ -14,9 +14,11 @@
                     <thead>
                         <tr class="bg-gray-700 dark:bg-dark-1 text-white">
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Time</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Amount <small>(After Fe)</small></th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">BTT Wallet</th>
+                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">BTT Amount</th>
                             <th class="border-b-2 dark:border-dark-5 whitespace-nowrap"></th>
                         </tr>
                     </thead>
@@ -24,9 +26,11 @@
                         @foreach ($data as $row)
                         <tr>
                             <td class="border-b whitespace-nowrap">{{ ++$no }}</td>
+                            <td class="border-b whitespace-nowrap">{{ $row->created_at }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->member->username }}</td>
+                            <td class="border-b whitespace-nowrap text-right">{{ number_format($row->acceptance) }}</td>
                             <td class="border-b whitespace-nowrap">{{ $row->member->wallet }}</td>
-                            <td class="border-b whitespace-nowrap">{{ $row->accepted_btt }}</td>
+                            <td class="border-b whitespace-nowrap text-right">{{ number_format($row->accepted_btt) }}</td>
                             <td class="border-b whitespace-nowrap text-right">
                                 @if((int)$key===$row->getKey())
                                 <form wire:submit.prevent="send">
