@@ -3,8 +3,9 @@
         <div class="flex flex-col sm:flex-row items-center p-5 border-b border-gray-200">
             <div class="w-full sm:w-auto flex items-center sm:ml-auto mt-3 sm:mt-0">
                 <select data-placeholder="Contract" wire:model="process" class="form-select w-full">
-                    <option value="0" selected>Not Processed</option>
-                    <option value="1" selected>Processed</option>
+                    <option value="0">Waiting Payment</option>
+                    <option value="2">Not Processed</option>
+                    <option value="1">Processed</option>
                 </select>
             </div>
         </div>

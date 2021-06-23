@@ -20,7 +20,7 @@ class Deposit extends Component
 {
     use WithPagination;
 
-    public $process = 0, $month, $year, $key, $parent = [];
+    public $process = 2, $month, $year, $key, $parent = [];
     protected $queryString = ['process', 'month', 'year'];
 
     public function mount()
@@ -238,8 +238,10 @@ class Deposit extends Component
         $data = \App\Models\Deposit::with('member')->orderBy('created_at');
         if ($this->process == 1) {
             $data = $data->whereNotNull('processed_at');
+        } else  if ($this->process == 2) {
+            $data = $data->whereNull('processed_at')->whereNotNull('file');
         } else {
-            $data = $data->whereNull('processed_at');
+            $data = $data->whereNull('processed_at')->whereNull('file');
         }
 
         $data = $data->paginate(10);
