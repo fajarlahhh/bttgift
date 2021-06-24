@@ -14,11 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class Dashboard extends Component
 {
-    public $daily, $daily_gift, $deposit, $withdrawal, $achievement, $user;
+    public $daily = [], $daily_gift, $deposit, $withdrawal, $achievement, $user;
 
     public function mount()
     {
-        $this->daily = Daily::where('date', date('Y-m-d'))->count();
 
         $this->deposit = Deposit::whereNull('processed_at')->whereNotNull('file')->whereNotNull('information')->count();
         $this->withdrawal = Withdrawal::whereNull('processed_at')->count();
@@ -29,31 +28,34 @@ class Dashboard extends Component
     public function daily()
     {
         $this->validate([
-            'daily_gift' => 'required'
+            'daily' => 'required'
         ]);
-
         DB::transaction(function () {
-            $daily = new Daily();
-            $daily->date = date('Y-m-d');
-            $daily->gift = $this->daily_gift;
-            $daily->save();
+            foreach ($this->daily as $key => $row) {
+                if ($row['gift'] > 0) {
+                    $daily = new Daily();
+                    $daily->date = $row['date'];
+                    $daily->gift = $row['gift'];
+                    $daily->save();
 
-            $bonus = [];
-            foreach (User::whereNotNull('actived_at')->whereNull('due_date')->get() as $key => $row) {
-                array_push($bonus,[
-                    'description' => 'Daily Gift '.$this->daily_gift.' %',
-                    'type' => "Daily",
-                    'debit' => 0,
-                    'credit' => $row->contract_price * $this->daily_gift /100,
-                    'id_member' => $row->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
-            }
-            $data_bonus = collect($bonus)->chunk(10);
-            foreach ($data_bonus as $item)
-            {
-                Bonus::insert($item->toArray());
+                    $bonus = [];
+                    foreach (User::whereNotNull('actived_at')->whereNull('due_date')->get() as $key => $sub) {
+                        array_push($bonus,[
+                            'description' => 'Daily Gift '.$row['gift'].' %',
+                            'type' => "Daily",
+                            'debit' => 0,
+                            'credit' => $sub->contract_price * $row['gift'] /100,
+                            'id_member' => $sub->id,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ]);
+                    }
+                    $data_bonus = collect($bonus)->chunk(10);
+                    foreach ($data_bonus as $item)
+                    {
+                        Bonus::insert($item->toArray());
+                    }
+                }
             }
         });
         redirect('/admin-area/dashboard');
@@ -61,6 +63,23 @@ class Dashboard extends Component
 
     public function render()
     {
+        $this->daily = [];
+        $data = Daily::orderBy('date', 'desc')->get();
+        if($data->count() == 0){
+            $last = date('Y-m-d', strtotime(User::first()->created_at));
+        }else{
+            $last = Carbon::parse($data->first()->date)->format('Y-m-d');
+        }
+        $from = Carbon::parse($last);
+        $now = Carbon::now();
+
+        $diff = $from->diffInDays($now);
+        for ($i=0; $i < $diff; $i++) {
+            array_push($this->daily, [
+                'gift' => 0,
+                'date' => $from->addDays(1)->format('Y-m-d')
+            ]);
+        }
         return view('livewire.administrator.dashboard', [
             'menu' => 'activation'
         ])->extends('layouts.dashboard');

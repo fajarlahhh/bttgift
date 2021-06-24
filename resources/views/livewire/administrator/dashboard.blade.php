@@ -71,15 +71,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($daily == 0)
+                                @if ($daily > 0)
                                 <div class="col-span-12 sm:col-span-6 xl:col-span-12 intro-y">
                                     <div class="alert alert-dark show intro-x ">
                                         <h3>Daily Gift</h3>
                                         <hr class="mt-2">
-                                        <form wire:submit.prevent="daily" class="flex flex-col sm:flex-row">
-                                            <input type="number" step="any" class="form-control mt-3 text-gray-700" max="100" min="0" wire:model.defer="daily_gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;`
-                                            <button class="btn btn-primary mt-3">Submit</button>
-                                        </form>
+                                        <form wire:submit.prevent="daily">
+                                        @foreach ($daily as $index => $item)
+                                            <div  class="flex flex-col sm:flex-row">
+                                                <input type="text" class="form-control mt-3 text-gray-700" max="100" min="0" wire:model.defer="daily.{{ $index }}.date" placeholder="Insert Daily Gift Here" autocomplete="off" readonly> &nbsp;
+                                                <input type="number" step="any" class="form-control mt-3 text-gray-700" max="100" min="0" wire:model.defer="daily.{{ $index }}.gift" placeholder="Insert Daily Gift Here" autocomplete="off"> &nbsp;
+                                            </div>
+                                        @endforeach
+                                        <button class="btn btn-primary mt-3">Submit</button>
+                                    </form>
                                     </div>
                                 </div>
                                 @endif
